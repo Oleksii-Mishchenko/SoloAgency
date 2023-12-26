@@ -1,5 +1,10 @@
+# Use the official Python image as a base image
 FROM --platform=linux/amd64 python:3.10.9-slim-buster
+
+# Set metadata for the image
 LABEL maintainer="savik1992@gmail.com"
+
+# Set the working directory to /app
 WORKDIR /app
 
 # Set environment variables
@@ -10,24 +15,24 @@ ENV PYTHONUNBUFFERED 1
 RUN pip install --upgrade pip
 COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
+RUN pip install python-dotenv
 
-# Copy the application code
-COPY . .
+# Install necessary packages
 
 # Create necessary directories
 RUN mkdir -p /vol/web/media/uploads/
 
+# Add a non-root user and set file permissions
 RUN adduser \
     --disabled-password \
     --no-create-home \
     --gecos '' \
     django-user
 
-RUN mkdir -p /vol/web/media/uploads/
 RUN chown -R django-user:django-user /vol/
 RUN chown -R django-user:django-user /vol/web/media/uploads/
 RUN chmod -R 775 /vol/web/media/uploads/
 RUN chmod -R 755 /vol/web/
 
-
+# Switch to the non-root user
 USER django-user
