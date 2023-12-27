@@ -18,16 +18,18 @@ import storage from 'redux-persist/lib/storage';
 
 import postsReducer from '../features/postsSlice';
 import positionReducer from '../features/positionSlice';
+import userReducer from '../features/userSlice';
 
 const rootReducer = combineReducers({
   posts: postsReducer,
   position: positionReducer,
+  user: userReducer,
 });
 
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['posts'],
+  whitelist: ['posts', 'user'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

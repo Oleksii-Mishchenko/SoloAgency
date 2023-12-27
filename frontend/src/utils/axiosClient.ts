@@ -1,7 +1,8 @@
-import axios, { AxiosResponse, isAxiosError } from 'axios';
+import axios, { AxiosRequestConfig, AxiosResponse, isAxiosError } from 'axios';
 
 const instance = axios.create({
-  baseURL: 'https://jsonplaceholder.typicode.com',
+  baseURL: 'http://localhost:8080/api',
+  // baseURL: 'https://jsonplaceholder.typicode.com',
   // baseURL: 'https://mate.academy/students-api',
 });
 
@@ -25,8 +26,12 @@ export const client = {
     }
   },
 
-  post: async <T, D>(url: string, data: D): Promise<T> => {
-    const response = await instance.post<T>(url, data);
+  post: async <T, D>(
+    url: string,
+    data: D,
+    config?: AxiosRequestConfig,
+  ): Promise<T> => {
+    const response = await instance.post<T>(url, data, config);
 
     return response.data;
   },
