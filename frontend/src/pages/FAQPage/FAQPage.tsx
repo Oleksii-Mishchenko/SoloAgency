@@ -1,3 +1,7 @@
 export const FAQPage = () => {
-  return <div>FAQ</div>;
+  return (
+    <div className="faq-page">
+      <h2>FAQ</h2>
+    </div>
+  );
 };

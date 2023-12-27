@@ -1,0 +1,7 @@
+@import '../../styles/utils/mixins';
+
+.header {
+  &__container {
+    @include page-container;
+  }
+}

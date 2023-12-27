@@ -1,5 +1,11 @@
 .App {
+  display: flex;
+  flex-direction: column;
+  gap: 100px;
+  min-height: 100vh;
+
   &__title {
+    text-align: center;
     color:purple;
   }
 }
