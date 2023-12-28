@@ -13,11 +13,11 @@ ENV PYTHONUNBUFFERED 1
 
 # Upgrade pip and install requirements
 RUN pip install --upgrade pip
-COPY backend/requirements.txt backend/requirements.txt
+COPY . .
 RUN pip install -r backend/requirements.txt
 
 # Create necessary directories
-RUN mkdir -p /vol/web/media/uploads/
+RUN mkdir -p /vol/web/media/
 
 # Add a non-root user and set file permissions
 RUN adduser \
@@ -27,9 +27,8 @@ RUN adduser \
     django-user
 
 RUN chown -R django-user:django-user /vol/
-RUN chown -R django-user:django-user /vol/web/media/uploads/
-RUN chmod -R 775 /vol/web/media/uploads/
 RUN chmod -R 755 /vol/web/
+
 
 # Switch to the non-root user
 USER django-user

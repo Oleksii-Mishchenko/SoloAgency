@@ -7,11 +7,12 @@ from django.utils.text import slugify
 
 User = get_user_model()
 
+
 def organizer_photo_file_path(instance, filename):
     _, extension = os.path.splitext(filename)
-    filename = f"{slugify(instance.full_name)}-{uuid.uuid4()}{extension}"
+    filename = f"{uuid.uuid4()}{extension}"
 
-    return os.path.join("uploads", "organizers", filename)
+    return os.path.join("uploads", filename)
 
 
 class Service(models.Model):
@@ -54,11 +55,8 @@ class Organizer(models.Model):
     phone = models.CharField(max_length=13)
     email = models.EmailField()
     photo = models.ImageField(
-        upload_to=organizer_photo_file_path,
-        null=True,
-        blank=True
+        upload_to=organizer_photo_file_path, null=True, blank=True
     )
-
 
     @property
     def full_name(self):
