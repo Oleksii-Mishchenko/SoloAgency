@@ -1,5 +1,5 @@
 from rest_framework import viewsets
-from agency.models import Service, Agency, EventType, Organizer, Event, Advice, Review
+from agency.models import Service, Agency, EventType, Organizer, Event, Advice, Review, CallRequest
 from agency.serializers import (
     ServiceSerializer,
     AgencySerializer,
@@ -7,7 +7,7 @@ from agency.serializers import (
     OrganizerSerializer,
     EventSerializer,
     AdviceSerializer,
-    ReviewSerializer,
+    ReviewSerializer, CallRequestSerializer,
 )
 
 
@@ -44,3 +44,7 @@ class AdviceViewSet(viewsets.ModelViewSet):
 class ReviewViewSet(viewsets.ModelViewSet):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
+
+class CallRequestViewSet(viewsets.ModelViewSet):
+    queryset = CallRequest.objects.all()
+    serializer_class = CallRequestSerializer

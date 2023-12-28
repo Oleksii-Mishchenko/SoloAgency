@@ -10,9 +10,10 @@ User = get_user_model()
 
 def organizer_photo_file_path(instance, filename):
     _, extension = os.path.splitext(filename)
-    filename = f"{uuid.uuid4()}{extension}"
-
-    return os.path.join("uploads", filename)
+    return os.path.join(
+        "uploads/organiser_photos/",
+        f"{slugify(instance.full_name)}-{uuid.uuid4()}{extension}"
+    )
 
 
 class Service(models.Model):
@@ -106,3 +107,12 @@ class Review(models.Model):
 
     class Meta:
         ordering = ["-created_at"]
+
+class CallRequest(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    name = models.CharField(max_length=63)
+    description = models.TextField()
+    phone = models.BigIntegerField()
+
+    def __str__(self):
+        return f"Call request from {self.name}: phone {self.phone}"

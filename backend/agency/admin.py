@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Service, Agency, EventType, Organizer, Event, Advice, Review
+from .models import Service, Agency, EventType, Organizer, Event, Advice, Review, CallRequest
 
 
 @admin.register(Service)
@@ -40,3 +40,7 @@ class ReviewAdmin(admin.ModelAdmin):
     list_display = ("user", "text", "rating", "created_at", "updated_at", "is_approved")
     list_filter = ("is_approved",)
     search_fields = ("user__username", "text")
+
+@admin.register(CallRequest)
+class CallRequestAdmin(admin.ModelAdmin):
+    list_display = ('name', "description", 'phone', 'created_at')
