@@ -1,7 +1,17 @@
+import os
+import uuid
+
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.utils.text import slugify
 
 User = get_user_model()
+
+def organizer_photo_file_path(instance, filename):
+    _, extension = os.path.splitext(filename)
+    filename = f"{slugify(instance.full_name)}-{uuid.uuid4()}{extension}"
+
+    return os.path.join("uploads", "organizers", filename)
 
 
 class Service(models.Model):
@@ -43,6 +53,12 @@ class Organizer(models.Model):
     position = models.CharField(max_length=63)
     phone = models.CharField(max_length=13)
     email = models.EmailField()
+    photo = models.ImageField(
+        upload_to=organizer_photo_file_path,
+        null=True,
+        blank=True
+    )
+
 
     @property
     def full_name(self):

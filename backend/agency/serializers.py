@@ -34,11 +34,12 @@ class OrganizerSerializer(serializers.ModelSerializer):
             "phone",
             "email",
             "full_name",
+            "photo",
         )
 
 
 class EventSerializer(serializers.ModelSerializer):
-    organizers = OrganizerSerializer(many=True)
+    organizers = OrganizerSerializer(many=True, read_only=True)
 
     class Meta:
         model = Event
