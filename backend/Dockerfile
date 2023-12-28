@@ -15,9 +15,6 @@ ENV PYTHONUNBUFFERED 1
 RUN pip install --upgrade pip
 COPY backend/requirements.txt backend/requirements.txt
 RUN pip install -r backend/requirements.txt
-RUN pip install python-dotenv
-
-# Install necessary packages
 
 # Create necessary directories
 RUN mkdir -p /vol/web/media/uploads/

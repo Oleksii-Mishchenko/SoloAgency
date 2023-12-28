@@ -16,7 +16,7 @@ class EventTypeAdmin(admin.ModelAdmin):
 
 @admin.register(Organizer)
 class OrganizerAdmin(admin.ModelAdmin):
-    list_display = ('full_name', 'position', 'phone', 'email')
+    list_display = ('full_name', 'position', 'phone', 'email', "photo")
     search_fields = ('first_name', 'last_name', 'position', 'phone', 'email')
 
 @admin.register(Event)
