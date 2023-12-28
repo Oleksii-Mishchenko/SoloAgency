@@ -2,7 +2,6 @@ from django.contrib.auth import get_user_model, authenticate
 from rest_framework import serializers
 from django.utils.translation import gettext as _
 
-
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
@@ -24,7 +23,6 @@ class UserSerializer(serializers.ModelSerializer):
 
         return user
 
-
 class AuthTokenSerializer(serializers.Serializer):
     email = serializers.CharField(label=_("Email"))
     password = serializers.CharField(
@@ -41,16 +39,28 @@ class AuthTokenSerializer(serializers.Serializer):
             if user:
                 if not user.is_active:
                     msg = _("User account is disabled.")
-                    raise serializers.ValidationError(
-                        msg,
-                        code="authorization"
-                    )
+                    raise serializers.ValidationError({
+                        "error": {
+                            "code": "ERR_ACCOUNT_DISABLED",
+                            "message": msg,
+                        }
+                    }, code="authorization")
             else:
                 msg = _("Unable to log in with provided credentials.")
-                raise serializers.ValidationError(msg, code="authorization")
+                raise serializers.ValidationError({
+                    "error": {
+                        "code": "ERR_INVALID_CREDENTIALS",
+                        "message": msg,
+                    }
+                }, code="authorization")
         else:
             msg = _("Must include 'username' and 'password'.")
-            raise serializers.ValidationError(msg, code="authorization")
+            raise serializers.ValidationError({
+                "error": {
+                    "code": "ERR_MISSING_CREDENTIALS",
+                    "message": msg,
+                }
+            }, code="authorization")
 
         attrs["user"] = user
         return attrs
