@@ -6,15 +6,7 @@ from django.utils.translation import gettext as _
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
-        fields = (
-            "id",
-            "email",
-            "password",
-            "first_name",
-            "last_name",
-            "phone",
-            "is_staff",
-        )
+        fields = ("id", "email", "password", "is_staff")
         read_only_fields = ("is_staff",)
         extra_kwargs = {"password": {"write_only": True, "min_length": 5}}
 
@@ -50,36 +42,15 @@ class AuthTokenSerializer(serializers.Serializer):
                 if not user.is_active:
                     msg = _("User account is disabled.")
                     raise serializers.ValidationError(
-                        {
-                            "error": {
-                                "code": "ERR_ACCOUNT_DISABLED",
-                                "message": msg,
-                            }
-                        },
-                        code="authorization",
+                        msg,
+                        code="authorization"
                     )
             else:
                 msg = _("Unable to log in with provided credentials.")
-                raise serializers.ValidationError(
-                    {
-                        "error": {
-                            "code": "ERR_INVALID_CREDENTIALS",
-                            "message": msg,
-                        }
-                    },
-                    code="authorization",
-                )
+                raise serializers.ValidationError(msg, code="authorization")
         else:
             msg = _("Must include 'username' and 'password'.")
-            raise serializers.ValidationError(
-                {
-                    "error": {
-                        "code": "ERR_MISSING_CREDENTIALS",
-                        "message": msg,
-                    }
-                },
-                code="authorization",
-            )
+            raise serializers.ValidationError(msg, code="authorization")
 
         attrs["user"] = user
         return attrs

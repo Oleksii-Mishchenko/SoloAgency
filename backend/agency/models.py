@@ -20,6 +20,9 @@ class Service(models.Model):
     name = models.CharField(max_length=63)
     description = models.TextField()
 
+    def __str__(self):
+        return self.name
+
 
 class Agency(models.Model):
     name = models.CharField(max_length=63)
@@ -38,6 +41,9 @@ class Agency(models.Model):
 
     class Meta:
         verbose_name_plural = "Agency"
+
+    def __str__(self):
+        return self.name
 
 
 class EventType(models.Model):
