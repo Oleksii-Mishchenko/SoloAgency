@@ -39,28 +39,16 @@ class AuthTokenSerializer(serializers.Serializer):
             if user:
                 if not user.is_active:
                     msg = _("User account is disabled.")
-                    raise serializers.ValidationError({
-                        "error": {
-                            "code": "ERR_ACCOUNT_DISABLED",
-                            "message": msg,
-                        }
-                    }, code="authorization")
+                    raise serializers.ValidationError(
+                        msg,
+                        code="authorization"
+                    )
             else:
                 msg = _("Unable to log in with provided credentials.")
-                raise serializers.ValidationError({
-                    "error": {
-                        "code": "ERR_INVALID_CREDENTIALS",
-                        "message": msg,
-                    }
-                }, code="authorization")
+                raise serializers.ValidationError(msg, code="authorization")
         else:
             msg = _("Must include 'username' and 'password'.")
-            raise serializers.ValidationError({
-                "error": {
-                    "code": "ERR_MISSING_CREDENTIALS",
-                    "message": msg,
-                }
-            }, code="authorization")
+            raise serializers.ValidationError(msg, code="authorization")
 
         attrs["user"] = user
         return attrs
