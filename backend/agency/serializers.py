@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from agency.models import Service, Agency, EventType, Organizer, Event, Advice, Review
+from agency.models import Service, Agency, EventType, Organizer, Event, Advice, Review, CallRequest
 
 
 class ServiceSerializer(serializers.ModelSerializer):
@@ -74,4 +74,15 @@ class ReviewSerializer(serializers.ModelSerializer):
             "created_at",
             "updated_at",
             "is_approved",
+        )
+
+class CallRequestSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CallRequest
+        fields = (
+            "id",
+            "name",
+            "description",
+            "phone",
+            "city"
         )
