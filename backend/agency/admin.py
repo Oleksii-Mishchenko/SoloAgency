@@ -38,4 +38,4 @@ class ReviewAdmin(admin.ModelAdmin):
 
 @admin.register(CallRequest)
 class CallRequestAdmin(admin.ModelAdmin):
-    list_display = ('name', "description" 'phone', 'created_at')
+    list_display = ('name', "description", "city", 'phone', 'created_at')

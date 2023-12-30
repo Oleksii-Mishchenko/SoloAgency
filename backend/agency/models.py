@@ -113,5 +113,6 @@ class Review(models.Model):
 class CallRequest(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=63)
-    description = models.TextField()
+    description = models.TextField(null=True, blank=True)
+    city = models.CharField(max_length=63, null=True, blank=True)
     phone = models.CharField(max_length=15)
