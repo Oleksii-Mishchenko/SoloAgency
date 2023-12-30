@@ -108,3 +108,10 @@ class Review(models.Model):
 
     class Meta:
         ordering = ["-created_at"]
+
+
+class CallRequest(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    name = models.CharField(max_length=63)
+    description = models.TextField()
+    phone = models.CharField(max_length=15)
