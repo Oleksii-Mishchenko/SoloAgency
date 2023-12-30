@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { LoginData } from '../../types/LoginData';
 import * as authActions from '../../features/authSlice';
 import { RegisterData } from '../../types/RegisterData';
+import { Loader2 } from '../../components/Loader2';
 
 export const HomePage = () => {
   const [loginData, setLoginData] = useState<LoginData>({
@@ -40,6 +41,7 @@ export const HomePage = () => {
   return (
     <div className="home-page">
       <h2>Home Page</h2>
+      <Loader2 />
       admin@admin.ua
       <form onSubmit={event => handleLogin(event)}>
         <input
