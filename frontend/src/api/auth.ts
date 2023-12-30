@@ -18,6 +18,6 @@ export const getUser = (token: string): Promise<User> => {
   return client.get<User>('/user/me/', config);
 };
 
-export const registerUser = (registerData: RegisterData) => {
+export const registerUser = (registerData: RegisterData): Promise<User> => {
   return client.post<User, RegisterData>('/user/register/', registerData);
 };

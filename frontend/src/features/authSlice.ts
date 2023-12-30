@@ -99,11 +99,13 @@ export const AuthState = createSlice({
     builder.addCase(register.fulfilled, (state, action) => {
       state.isRegistering = false;
       state.authData.user = action.payload;
+      console.log(action);
     });
 
     builder.addCase(register.rejected, (state, action) => {
       state.isRegistering = false;
       state.errors = parseErrors(action.error.message);
+      console.log(action);
     });
   },
 });
