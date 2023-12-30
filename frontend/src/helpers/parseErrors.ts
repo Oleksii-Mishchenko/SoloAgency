@@ -1,8 +1,12 @@
-import { Errors } from '../types/Errors';
+import { ServerErrorResponse } from '../types/ServerErrorResponse';
 
-export const parseErrors = (JSONError?: string): Errors => {
-  const commonErrors: Errors = { error: ['Something went wrong.'] };
-  const errors = JSONError ? JSON.parse(JSONError) : commonErrors;
+export const parseErrors = (jsonError?: string): ServerErrorResponse => {
+  const commonErrors: ServerErrorResponse = {
+    error: ['Something went wrong.'],
+  };
+  const errors: ServerErrorResponse = jsonError
+    ? JSON.parse(jsonError)
+    : commonErrors;
 
   return errors;
 };

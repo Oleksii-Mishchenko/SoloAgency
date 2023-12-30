@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { useAppDispatch } from '../../app/hooks';
+import { useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { LoginData } from '../../types/LoginData';
-import * as userActions from '../../features/userSlice';
+import * as authActions from '../../features/authSlice';
 
 export const HomePage = () => {
   const [loginData, setLoginData] = useState<LoginData>({
@@ -9,17 +9,25 @@ export const HomePage = () => {
     password: '',
   });
   const dispatch = useAppDispatch();
+  const { authData } = useAppSelector(state => state.auth);
+
+  const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    dispatch(authActions.login(loginData));
+  };
+
+  useEffect(() => {
+    if (authData.token) {
+      dispatch(authActions.getUserByToken(authData.token));
+    }
+  }, [authData.token, dispatch]);
 
   return (
     <div className="home-page">
       <h2>Home Page</h2>
-
-      <form
-        onSubmit={event => {
-          event.preventDefault();
-          dispatch(userActions.loginUser(loginData));
-        }}
-      >
+      admin@admin.ua
+      <form onSubmit={event => handleLogin(event)}>
         <input
           type="email"
           value={loginData.email}

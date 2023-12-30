@@ -1,26 +1,23 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { User } from '../types/User';
-import { loginUser, registerUser } from '../api/auth';
+import { getUser, loginUser, registerUser } from '../api/auth';
 import { LoginData } from '../types/LoginData';
-// import { AuthData } from '../types/AuthData';
 import { RegisterData } from '../types/RegisterData';
-import { Errors } from '../types/Errors';
+import { ServerErrorResponse } from '../types/ServerErrorResponse';
 import { parseErrors } from '../helpers/parseErrors';
+import { AuthData } from '../types/AuthData';
 
 export type AuthState = {
-  user: User | null;
-  // authData: AuthData | null;
-  token: string | null;
-  isLoading: boolean;
+  authData: AuthData;
+  isLoggingIn: boolean;
+  isGettingUser: boolean;
   isRegistering: boolean;
-  errors: Errors | null;
+  errors: ServerErrorResponse | null;
 };
 
 const initialState: AuthState = {
-  user: null,
-  // authData: null,
-  token: null,
-  isLoading: false,
+  authData: { token: null, user: null },
+  isLoggingIn: false,
+  isGettingUser: false,
   isRegistering: false,
   errors: null,
 };
@@ -29,6 +26,15 @@ export const login = createAsyncThunk(
   'auth/login',
   async (loginData: LoginData) => {
     const response = await loginUser(loginData);
+
+    return response;
+  },
+);
+
+export const getUserByToken = createAsyncThunk(
+  'auth/getUser',
+  async (token: string) => {
+    const response = await getUser(token);
 
     return response;
   },
@@ -48,22 +54,43 @@ export const AuthState = createSlice({
   initialState,
   reducers: {},
   extraReducers: builder => {
+    //login
     builder.addCase(login.pending, state => {
-      state.isLoading = true;
+      state.errors = null;
+      state.isLoggingIn = true;
     });
 
     builder.addCase(login.fulfilled, (state, action) => {
-      state.isLoading = false;
-      state.errors = null;
-      state.token = action.payload;
+      state.isLoggingIn = false;
+      state.authData.token = action.payload.token;
       console.log(action);
     });
 
     builder.addCase(login.rejected, (state, action) => {
-      state.isLoading = false;
+      state.isLoggingIn = false;
       state.errors = parseErrors(action.error.message);
+      console.log(action);
     });
 
+    // getUser
+    builder.addCase(getUserByToken.pending, state => {
+      state.errors = null;
+      state.isGettingUser = true;
+    });
+
+    builder.addCase(getUserByToken.fulfilled, (state, action) => {
+      state.isGettingUser = false;
+      state.authData.user = action.payload;
+      console.log(action);
+    });
+
+    builder.addCase(getUserByToken.rejected, (state, action) => {
+      state.isGettingUser = false;
+      state.errors = parseErrors(action.error.message);
+      console.log(action);
+    });
+
+    // register
     builder.addCase(register.pending, state => {
       state.errors = null;
       state.isRegistering = true;
@@ -71,7 +98,7 @@ export const AuthState = createSlice({
 
     builder.addCase(register.fulfilled, (state, action) => {
       state.isRegistering = false;
-      state.user = action.payload;
+      state.authData.user = action.payload;
     });
 
     builder.addCase(register.rejected, (state, action) => {

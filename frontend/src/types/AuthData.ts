@@ -1,6 +1,6 @@
 import { User } from './User';
 
 export interface AuthData {
-  token: string;
-  user: User;
+  token: string | null;
+  user: User | null;
 }

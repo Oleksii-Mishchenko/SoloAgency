@@ -1,28 +1,18 @@
-import axios, { AxiosRequestConfig, AxiosResponse, isAxiosError } from 'axios';
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { handleErrorFromServer } from '../helpers/handleErrorFromServer';
 
 const instance = axios.create({
   baseURL: 'http://localhost:8080/api',
-  // baseURL: 'https://jsonplaceholder.typicode.com',
-  // baseURL: 'https://mate.academy/students-api',
 });
 
 export const client = {
-  get: async <T>(url: string): Promise<T> => {
+  get: async <T>(url: string, config?: AxiosRequestConfig): Promise<T> => {
     try {
-      const response: AxiosResponse<T> = await instance.get<T>(url);
+      const response: AxiosResponse<T> = await instance.get<T>(url, config);
 
       return response.data;
     } catch (error) {
-      if (isAxiosError(error)) {
-        const message =
-          error.code === 'ERR_NETWORK'
-            ? 'No internet connection'
-            : error.message;
-
-        throw new Error(message);
-      } else {
-        throw new Error('Something went wrong');
-      }
+      return handleErrorFromServer(error);
     }
   },
 
@@ -31,15 +21,14 @@ export const client = {
     data: D,
     config?: AxiosRequestConfig,
   ): Promise<T> => {
-    const response = await instance.post<T>(url, data, config);
+    try {
+      const response = await instance.post<T>(url, data, config);
 
-    return response.data;
+      return response.data;
+    } catch (error) {
+      return handleErrorFromServer(error);
+    }
   },
-  // async post<T, D>(url: string, data: D) {
-  //   const response = await instance.post<T>(url, data);
-
-  //   return response.data;
-  // },
 
   async patch<T, D>(url: string, data: D) {
     const response = await instance.patch<T>(url, data);
