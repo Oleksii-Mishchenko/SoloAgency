@@ -54,7 +54,7 @@ export const AuthState = createSlice({
   initialState,
   reducers: {},
   extraReducers: builder => {
-    //login
+    // login
     builder.addCase(login.pending, state => {
       state.errors = null;
       state.isLoggingIn = true;
@@ -63,13 +63,11 @@ export const AuthState = createSlice({
     builder.addCase(login.fulfilled, (state, action) => {
       state.isLoggingIn = false;
       state.authData.token = action.payload.token;
-      console.log(action);
     });
 
     builder.addCase(login.rejected, (state, action) => {
       state.isLoggingIn = false;
       state.errors = parseErrors(action.error.message);
-      console.log(action);
     });
 
     // getUser
@@ -81,16 +79,14 @@ export const AuthState = createSlice({
     builder.addCase(getUserByToken.fulfilled, (state, action) => {
       state.isGettingUser = false;
       state.authData.user = action.payload;
-      console.log(action);
     });
 
     builder.addCase(getUserByToken.rejected, (state, action) => {
       state.isGettingUser = false;
       state.errors = parseErrors(action.error.message);
-      console.log(action);
     });
 
-    // register
+    // registration
     builder.addCase(register.pending, state => {
       state.errors = null;
       state.isRegistering = true;
@@ -99,13 +95,11 @@ export const AuthState = createSlice({
     builder.addCase(register.fulfilled, (state, action) => {
       state.isRegistering = false;
       state.authData.user = action.payload;
-      console.log(action);
     });
 
     builder.addCase(register.rejected, (state, action) => {
       state.isRegistering = false;
       state.errors = parseErrors(action.error.message);
-      console.log(action);
     });
   },
 });

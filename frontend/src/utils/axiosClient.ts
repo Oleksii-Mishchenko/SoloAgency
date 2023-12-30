@@ -22,7 +22,11 @@ export const client = {
     config?: AxiosRequestConfig,
   ): Promise<T> => {
     try {
-      const response = await instance.post<T>(url, data, config);
+      const response: AxiosResponse<T> = await instance.post<T>(
+        url,
+        data,
+        config,
+      );
 
       return response.data;
     } catch (error) {
@@ -30,13 +34,17 @@ export const client = {
     }
   },
 
-  async patch<T, D>(url: string, data: D) {
+  patch: async <T, D>(url: string, data: D): Promise<T> => {
     const response = await instance.patch<T>(url, data);
 
     return response.data;
   },
 
-  async delete(url: string) {
-    return instance.delete(url);
+  delete: async (url: string) => {
+    try {
+      return await instance.delete(url);
+    } catch (error) {
+      return handleErrorFromServer(error);
+    }
   },
 };

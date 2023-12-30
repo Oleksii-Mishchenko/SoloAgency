@@ -1,13 +1,15 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { Advice, NewAdvice } from '../types/Advice';
-import { addAdvice, deleteAdvice, loadAdvices } from '../api/advices';
+import { addAdvice, removeAdvice, loadAdvices } from '../api/advices';
+import { ServerErrorResponse } from '../types/ServerErrorResponse';
+import { parseErrors } from '../helpers/parseErrors';
 
 export type AdvicesState = {
   advices: Advice[];
   isLoadingAdvices: boolean;
   isUploadingAdvice: boolean;
   deletingAdviceId: number | null;
-  error: string;
+  errors: ServerErrorResponse | null;
 };
 
 const initialState: AdvicesState = {
@@ -15,7 +17,7 @@ const initialState: AdvicesState = {
   isLoadingAdvices: false,
   isUploadingAdvice: false,
   deletingAdviceId: null,
-  error: '',
+  errors: null,
 };
 
 export const init = createAsyncThunk('fetch/advices', async () => {
@@ -34,7 +36,7 @@ export const add = createAsyncThunk(
 );
 
 export const remove = createAsyncThunk('delete/advice', async (id: number) => {
-  await deleteAdvice(id);
+  await removeAdvice(id);
 
   return id;
 });
@@ -47,7 +49,7 @@ export const advicesSlice = createSlice({
     builder.addCase(init.pending, state => {
       state.isLoadingAdvices = true;
       state.advices = [];
-      state.error = '';
+      state.errors = null;
     });
 
     builder.addCase(init.fulfilled, (state, action) => {
@@ -58,12 +60,12 @@ export const advicesSlice = createSlice({
     builder.addCase(init.rejected, (state, action) => {
       state.isLoadingAdvices = false;
       state.advices = [];
-      state.error = action.error.message || 'Error while loading advices';
+      state.errors = parseErrors(action.error.message);
     });
 
     builder.addCase(add.pending, state => {
       state.isUploadingAdvice = true;
-      state.error = '';
+      state.errors = null;
     });
 
     builder.addCase(add.fulfilled, (state, action) => {
@@ -73,12 +75,12 @@ export const advicesSlice = createSlice({
 
     builder.addCase(add.rejected, (state, action) => {
       state.isUploadingAdvice = false;
-      state.error = action.error.message || 'Error while adding the advice';
+      state.errors = parseErrors(action.error.message);
     });
 
     builder.addCase(remove.pending, (state, action) => {
       state.deletingAdviceId = action.meta.arg;
-      state.error = '';
+      state.errors = null;
     });
 
     builder.addCase(remove.fulfilled, (state, action) => {
@@ -86,11 +88,12 @@ export const advicesSlice = createSlice({
       state.advices = state.advices.filter(
         advice => advice.id !== action.payload,
       );
+      console.log(action);
     });
 
     builder.addCase(remove.rejected, (state, action) => {
       state.deletingAdviceId = null;
-      state.error = action.error.message || 'Error while deleting the advice';
+      state.errors = parseErrors(action.error.message);
     });
   },
 });

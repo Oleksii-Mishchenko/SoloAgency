@@ -3,14 +3,14 @@ import { client } from '../utils/axiosClient';
 
 const advicesUrl = 'agency/advices/';
 
-export const loadAdvices = () => {
+export const loadAdvices = (): Promise<Advice[]> => {
   return client.get<Advice[]>(advicesUrl);
 };
 
-export const addAdvice = (advice: NewAdvice) => {
+export const addAdvice = (advice: NewAdvice): Promise<Advice> => {
   return client.post<Advice, NewAdvice>(advicesUrl, advice);
 };
 
-export const deleteAdvice = (adviceId: number) => {
+export const removeAdvice = (adviceId: number) => {
   return client.delete(`${advicesUrl}${adviceId}`);
 };

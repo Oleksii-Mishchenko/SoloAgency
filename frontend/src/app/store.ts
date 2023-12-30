@@ -1,3 +1,6 @@
+import authReducer from '../features/authSlice';
+import advicesReducer from '../features/advicesSlice';
+
 import {
   configureStore,
   combineReducers,
@@ -16,10 +19,9 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-import authReducer from '../features/authSlice';
-
 const rootReducer = combineReducers({
   auth: authReducer,
+  advices: advicesReducer,
 });
 
 const persistConfig = {
