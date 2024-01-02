@@ -69,7 +69,7 @@ class Organizer(models.Model):
 
 
 class Event(models.Model):
-    organizers = models.ManyToManyField(Organizer)
+    organizers = models.ManyToManyField(Organizer, )
     description = models.TextField()
     name = models.CharField(max_length=63)
     number_of_guests = models.IntegerField()
@@ -78,7 +78,7 @@ class Event(models.Model):
     style = models.CharField(
         max_length=63,
     )
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_events")
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

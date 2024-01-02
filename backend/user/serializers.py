@@ -2,10 +2,14 @@ from django.contrib.auth import get_user_model, authenticate
 from rest_framework import serializers
 from django.utils.translation import gettext as _
 
+from agency.serializers import EventSerializer
+
+
 class UserSerializer(serializers.ModelSerializer):
+    user_events = EventSerializer(many=True, read_only=True)
     class Meta:
         model = get_user_model()
-        fields = ("id", "email", "password", "first_name", "last_name", "phone", "is_staff")
+        fields = ("id", "email", "password", "first_name", "last_name", "phone", "is_staff", "user_events")
         read_only_fields = ("is_staff",)
         extra_kwargs = {"password": {"write_only": True, "min_length": 5}}
 

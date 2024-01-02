@@ -20,10 +20,6 @@ class OrganizerAdmin(admin.ModelAdmin):
     list_display = ('full_name', 'position', 'phone', 'email', "photo")
     search_fields = ('first_name', 'last_name', 'position', 'phone', 'email')
 
-@admin.register(Event)
-class EventAdmin(admin.ModelAdmin):
-    list_display = ('name', 'event_type', 'date', 'style', 'user', 'created_at')
-    filter_horizontal = ('organizers',)
 
 @admin.register(Advice)
 class AdviceAdmin(admin.ModelAdmin):
@@ -39,3 +35,5 @@ class ReviewAdmin(admin.ModelAdmin):
 @admin.register(CallRequest)
 class CallRequestAdmin(admin.ModelAdmin):
     list_display = ('name', "description", "city", 'phone', 'created_at')
+
+admin.site.register(Event)
