@@ -1,7 +1,7 @@
 import { Auth } from '../Auth';
 import { Logo } from '../Logo';
 import { NavBar } from '../NavBar';
-import './_header.scss';
+import './header.scss';
 
 export const Header = () => {
   return (

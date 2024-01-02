@@ -1,7 +1,7 @@
 import React from 'react';
 import { HeaderNavLink } from '../HeaderNavLink';
-import './_nav-bar.scss';
 import { navLinks } from '../../assets/navLinks/navLinks';
+import './nav-bar.scss';
 
 export const NavBar: React.FC = () => {
   return (

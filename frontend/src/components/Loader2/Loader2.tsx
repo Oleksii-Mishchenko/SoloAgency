@@ -1,4 +1,4 @@
-import './_loader2.scss';
+import './loader2.scss';
 
 export const Loader2 = () => (
   <section className="rect-spinner" tabIndex={1} aria-label="rect spinner">
