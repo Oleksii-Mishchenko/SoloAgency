@@ -1,0 +1,8 @@
+.logo {
+  display: flex;
+
+  &__image {
+    object-position: center;
+    object-fit: contain;
+  }
+}
