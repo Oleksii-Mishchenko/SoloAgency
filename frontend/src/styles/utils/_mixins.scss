@@ -1,6 +1,11 @@
 @mixin page-container {
-  width: 100%;
   max-width: 1024px;
   margin: 0 auto;
   padding-inline: 80px;
+}
+
+@mixin grid-container($num-columns) {
+  display: grid;
+  grid-template-columns: repeat($num-columns, 1fr);
+  gap: 20px;
 }
