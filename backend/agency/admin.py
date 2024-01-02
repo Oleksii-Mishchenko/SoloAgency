@@ -1,39 +1,50 @@
 from django.contrib import admin
-from .models import Service, Agency, EventType, Organizer, Event, Advice, Review, CallRequest
+from .models import (
+    Service,
+    Agency,
+    EventType,
+    Organizer,
+    Event,
+    Advice,
+    Review,
+    CallRequest,
+    Article,
+)
 
 
 @admin.register(Service)
 class ServiceAdmin(admin.ModelAdmin):
-    list_display = ('name', 'description')
+    list_display = ("name", "description")
 
-@admin.register(Agency)
-class AgencyAdmin(admin.ModelAdmin):
-    list_display = ('name', 'description')
-    filter_horizontal = ('services',)
 
 @admin.register(EventType)
 class EventTypeAdmin(admin.ModelAdmin):
-    list_display = ('name', 'description')
+    list_display = ("name", "description")
+
 
 @admin.register(Organizer)
 class OrganizerAdmin(admin.ModelAdmin):
-    list_display = ('full_name', 'position', 'phone', 'email', "photo")
-    search_fields = ('first_name', 'last_name', 'position', 'phone', 'email')
+    list_display = ("full_name", "position", "phone", "email", "photo")
+    search_fields = ("first_name", "last_name", "position", "phone", "email")
 
 
 @admin.register(Advice)
 class AdviceAdmin(admin.ModelAdmin):
-    list_display = ('question', 'answer')
+    list_display = ("question", "answer")
+
 
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
-    list_display = ('user', 'text', 'rating', 'created_at', 'updated_at', 'is_approved')
-    list_filter = ('is_approved',)
-    search_fields = ('user__username', 'text')
+    list_display = ("user", "text", "rating", "created_at", "updated_at", "is_approved")
+    list_filter = ("is_approved",)
+    search_fields = ("user__username", "text")
 
 
 @admin.register(CallRequest)
 class CallRequestAdmin(admin.ModelAdmin):
-    list_display = ('name', "description", "city", 'phone', 'created_at')
+    list_display = ("name", "description", "city", "phone", "created_at")
+
 
 admin.site.register(Event)
+admin.site.register(Article)
+admin.site.register(Agency)
