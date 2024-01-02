@@ -20,12 +20,3 @@ export const HeaderNavLink: React.FC<Props> = ({ path, text }) => {
     </NavLink>
   );
 };
-
-{
-  /* <Link to={'home'}>Home</Link>
-<Link to={'about-us'}>About us</Link>
-<Link to={'faq'}>FAQ</Link>
-<Link to={'contacts'}>Contacts</Link>
-<Link to={'services'}>Services</Link>
-<Link to={'anypage'}>Page not found</Link> */
-}
