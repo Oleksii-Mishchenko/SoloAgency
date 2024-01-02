@@ -7,6 +7,7 @@ from django.utils.text import slugify
 
 User = get_user_model()
 
+
 def organizer_photo_file_path(instance, filename):
     _, extension = os.path.splitext(filename)
     filename = f"{slugify(instance.full_name)}-{uuid.uuid4()}{extension}"
@@ -14,25 +15,36 @@ def organizer_photo_file_path(instance, filename):
     return os.path.join("uploads", "organizers", filename)
 
 
+class Article(models.Model):
+    title = models.CharField(max_length=255)
+    content = models.TextField()
+
+    def __str__(self):
+        return self.title
+
+
 class Service(models.Model):
     name = models.CharField(max_length=63)
     description = models.TextField()
 
+    def __str__(self):
+        return self.name
+
 
 class Agency(models.Model):
     name = models.CharField(max_length=63)
-    description = models.TextField()
-    agency_values = models.TextField()
+    articles = models.ManyToManyField(Article)
     services = models.ManyToManyField(Service)
 
-    @classmethod
-    def get_or_create_agency(cls):
-        return cls.objects.get_or_create(pk=1)
-
     def save(self, *args, **kwargs):
-        if not self.pk and Agency.objects.filter(pk=1).exists():
-            raise ValueError("Only one instance of Agency is allowed.")
+        self.id = 1
+        if Agency.objects.exclude(id=1).exists():
+            raise ValueError("Only one instance of Agency with id=1 is allowed.")
+
         super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
 
     class Meta:
         verbose_name_plural = "Agency"
@@ -54,11 +66,8 @@ class Organizer(models.Model):
     phone = models.CharField(max_length=13)
     email = models.EmailField()
     photo = models.ImageField(
-        upload_to=organizer_photo_file_path,
-        null=True,
-        blank=True
+        upload_to=organizer_photo_file_path, null=True, blank=True
     )
-
 
     @property
     def full_name(self):
@@ -69,7 +78,9 @@ class Organizer(models.Model):
 
 
 class Event(models.Model):
-    organizers = models.ManyToManyField(Organizer, )
+    organizers = models.ManyToManyField(
+        Organizer,
+    )
     description = models.TextField()
     name = models.CharField(max_length=63)
     number_of_guests = models.IntegerField()

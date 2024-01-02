@@ -1,5 +1,14 @@
 from rest_framework import viewsets
-from agency.models import Service, Agency, EventType, Organizer, Event, Advice, Review, CallRequest
+from agency.models import (
+    Service,
+    Agency,
+    EventType,
+    Organizer,
+    Event,
+    Advice,
+    Review,
+    CallRequest,
+)
 from agency.serializers import (
     ServiceSerializer,
     AgencySerializer,
@@ -7,7 +16,8 @@ from agency.serializers import (
     OrganizerSerializer,
     EventSerializer,
     AdviceSerializer,
-    ReviewSerializer, CallRequestSerializer,
+    ReviewSerializer,
+    CallRequestSerializer,
 )
 
 
