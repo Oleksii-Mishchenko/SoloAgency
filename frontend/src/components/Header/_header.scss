@@ -1,7 +1,10 @@
-@import '../../styles/utils/mixins';
+@import '../../styles/main';
 
 .header {
   &__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     @include page-container;
   }
 }
