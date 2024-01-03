@@ -2,6 +2,7 @@ import React from 'react';
 import './main-button.scss';
 import classNames from 'classnames';
 import { Loader } from '../Loader';
+import { LoaderElement } from '../../types/LoaderElement';
 
 type Props = {
   text: string;
@@ -15,7 +16,7 @@ export const MainButton: React.FC<Props> = ({ text, className, isLoading }) => {
       {text}
       {isLoading && (
         <div className="main-button__loader-container">
-          <Loader element="button" />
+          <Loader element={LoaderElement.Button} />
         </div>
       )}
     </button>
