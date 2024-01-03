@@ -15,7 +15,7 @@ from agency.models import (
 class ArticleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Article
-        fields = "__all__"
+        fields = ("id", "title", "content")
 
 
 class ServiceSerializer(serializers.ModelSerializer):
@@ -26,11 +26,10 @@ class ServiceSerializer(serializers.ModelSerializer):
 
 class AgencySerializer(serializers.ModelSerializer):
     services = ServiceSerializer(many=True, read_only=True)
-    articles = ArticleSerializer(many=True, read_only=True)
 
     class Meta:
         model = Agency
-        fields = ("id", "name", "articles", "services")
+        fields = ("id", "name", "services")
 
 
 class EventTypeSerializer(serializers.ModelSerializer):
@@ -97,4 +96,11 @@ class ReviewSerializer(serializers.ModelSerializer):
 class CallRequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = CallRequest
-        fields = ("id", "name", "description", "phone", "city")
+        fields = (
+            "id",
+            "name",
+            "description",
+            "phone",
+            "city"
+            "created_at",
+        )

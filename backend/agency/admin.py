@@ -40,11 +40,7 @@ class ReviewAdmin(admin.ModelAdmin):
     search_fields = ("user__username", "text")
 
 
-@admin.register(CallRequest)
-class CallRequestAdmin(admin.ModelAdmin):
-    list_display = ("name", "description", "city", "phone", "created_at")
-
-
+admin.site.register(CallRequest)
 admin.site.register(Event)
 admin.site.register(Article)
 admin.site.register(Agency)
