@@ -1,11 +1,7 @@
 @import '../../styles/main';
 
 .header-nav-link {
-  font-family: Gilroy, sans-serif;
-  font-size: 20px;
-  font-weight: 600;
-  line-height: 20px;
-  color: $color-black;
+  @extend %h3;
 
   &--active {
     color: $color-green-dark;
