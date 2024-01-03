@@ -17,6 +17,8 @@ export const HomePage = () => {
           />
         </div>
       </section>
+
+      <section className="home-page__about-us">about us</section>
     </div>
   );
 };
