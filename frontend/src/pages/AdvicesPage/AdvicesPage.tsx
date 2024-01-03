@@ -4,7 +4,7 @@ import * as advicesActions from '../../features/advicesSlice';
 import { Loader } from '../../components/Loader';
 import { NewAdvice } from '../../types/Advice';
 
-export const FAQPage = () => {
+export const AdvicesPage = () => {
   const [newAdvice, setNewAdvice] = useState<NewAdvice>({
     question: '',
     answer: '',

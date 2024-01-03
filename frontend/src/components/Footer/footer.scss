@@ -1,6 +1,6 @@
-@import '../../styles/utils/mixins';
+@import '../../styles/main';
 
-.header {
+.footer {
   &__container {
     @include page-container;
   }

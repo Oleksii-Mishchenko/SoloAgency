@@ -1,0 +1,11 @@
+@import '../../styles/main';
+
+.header-nav-link {
+  font-family: Gilroy, sans-serif;
+  font-weight: 600;
+  color: $color-black;
+
+  &--active {
+    color: $color-black;
+  }
+}

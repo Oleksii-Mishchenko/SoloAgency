@@ -6,7 +6,8 @@ from agency.views import (
     OrganizerViewSet,
     EventViewSet,
     AdviceViewSet,
-    ReviewViewSet, CallRequestViewSet,
+    ReviewViewSet,
+    CallRequestViewSet,
 )
 
 router = DefaultRouter()
