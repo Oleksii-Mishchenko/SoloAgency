@@ -2,10 +2,12 @@
 
 .header-nav-link {
   font-family: Gilroy, sans-serif;
+  font-size: 20px;
   font-weight: 600;
+  line-height: 20px;
   color: $color-black;
 
   &--active {
-    color: $color-black;
+    color: $color-green-dark;
   }
 }
