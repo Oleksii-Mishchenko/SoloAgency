@@ -8,6 +8,7 @@ from agency.views import (
     AdviceViewSet,
     ReviewViewSet,
     CallRequestViewSet,
+    ArticleViewSet,
 )
 
 router = DefaultRouter()
@@ -19,6 +20,7 @@ router.register(r"events", EventViewSet)
 router.register(r"advices", AdviceViewSet)
 router.register(r"reviews", ReviewViewSet)
 router.register(r"call-requests", CallRequestViewSet)
+router.register(r"articles", ArticleViewSet)
 
 
 urlpatterns = router.urls

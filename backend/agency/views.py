@@ -7,7 +7,7 @@ from agency.models import (
     Event,
     Advice,
     Review,
-    CallRequest,
+    CallRequest, Article,
 )
 from agency.serializers import (
     ServiceSerializer,
@@ -17,7 +17,7 @@ from agency.serializers import (
     EventSerializer,
     AdviceSerializer,
     ReviewSerializer,
-    CallRequestSerializer,
+    CallRequestSerializer, ArticleSerializer,
 )
 
 
@@ -59,3 +59,8 @@ class ReviewViewSet(viewsets.ModelViewSet):
 class CallRequestViewSet(viewsets.ModelViewSet):
     queryset = CallRequest.objects.all()
     serializer_class = CallRequestSerializer
+
+
+class ArticleViewSet(viewsets.ModelViewSet):
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
