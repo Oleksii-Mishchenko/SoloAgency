@@ -41,7 +41,7 @@ export const AdvicesPage = () => {
           </div>
         ))}
 
-      {isLoadingAdvices && <Loader />}
+      {isLoadingAdvices && <Loader element="block" />}
 
       <form onSubmit={handleAdd}>
         <input
