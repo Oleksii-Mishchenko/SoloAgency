@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC, ButtonHTMLAttributes } from 'react';
 import './main-button.scss';
 import classNames from 'classnames';
 import { Loader } from '../Loader';
@@ -6,11 +6,12 @@ import { LoaderElement } from '../../types/LoaderElement';
 
 type Props = {
   text: string;
-  className?: string;
   isLoading?: boolean;
 };
 
-export const MainButton: React.FC<Props> = ({ text, className, isLoading }) => {
+type MainButton = FC<Props & ButtonHTMLAttributes<HTMLButtonElement>>;
+
+export const MainButton: MainButton = ({ text, className, isLoading }) => {
   return (
     <button className={classNames('main-button', className)}>
       {text}

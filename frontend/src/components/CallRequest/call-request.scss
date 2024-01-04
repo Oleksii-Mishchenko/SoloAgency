@@ -1,0 +1,25 @@
+@import '../../styles/main.scss';
+
+.call-request {
+  &__info {
+    margin-bottom: 20px;
+  }
+
+  &__title {
+    @extend %h2;
+    margin-bottom: 20px;
+  }
+
+  &__description {
+    @extend %secondary-body;
+  }
+
+  &__form {
+    width: 80%;
+  }
+
+  &__button {
+    display: block;
+    width: 100%;
+  }
+}
