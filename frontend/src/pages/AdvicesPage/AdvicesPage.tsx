@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import * as advicesActions from '../../features/advicesSlice';
 import { Loader } from '../../components/Loader';
 import { NewAdvice } from '../../types/Advice';
+import { LoaderElement } from '../../types/LoaderElement';
 
 export const AdvicesPage = () => {
   const [newAdvice, setNewAdvice] = useState<NewAdvice>({
@@ -41,7 +42,7 @@ export const AdvicesPage = () => {
           </div>
         ))}
 
-      {isLoadingAdvices && <Loader element="block" />}
+      {isLoadingAdvices && <Loader element={LoaderElement.Block} />}
 
       <form onSubmit={handleAdd}>
         <input

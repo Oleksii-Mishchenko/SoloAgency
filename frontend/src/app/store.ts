@@ -1,5 +1,6 @@
 import authReducer from '../features/authSlice';
 import advicesReducer from '../features/advicesSlice';
+import articlesReducer from '../features/articlesSlice';
 
 import {
   configureStore,
@@ -22,6 +23,7 @@ import storage from 'redux-persist/lib/storage';
 const rootReducer = combineReducers({
   auth: authReducer,
   advices: advicesReducer,
+  articles: articlesReducer,
 });
 
 const persistConfig = {

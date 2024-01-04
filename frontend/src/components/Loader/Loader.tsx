@@ -1,9 +1,10 @@
 import classNames from 'classnames';
 import './loader.scss';
 import React from 'react';
+import { LoaderElement } from '../../types/LoaderElement';
 
 type Props = {
-  element: string;
+  element: LoaderElement;
   className?: string;
 };
 
