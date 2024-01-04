@@ -79,18 +79,7 @@ class AdviceSerializer(serializers.ModelSerializer):
         fields = ("id", "question", "answer")
 
 
-class ReviewSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Review
-        fields = (
-            "id",
-            "user",
-            "text",
-            "rating",
-            "created_at",
-            "updated_at",
-            "is_approved",
-        )
+
 
 
 class CallRequestSerializer(serializers.ModelSerializer):
@@ -103,4 +92,34 @@ class CallRequestSerializer(serializers.ModelSerializer):
             "phone",
             "city",
             "created_at",
+        )
+
+
+class ReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Review
+        fields = (
+            "id",
+            "user",
+            "text",
+            "rating",
+            "created_at",
+            "is_approved",
+        )
+
+
+
+class ReviewListSerializer(serializers.ModelSerializer):
+    user_name = serializers.CharField(
+        source="user.first_name", read_only=True
+    )
+    class Meta:
+        model = Review
+        fields = (
+            "id",
+            "user_name",
+            "text",
+            "rating",
+            "created_at",
+            "is_approved",
         )

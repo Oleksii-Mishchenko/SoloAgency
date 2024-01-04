@@ -17,7 +17,7 @@ from agency.serializers import (
     EventSerializer,
     AdviceSerializer,
     ReviewSerializer,
-    CallRequestSerializer, ArticleSerializer,
+    CallRequestSerializer, ArticleSerializer, ReviewListSerializer,
 )
 
 
@@ -53,7 +53,11 @@ class AdviceViewSet(viewsets.ModelViewSet):
 
 class ReviewViewSet(viewsets.ModelViewSet):
     queryset = Review.objects.all()
-    serializer_class = ReviewSerializer
+
+    def get_serializer_class(self):
+        if self.action == "list":
+            return ReviewListSerializer
+        return ReviewSerializer
 
 
 class CallRequestViewSet(viewsets.ModelViewSet):
