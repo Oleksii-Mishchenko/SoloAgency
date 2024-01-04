@@ -1,9 +1,16 @@
 import './App.scss';
+import { Header } from './components/Header';
+import { Main } from './components/Main';
+import { Footer } from './components/Footer';
 
 export const App = () => {
   return (
     <div className="App">
-      <h1 className="App__title">Solo Agency</h1>
+      <Header />
+
+      <Main />
+
+      <Footer />
     </div>
   );
 };

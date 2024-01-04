@@ -1,0 +1,12 @@
+@import '../../styles/main';
+
+.header {
+  padding-top: 50px;
+
+  &__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    @include page-container;
+  }
+}
