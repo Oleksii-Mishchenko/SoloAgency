@@ -19,7 +19,7 @@ class ServiceAdmin(admin.ModelAdmin):
 
 @admin.register(EventType)
 class EventTypeAdmin(admin.ModelAdmin):
-    list_display = ("name", "description")
+    list_display = ("name", "description", "photo")
 
 
 @admin.register(Organizer)

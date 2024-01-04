@@ -35,7 +35,7 @@ class AgencySerializer(serializers.ModelSerializer):
 class EventTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = EventType
-        fields = ("id", "name", "description")
+        fields = ("id", "name", "description", "photo")
 
 
 class OrganizerSerializer(serializers.ModelSerializer):
