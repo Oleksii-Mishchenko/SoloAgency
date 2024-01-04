@@ -36,14 +36,12 @@ export const articlesSlice = createSlice({
     builder.addCase(init.fulfilled, (state, action) => {
       state.articles = action.payload;
       state.isLoadingArticles = false;
-      console.log(action);
     });
 
     builder.addCase(init.rejected, (state, action) => {
       state.isLoadingArticles = false;
       state.articles = [];
       state.errors = parseErrors(action.error.message);
-      console.log(action);
     });
   },
 });

@@ -6,6 +6,9 @@ import * as articlesActions from '../../features/articlesSlice';
 import './home-page.scss';
 import { useEffect } from 'react';
 import { Article } from '../../components/Article';
+import { SocialMedia } from '../../components/SocialMedia';
+import { CallRequest } from '../../components/CallRequest';
+import { Errors } from '../../components/Errors';
 
 export const HomePage = () => {
   const dispatch = useAppDispatch();
@@ -29,6 +32,7 @@ export const HomePage = () => {
           <MainButton
             text="Замовити послугу"
             className="home-page__hero-button"
+            disabled
           />
         </div>
       </section>
@@ -50,6 +54,45 @@ export const HomePage = () => {
               className="home-page__about-us-article"
             />
           ))}
+
+        {errors && <Errors errors={errors} />}
+      </section>
+
+      <section className="home-page__contacts">
+        <h1 className="home-page__contacts-title">Наші контакти</h1>
+
+        <div className="home-page__contacts-content">
+          <CallRequest />
+
+          <div className="home-page__contacts-items">
+            <div className="home-page__contacts-item">
+              <p className="home-page__contacts-item-name">Номер телефону</p>
+
+              <p className="home-page__contacts-item-value">+380222222222</p>
+            </div>
+
+            <div className="home-page__contacts-item">
+              <p className="home-page__contacts-item-name">Електронна адреса</p>
+
+              <p className="home-page__contacts-item-value">
+                soloagency@gmail.com
+              </p>
+            </div>
+
+            <div className="home-page__contacts-item">
+              <p
+                className="
+                  home-page__contacts-item-name
+                  home-page__contacts-item-name--social
+                "
+              >
+                Шукайте нас також в соціальних мережах:
+              </p>
+
+              <SocialMedia />
+            </div>
+          </div>
+        </div>
       </section>
     </div>
   );
