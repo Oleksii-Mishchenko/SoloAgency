@@ -101,6 +101,6 @@ class CallRequestSerializer(serializers.ModelSerializer):
             "name",
             "description",
             "phone",
-            "city"
+            "city",
             "created_at",
         )
