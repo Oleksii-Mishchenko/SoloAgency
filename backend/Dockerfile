@@ -27,8 +27,6 @@ RUN adduser \
     django-user
 
 RUN chown -R django-user:django-user /vol/
-RUN chown -R django-user:django-user /vol/web/media/uploads/
-RUN chmod -R 775 /vol/web/media/uploads/
 RUN chmod -R 755 /vol/web/
 
 # Switch to the non-root user
