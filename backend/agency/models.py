@@ -111,7 +111,6 @@ class Review(models.Model):
         default=5, choices=[(i, i) for i in range(1, 6)]
     )
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
     is_approved = models.BooleanField(default=False)
 
     def __str__(self):
