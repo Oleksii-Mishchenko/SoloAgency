@@ -1,7 +1,22 @@
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { Loader } from '../../components/Loader';
 import { MainButton } from '../../components/MainButton';
+import { LoaderElement } from '../../types/LoaderElement';
+import * as articlesActions from '../../features/articlesSlice';
 import './home-page.scss';
+import { useEffect } from 'react';
+import { Article } from '../../components/Article';
 
 export const HomePage = () => {
+  const dispatch = useAppDispatch();
+  const { articles, isLoadingArticles, errors } = useAppSelector(
+    state => state.articles,
+  );
+
+  useEffect(() => {
+    dispatch(articlesActions.init());
+  }, [dispatch]);
+
   return (
     <div className="home-page">
       <section className="home-page__hero">
@@ -18,7 +33,24 @@ export const HomePage = () => {
         </div>
       </section>
 
-      <section className="home-page__about-us">about us</section>
+      <section className="home-page__about-us">
+        {isLoadingArticles && (
+          <Loader
+            element={LoaderElement.Block}
+            className="home-page__about-us-loader"
+          />
+        )}
+
+        {!!articles.length &&
+          !errors &&
+          articles.map(article => (
+            <Article
+              key={article.id}
+              article={article}
+              className="home-page__about-us-article"
+            />
+          ))}
+      </section>
     </div>
   );
 };

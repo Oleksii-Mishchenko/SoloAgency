@@ -34,4 +34,20 @@
       margin: 0 auto;
     }
   }
+
+  &__about-us {
+    grid-column: 3 / span 8;
+
+    &-loader {
+      margin: 0 auto;
+    }
+
+    &-article {
+      margin-bottom: 50px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
 }
