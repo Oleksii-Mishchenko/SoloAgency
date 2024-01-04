@@ -10,8 +10,19 @@
   border-radius: 5px;
   background-color: transparent;
   outline: none;
+  transition: all 0.3s;
 
   @extend %secondary-body;
+
+  &:hover {
+    border: 0.5px solid $color-black;
+    box-shadow: 0 0 5px rgba($color-black, 0.2);
+  }
+
+  &:focus {
+    border: 0.5px solid $color-black;
+    box-shadow: 0 0 5px rgba($color-black, 0.4);
+  }
 
   &:last-child {
     margin-bottom: 20px;
