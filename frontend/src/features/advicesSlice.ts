@@ -88,7 +88,6 @@ export const advicesSlice = createSlice({
       state.advices = state.advices.filter(
         advice => advice.id !== action.payload,
       );
-      console.log(action);
     });
 
     builder.addCase(remove.rejected, (state, action) => {

@@ -1,6 +1,5 @@
 import { FC, ButtonHTMLAttributes } from 'react';
 import './main-button.scss';
-import classNames from 'classnames';
 import { Loader } from '../Loader';
 import { LoaderElement } from '../../types/LoaderElement';
 
@@ -18,7 +17,7 @@ export const MainButton: MainButton = ({
   ...rest
 }) => {
   return (
-    <button className={classNames('main-button', className)} {...rest}>
+    <button className={`main-button ${className}`} {...rest}>
       {text}
       {isLoading && (
         <div className="main-button__loader-container">

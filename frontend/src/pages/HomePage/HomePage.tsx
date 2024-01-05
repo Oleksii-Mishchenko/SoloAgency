@@ -32,7 +32,6 @@ export const HomePage = () => {
           <MainButton
             text="Замовити послугу"
             className="home-page__hero-button"
-            disabled
           />
         </div>
       </section>
