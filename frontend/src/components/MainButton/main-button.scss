@@ -9,8 +9,22 @@
   background-color: $color-green-dark;
   text-align: center;
   cursor: pointer;
+  transition: all 0.3s;
 
   @extend %body-bold-button-white;
+
+  &:hover {
+    box-shadow: 0 0 7px rgba($color-black, 0.5);
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
+
+  &:focus {
+    outline: 1px solid $color-grey-elements;
+    box-shadow: 0 0 7px rgba($color-black, 0.5);
+  }
 
   &:disabled {
     background-color: $color-green-disabled;

@@ -23,10 +23,9 @@
   }
 
   &__message {
-    @extend %secondary-body;
+    @extend %body-error;
     padding-left: 40px;
     margin-bottom: 2px;
     text-transform: capitalize;
-    color: $color-red-error;
   }
 }

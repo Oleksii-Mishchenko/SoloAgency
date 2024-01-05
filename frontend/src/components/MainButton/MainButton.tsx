@@ -11,9 +11,14 @@ type Props = {
 
 type MainButton = FC<Props & ButtonHTMLAttributes<HTMLButtonElement>>;
 
-export const MainButton: MainButton = ({ text, className, isLoading }) => {
+export const MainButton: MainButton = ({
+  text,
+  className,
+  isLoading,
+  ...rest
+}) => {
   return (
-    <button className={classNames('main-button', className)}>
+    <button className={classNames('main-button', className)} {...rest}>
       {text}
       {isLoading && (
         <div className="main-button__loader-container">

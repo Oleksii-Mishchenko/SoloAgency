@@ -8,13 +8,10 @@ type Props = {
 
 export const Errors: React.FC<Props> = ({ errors }) => {
   const preparedErrors = Object.entries(errors);
-  console.log(preparedErrors);
 
   return (
     <div className="errors">
-      <p className="errors__title">
-        Наступні помилки виникли при завантаженні:
-      </p>
+      <p className="errors__title">Помилки при завантаженні:</p>
 
       {preparedErrors.map(([errorName, messages], i) => {
         return (
@@ -24,7 +21,7 @@ export const Errors: React.FC<Props> = ({ errors }) => {
             </p>
 
             {messages.map(message => (
-              <p className="errors__message">{`- ${message}`}</p>
+              <p className="errors__message">{`! ${message}`}</p>
             ))}
           </article>
         );
