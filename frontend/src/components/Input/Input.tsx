@@ -1,15 +1,55 @@
-import { FC, InputHTMLAttributes, TextareaHTMLAttributes } from 'react';
+import React, { FC, InputHTMLAttributes, TextareaHTMLAttributes } from 'react';
 import './input.scss';
+import { FieldErrors, FieldValues } from 'react-hook-form';
 
-export const Input: FC<InputHTMLAttributes<HTMLInputElement>> = ({
-  type,
-  placeholder,
-}) => {
-  return <input type={type} className="input" placeholder={placeholder} />;
+type InputProps = InputHTMLAttributes<HTMLInputElement> & {
+  errors: FieldErrors<FieldValues>;
+  register: {
+    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    onBlur: (event: React.FocusEvent<HTMLInputElement>) => void;
+    ref: React.RefCallback<HTMLInputElement>;
+    name: string;
+  };
 };
 
-export const Textarea: FC<TextareaHTMLAttributes<HTMLTextAreaElement>> = ({
-  placeholder,
-}) => {
-  return <textarea className="input" placeholder={placeholder} />;
+type TextAreaProps = TextareaHTMLAttributes<HTMLTextAreaElement> & {
+  errors: FieldErrors<FieldValues>;
+  register: {
+    onChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+    onBlur: (event: React.FocusEvent<HTMLTextAreaElement>) => void;
+    ref: React.RefCallback<HTMLTextAreaElement>;
+    name: string;
+  };
+};
+
+export const Input: FC<InputProps> = ({ register, errors, ...props }) => {
+  const { name } = register;
+  const error = errors[name]?.message as string;
+
+  return (
+    <>
+      <input className="input" {...register} {...props} />
+      {errors[name] && (
+        <p className="input__error">
+          {error || 'Помилка при валідації даних.'}
+        </p>
+      )}
+    </>
+  );
+};
+
+export const Textarea: FC<TextAreaProps> = ({ register, errors, ...props }) => {
+  const { name } = register;
+  const error = errors[name]?.message as string;
+
+  return (
+    <>
+      <textarea className="input input--textarea" {...register} {...props} />
+      {errors[name] && (
+        <p className="input__error">
+          {error || 'Помилка при валідації даних.'}
+        </p>
+      )}
+    </>
+  );
 };

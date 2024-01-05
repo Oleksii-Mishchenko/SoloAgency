@@ -1,6 +1,5 @@
 import { FC, ButtonHTMLAttributes } from 'react';
 import './main-button.scss';
-import classNames from 'classnames';
 import { Loader } from '../Loader';
 import { LoaderElement } from '../../types/LoaderElement';
 
@@ -11,9 +10,14 @@ type Props = {
 
 type MainButton = FC<Props & ButtonHTMLAttributes<HTMLButtonElement>>;
 
-export const MainButton: MainButton = ({ text, className, isLoading }) => {
+export const MainButton: MainButton = ({
+  text,
+  className,
+  isLoading,
+  ...rest
+}) => {
   return (
-    <button className={classNames('main-button', className)}>
+    <button className={`main-button ${className}`} {...rest}>
       {text}
       {isLoading && (
         <div className="main-button__loader-container">

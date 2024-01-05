@@ -5,7 +5,11 @@ import instagramImage from '../../assets/img/instagram.svg';
 export const SocialMedia = () => {
   return (
     <div className="social-media">
-      <a href="/" className="social-media__link" target="_blank">
+      <a
+        href="https://t.me/solo_agencylviv"
+        className="social-media__link"
+        target="_blank"
+      >
         <img
           src={telegramImage}
           alt="Telegram"
