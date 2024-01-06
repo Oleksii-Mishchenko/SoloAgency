@@ -1,4 +1,4 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, serializers
 from agency.models import (
     Service,
     Agency,
@@ -58,6 +58,21 @@ class ReviewViewSet(viewsets.ModelViewSet):
         if self.action == "list":
             return ReviewListSerializer
         return ReviewSerializer
+
+    def get_queryset(self):
+        queryset = Review.objects.all()
+
+        is_approved_param = self.request.query_params.get("is_approved")
+
+        if is_approved_param is not None:
+            if is_approved_param.lower() == "true":
+                queryset = queryset.filter(is_approved=True)
+            elif is_approved_param.lower() == "false":
+                queryset = queryset.filter(is_approved=False)
+            else:
+                raise serializers.ValidationError({"is_approved":  "Incorrect input use 'true' or 'false'."})
+
+        return queryset
 
 
 class CallRequestViewSet(viewsets.ModelViewSet):
