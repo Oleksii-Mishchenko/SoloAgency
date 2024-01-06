@@ -1,6 +1,12 @@
 @import '../../styles/main.scss';
 
 .errors {
+  margin-bottom: 20px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
   &__title {
     @extend %body-bold-button;
     margin-bottom: 10px;
@@ -23,10 +29,9 @@
   }
 
   &__message {
-    @extend %secondary-body;
+    @extend %body-error;
     padding-left: 40px;
-    margin-bottom: 2px;
+    // margin-bottom: 2px;
     text-transform: capitalize;
-    color: $color-red-error;
   }
 }

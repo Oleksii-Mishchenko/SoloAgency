@@ -2,8 +2,13 @@ import os
 import uuid
 
 from django.contrib.auth import get_user_model
+from django.core.mail import send_mail
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.utils.text import slugify
+
+from solo_agency import settings
 
 User = get_user_model()
 
@@ -135,3 +140,11 @@ class CallRequest(models.Model):
     description = models.TextField(null=True, blank=True)
     city = models.CharField(max_length=63, null=True, blank=True)
     phone = models.CharField(max_length=15)
+
+@receiver(post_save, sender=CallRequest)
+def send_email_on_model_creation(sender, instance, **kwargs):
+    subject = 'Нова модель була створена!'
+    message = f'Модель {instance} була успішно створена.'
+    from_email = settings.DEFAULT_FROM_EMAIL
+    recipient_list = ['savik1992@gmail.com']
+    send_mail(subject, message, from_email, recipient_list)

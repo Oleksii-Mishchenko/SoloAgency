@@ -64,3 +64,11 @@
     color: $color-white;
   }
 }
+
+%body-error {
+  font-family: Gilroy, sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 14px;
+  color: $color-red-error;
+}
