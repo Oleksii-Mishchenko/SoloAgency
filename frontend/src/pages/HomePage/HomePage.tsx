@@ -9,6 +9,7 @@ import { Article } from '../../components/Article';
 import { SocialMedia } from '../../components/SocialMedia';
 import { CallRequest } from '../../components/CallRequest';
 import { Errors } from '../../components/Errors';
+import { ReviewsSlider } from '../../components/ReviewsSlider';
 
 export const HomePage = () => {
   const dispatch = useAppDispatch();
@@ -92,6 +93,12 @@ export const HomePage = () => {
             </div>
           </div>
         </div>
+      </section>
+
+      <section className="home-page__reviews">
+        <h1 className="home-page__reviews-title">Що говорять про нас?</h1>
+
+        <ReviewsSlider />
       </section>
     </div>
   );
