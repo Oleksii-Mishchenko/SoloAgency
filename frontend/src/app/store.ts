@@ -2,6 +2,7 @@ import authReducer from '../features/authSlice';
 import advicesReducer from '../features/advicesSlice';
 import articlesReducer from '../features/articlesSlice';
 import callRequestReducer from '../features/callRequestSlice';
+import reviewsReducer from '../features/reviewsSlice';
 
 import {
   configureStore,
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
   advices: advicesReducer,
   articles: articlesReducer,
   callRequest: callRequestReducer,
+  reviews: reviewsReducer,
 });
 
 const persistConfig = {

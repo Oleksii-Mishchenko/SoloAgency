@@ -4,13 +4,13 @@ import { ServerErrorResponse } from '../types/ServerErrorResponse';
 import { addCallRequest } from '../api/callRequest';
 import { parseErrors } from '../helpers/parseErrors';
 
-export type CallRequestSlice = {
+export type CallRequestState = {
   callRequest: CallRequestData | null;
   isUploading: boolean;
   errors: ServerErrorResponse | null;
 };
 
-const initialState: CallRequestSlice = {
+const initialState: CallRequestState = {
   callRequest: null,
   isUploading: false,
   errors: null,
