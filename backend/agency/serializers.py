@@ -39,6 +39,7 @@ class EventTypeSerializer(serializers.ModelSerializer):
 
 
 class OrganizerSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Organizer
         fields = (
@@ -46,6 +47,21 @@ class OrganizerSerializer(serializers.ModelSerializer):
             "description",
             "first_name",
             "last_name",
+            "position",
+            "phone",
+            "email",
+            "photo",
+        )
+
+
+class OrganizerListSerializer(serializers.ModelSerializer):
+    full_name = serializers.ReadOnlyField()
+
+    class Meta:
+        model = Organizer
+        fields = (
+            "id",
+            "description",
             "position",
             "phone",
             "email",
