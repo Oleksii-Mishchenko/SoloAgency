@@ -12,6 +12,10 @@
     column-gap: 20px;
     width: 100%;
     transition: all 0.3s;
+
+    @include on-tablet {
+      column-gap: 0;
+    }
   }
 
   &__button {

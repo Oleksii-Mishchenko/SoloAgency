@@ -6,11 +6,19 @@ import { LoaderElement } from '../../types/LoaderElement';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import * as reviewsActions from '../../features/reviewsSlice';
 import { Errors } from '../Errors';
+import { Media } from '../../types/Media';
 
 export const ReviewsSlider: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const dispatch = useAppDispatch();
   const { reviews, isLoading, errors } = useAppSelector(state => state.reviews);
+  const windowWidth = window.innerWidth;
+  const shift = {
+    wide: `translateX(calc(-${currentIndex * 50}% - ${currentIndex * 10}px))`,
+    tablet: `translateX(calc(-${currentIndex * 100}%))`,
+  };
+  const currentShift =
+    windowWidth <= Media.TabletMax ? shift.tablet : shift.wide;
 
   useEffect(() => {
     dispatch(reviewsActions.init());
@@ -30,11 +38,7 @@ export const ReviewsSlider: React.FC = () => {
           <div className="reviews-slider__screen">
             <div
               className="reviews-slider__film"
-              style={{
-                transform: `translateX(calc(-${currentIndex * 50}% - ${
-                  currentIndex * 10
-                }px))`,
-              }}
+              style={{ transform: currentShift }}
             >
               {reviews.map(review => (
                 <Review review={review} key={review.id} />
