@@ -2,13 +2,10 @@ import os
 import uuid
 
 from django.contrib.auth import get_user_model
-from django.core.mail import send_mail
 from django.db import models
-from django.db.models.signals import post_save
-from django.dispatch import receiver
+
 from django.utils.text import slugify
 
-from solo_agency import settings
 
 User = get_user_model()
 
@@ -18,6 +15,7 @@ def organizer_photo_file_path(instance, filename):
     filename = f"{slugify(instance.full_name)}-{uuid.uuid4()}{extension}"
 
     return os.path.join("uploads/organizers", filename)
+
 
 def event_type_photo_file_path(instance, filename):
     _, extension = os.path.splitext(filename)
@@ -141,10 +139,5 @@ class CallRequest(models.Model):
     city = models.CharField(max_length=63, null=True, blank=True)
     phone = models.CharField(max_length=15)
 
-@receiver(post_save, sender=CallRequest)
-def send_email_on_model_creation(sender, instance, **kwargs):
-    subject = 'Нова модель була створена!'
-    message = f'Модель {instance} була успішно створена.'
-    from_email = settings.DEFAULT_FROM_EMAIL
-    recipient_list = ['savik1992@gmail.com']
-    send_mail(subject, message, from_email, recipient_list)
+    def __str__(self):
+        return f"CallRequest: {self.name} {self.phone}"
