@@ -7,7 +7,8 @@ from agency.models import (
     Event,
     Advice,
     Review,
-    CallRequest, Article,
+    CallRequest,
+    Article,
 )
 from agency.serializers import (
     ServiceSerializer,
@@ -17,8 +18,11 @@ from agency.serializers import (
     EventSerializer,
     AdviceSerializer,
     ReviewSerializer,
-    CallRequestSerializer, ArticleSerializer, ReviewListSerializer,
+    CallRequestSerializer,
+    ArticleSerializer,
+    ReviewListSerializer,
 )
+import telebot
 
 
 class ServiceViewSet(viewsets.ModelViewSet):
@@ -70,7 +74,9 @@ class ReviewViewSet(viewsets.ModelViewSet):
             elif is_approved_param.lower() == "false":
                 queryset = queryset.filter(is_approved=False)
             else:
-                raise serializers.ValidationError({"is_approved":  "Incorrect input use 'true' or 'false'."})
+                raise serializers.ValidationError(
+                    {"is_approved": "Incorrect input use 'true' or 'false'."}
+                )
 
         return queryset
 

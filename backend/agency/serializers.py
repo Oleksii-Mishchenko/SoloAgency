@@ -79,9 +79,6 @@ class AdviceSerializer(serializers.ModelSerializer):
         fields = ("id", "question", "answer")
 
 
-
-
-
 class CallRequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = CallRequest
@@ -108,11 +105,9 @@ class ReviewSerializer(serializers.ModelSerializer):
         )
 
 
-
 class ReviewListSerializer(serializers.ModelSerializer):
-    user_name = serializers.CharField(
-        source="user.first_name", read_only=True
-    )
+    user_name = serializers.CharField(source="user.first_name", read_only=True)
+
     class Meta:
         model = Review
         fields = (
