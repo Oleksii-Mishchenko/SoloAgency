@@ -11,6 +11,14 @@
   border: 0.5px solid $color-grey-blocks;
   border-radius: 20px;
 
+  @include on-desktop {
+    padding: 30px 48px;
+  }
+
+  @include on-tablet {
+    flex: 0 0 100%;
+  }
+
   &__text {
     @extend %secondary-body;
     margin-bottom: 20px;

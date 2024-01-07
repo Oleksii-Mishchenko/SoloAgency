@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { avatarColors } from '../../assets/libs/avatarColors';
 import { getRandomElement } from '../../helpers/getRandomElement';
 import { Review as ReviewType } from '../../types/Review';
@@ -8,7 +8,7 @@ type Props = {
   review: ReviewType;
 };
 
-export const Review: React.FC<Props> = ({ review }) => {
+export const Review: React.FC<Props> = React.memo(({ review }) => {
   const { text, user_name, rating } = review;
   const initial = user_name[0].toUpperCase();
   const avaColor = useMemo(() => {
@@ -38,4 +38,4 @@ export const Review: React.FC<Props> = ({ review }) => {
       </div>
     </article>
   );
-};
+});

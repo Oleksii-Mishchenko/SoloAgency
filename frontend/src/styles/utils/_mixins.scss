@@ -1,7 +1,50 @@
+@mixin on-desktop {
+  @media (max-width: $media-desktop) {
+    @content;
+  }
+}
+
+@mixin on-tablet {
+  @media (max-width: $media-tablet) {
+    @content;
+  }
+}
+
+@mixin on-mobile {
+  @media (max-width: $media-mobile) {
+    @content;
+  }
+}
+
+@mixin page-grid {
+  --columns: 12;
+
+  display: grid;
+  grid-template-columns: repeat(var(--columns), 1fr);
+  column-gap: 20px;
+
+  @include on-tablet {
+    --columns: 6;
+  }
+
+  @include on-mobile {
+    --columns: 2;
+  }
+}
+
+
 @mixin page-container {
   max-width: 1280px;
   margin: 0 auto;
   padding-inline: 80px;
+
+  @include on-tablet {
+    padding-inline: 40px;
+  }
+
+  @include on-mobile {
+    padding-inline: 20px;
+  }
 }
 
 @mixin grid-container($num-columns, $column-gap) {

@@ -1,11 +1,11 @@
 @import '../../styles/main.scss';
 
 .home-page {
-  @include grid-container(12, 20px);
+  @include page-grid;
   row-gap: 100px;
 
   &__hero {
-    grid-column: 1 / span 12;
+    grid-column: 1 / -1;
     height: 482px;
     padding-top: 50px;
     background-image: url(../../assets/img/Hero.png);
@@ -37,6 +37,10 @@
 
   &__about-us {
     grid-column: 3 / span 8;
+
+    @include on-tablet {
+      grid-column: 2 / span 4;
+    }
 
     &-loader {
       margin: 0 auto;
