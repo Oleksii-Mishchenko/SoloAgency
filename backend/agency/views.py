@@ -20,7 +20,7 @@ from agency.serializers import (
     ReviewSerializer,
     CallRequestSerializer,
     ArticleSerializer,
-    ReviewListSerializer,
+    ReviewListSerializer, OrganizerListSerializer,
 )
 import telebot
 
@@ -43,6 +43,11 @@ class EventTypeViewSet(viewsets.ModelViewSet):
 class OrganizerViewSet(viewsets.ModelViewSet):
     queryset = Organizer.objects.all()
     serializer_class = OrganizerSerializer
+
+    def get_serializer_class(self):
+        if self.action == "list":
+            return OrganizerListSerializer
+        return OrganizerSerializer
 
 
 class EventViewSet(viewsets.ModelViewSet):

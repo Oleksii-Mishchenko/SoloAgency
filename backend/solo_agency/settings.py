@@ -18,7 +18,12 @@ SECRET_KEY = "django-insecure-alkhrgl9bh+e2r256(w!#dk!wynfv2*6o9i5z7k%8le*0u0l5!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["0.0.0.0", "127.0.0.1", "localhost", "127.0.0.1:5173"]
+ALLOWED_HOSTS = [
+    "0.0.0.0",
+    "127.0.0.1",
+    "localhost",
+    "172.19.0.4",
+]
 
 
 # Application definition
@@ -136,18 +141,35 @@ REST_FRAMEWORK = {
 
 }
 
+APPEND_SLASH = True
+CORS_ALLOW_CREDENTIALS = True
+
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://0.0.0.0:8080",
+    "http://0.0.0.0:3000",
     "http://127.0.0.1:8080",
+    "http://172.19.0.4:5173",
+    "http://172.19.0.4:3000",
 ]
 
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
 
-
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.elasticemail.com'
-EMAIL_PORT = 2525
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'savik1992@gmail.com'
-EMAIL_HOST_PASSWORD = '39B43833949A16369A5158F47063F3243D5E187A63894507232EC60CAF26923B7BF68BD3B6890D0EF3911FB0C68D5F9E'
-DEFAULT_FROM_EMAIL = 'savik1992@gmail.com'
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+]

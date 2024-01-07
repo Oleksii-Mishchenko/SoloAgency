@@ -1,7 +1,7 @@
 version: "3.4"
 
 services:
-  app:
+  backend:
     build:
       context: .
       dockerfile: backend/Dockerfile
@@ -21,9 +21,18 @@ services:
       retries: 5
       start_period: 10s
 
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+    depends_on:
+      - backend
+
   db:
     image: postgres:14-alpine
-    ports:
-      - "5432:5432"
     env_file:
       - backend/.env
