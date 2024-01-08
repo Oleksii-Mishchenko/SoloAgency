@@ -35,7 +35,7 @@ class Article(models.Model):
 
 class Service(models.Model):
     name = models.CharField(max_length=63)
-    description = models.TextField()
+    description = models.TextField(max_length=255)
 
     def __str__(self):
         return self.name
@@ -62,7 +62,7 @@ class Agency(models.Model):
 
 class EventType(models.Model):
     name = models.CharField(max_length=255, unique=True)
-    description = models.TextField()
+    description = models.TextField(max_length=255)
     photo = models.ImageField(
         upload_to=event_type_photo_file_path,
     )
@@ -72,7 +72,7 @@ class EventType(models.Model):
 
 
 class Organizer(models.Model):
-    description = models.TextField()
+    description = models.TextField(max_length=511)
     first_name = models.CharField(max_length=63)
     last_name = models.CharField(max_length=63)
     position = models.CharField(max_length=63)
@@ -114,8 +114,8 @@ class Event(models.Model):
 
 
 class Advice(models.Model):
-    question = models.TextField()
-    answer = models.TextField()
+    question = models.TextField(max_length=255)
+    answer = models.TextField(max_length=511)
 
     def __str__(self):
         return self.question
