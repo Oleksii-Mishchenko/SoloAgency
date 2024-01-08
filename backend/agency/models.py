@@ -95,13 +95,15 @@ class Organizer(models.Model):
 
 
 class Event(models.Model):
+    # service
     organizers = models.ManyToManyField(
         Organizer,
     )
+
     description = models.TextField()
     name = models.CharField(max_length=63)
     number_of_guests = models.IntegerField()
-    event_type = models.OneToOneField(EventType, on_delete=models.CASCADE)
+    event_type = models.ForeignKey(EventType, on_delete=models.CASCADE)
     date = models.DateField()
     style = models.CharField(
         max_length=63,
