@@ -1,4 +1,7 @@
-from rest_framework import viewsets, serializers
+from rest_framework import viewsets, serializers, status
+from rest_framework.decorators import action
+from rest_framework.response import Response
+
 from agency.models import (
     Service,
     Agency,
@@ -20,7 +23,8 @@ from agency.serializers import (
     ReviewSerializer,
     CallRequestSerializer,
     ArticleSerializer,
-    ReviewListSerializer, OrganizerListSerializer,
+    ReviewListSerializer,
+    OrganizerListSerializer,
 )
 import telebot
 
@@ -84,6 +88,13 @@ class ReviewViewSet(viewsets.ModelViewSet):
                 )
 
         return queryset
+
+    @action(detail=True, methods=['POST'])
+    def approve(self, request, pk=None):
+        review = self.get_object()
+        review.is_approved = True
+        review.save()
+        return Response({'status': 'Comment approved'}, status=status.HTTP_200_OK)
 
 
 class CallRequestViewSet(viewsets.ModelViewSet):

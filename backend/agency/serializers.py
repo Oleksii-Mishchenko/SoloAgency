@@ -39,7 +39,6 @@ class EventTypeSerializer(serializers.ModelSerializer):
 
 
 class OrganizerSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Organizer
         fields = (
