@@ -139,9 +139,13 @@ class Review(models.Model):
 
 class CallRequest(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
-    name = models.CharField(max_length=63)
+    string_validator = RegexValidator(
+        regex=r'^[a-zA-Z]+$',
+        message="Name must contain only letters."
+    )
+    name = models.CharField(max_length=63, validators=[string_validator])
     description = models.TextField(null=True, blank=True, max_length=255)
-    city = models.CharField(max_length=63, null=True, blank=True)
+    city = models.CharField(max_length=63, null=True, blank=True, validators=[string_validator])
 
     phone_validator = RegexValidator(
         regex=r'^\+380\d{9}$',
