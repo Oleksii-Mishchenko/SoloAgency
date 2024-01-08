@@ -77,8 +77,8 @@ class Organizer(models.Model):
     last_name = models.CharField(max_length=63)
     position = models.CharField(max_length=63)
     phone_validator = RegexValidator(
-        regex=r'^\+380\d{9}$',
-        message="Phone number must be entered in the format: '+380XXXXXXXXX'."
+        regex=r"^\+380\d{9}$",
+        message="Phone number must be entered in the format: '+380XXXXXXXXX'.",
     )
     phone = models.CharField(max_length=13, validators=[phone_validator])
     email = models.EmailField()
@@ -102,8 +102,7 @@ class Event(models.Model):
 
     description = models.TextField()
     string_validator = RegexValidator(
-        regex=r'^[a-zA-Zа-яА-Я]+$',
-        message="Word must contain only letters."
+        regex=r"^[a-zA-Zа-яА-Я]+$", message="Word must contain only letters."
     )
     name = models.CharField(max_length=63, validators=[string_validator])
     city = models.CharField(max_length=63, validators=[string_validator])
@@ -148,16 +147,17 @@ class Review(models.Model):
 class CallRequest(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     string_validator = RegexValidator(
-        regex=r'^[a-zA-Zа-яА-Я]+$',
-        message="Word must contain only letters."
+        regex=r"^[a-zA-Zа-яА-Я]+$", message="Word must contain only letters."
     )
     name = models.CharField(max_length=63, validators=[string_validator])
     description = models.TextField(null=True, blank=True, max_length=255)
-    city = models.CharField(max_length=63, null=True, blank=True, validators=[string_validator])
+    city = models.CharField(
+        max_length=63, null=True, blank=True, validators=[string_validator]
+    )
 
     phone_validator = RegexValidator(
-        regex=r'^\+380\d{9}$',
-        message="Phone number must be entered in the format: '+380XXXXXXXXX'."
+        regex=r"^\+380\d{9}$",
+        message="Phone number must be entered in the format: '+380XXXXXXXXX'.",
     )
     phone = models.CharField(max_length=13, validators=[phone_validator])
 

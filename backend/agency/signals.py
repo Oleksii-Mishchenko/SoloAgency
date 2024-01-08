@@ -29,6 +29,7 @@ def send_telegram_message_event_request(sender, instance, **kwargs):
     if r.status_code != 200:
         raise Exception(f"Error sending Telegram message: {r.text}")
 
+
 @receiver(post_save, sender=CallRequest)
 def send_telegram_message_call_request(sender, instance, **kwargs):
     text = (
