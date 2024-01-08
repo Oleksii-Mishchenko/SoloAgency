@@ -1,20 +1,20 @@
-# Use the official Node.js image as a base image
+# Використовуйте офіційний образ Node.js як базовий образ
 FROM node:21
 
-# Set the working directory to /app
+# Встановити робочий каталог /app
 WORKDIR /app
 
-# Copy package.json and package-lock.json
-COPY frontend/package*.json ./
+# Копіювати package.json та package-lock.json
+COPY frontend/package*.json .
 
-# Install dependencies
-RUN npm install
+# Встановити залежності та запустити додаткові команди
+RUN npm install -g npm@10.2.5; npm cache clean --force
 
-# Copy the remaining application code
+# Копіювати решту коду додатка
 COPY frontend/ .
 
-# Expose the port on which the React app will run
+# Відкрити порт, на якому буде працювати React-додаток
 EXPOSE 3000
 
-# Command to run the application in development mode
-CMD ["npm", "run", "dev"]
+# Команда для запуску додатка у режимі розробки
+CMD ["npm", "install", "--legacy-peer-deps", "&&", "npm", "run", "dev"]
