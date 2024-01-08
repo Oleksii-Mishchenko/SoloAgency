@@ -2,6 +2,7 @@ import os
 import uuid
 
 from django.contrib.auth import get_user_model
+from django.core.validators import RegexValidator
 from django.db import models
 
 from django.utils.text import slugify
@@ -75,7 +76,11 @@ class Organizer(models.Model):
     first_name = models.CharField(max_length=63)
     last_name = models.CharField(max_length=63)
     position = models.CharField(max_length=63)
-    phone = models.CharField(max_length=13)
+    phone_validator = RegexValidator(
+        regex=r'^\+380\d{9}$',
+        message="Phone number must be entered in the format: '+380XXXXXXXXX'."
+    )
+    phone = models.CharField(max_length=13, validators=[phone_validator])
     email = models.EmailField()
     photo = models.ImageField(
         upload_to=organizer_photo_file_path,
@@ -118,7 +123,7 @@ class Advice(models.Model):
 
 class Review(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    text = models.TextField()
+    text = models.TextField(200)
     rating = models.PositiveIntegerField(
         default=5, choices=[(i, i) for i in range(1, 6)]
     )
@@ -135,9 +140,14 @@ class Review(models.Model):
 class CallRequest(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=63)
-    description = models.TextField(null=True, blank=True)
+    description = models.TextField(null=True, blank=True, max_length=255)
     city = models.CharField(max_length=63, null=True, blank=True)
-    phone = models.CharField(max_length=15)
+
+    phone_validator = RegexValidator(
+        regex=r'^\+380\d{9}$',
+        message="Phone number must be entered in the format: '+380XXXXXXXXX'."
+    )
+    phone = models.CharField(max_length=13, validators=[phone_validator])
 
     def __str__(self):
         return f"CallRequest: {self.name} {self.phone}"
