@@ -35,7 +35,7 @@ class Article(models.Model):
 
 class Service(models.Model):
     name = models.CharField(max_length=63)
-    description = models.TextField()
+    description = models.TextField(max_length=255)
 
     def __str__(self):
         return self.name
@@ -62,7 +62,7 @@ class Agency(models.Model):
 
 class EventType(models.Model):
     name = models.CharField(max_length=255, unique=True)
-    description = models.TextField()
+    description = models.TextField(max_length=255)
     photo = models.ImageField(
         upload_to=event_type_photo_file_path,
     )
@@ -72,7 +72,7 @@ class EventType(models.Model):
 
 
 class Organizer(models.Model):
-    description = models.TextField()
+    description = models.TextField(max_length=511)
     first_name = models.CharField(max_length=63)
     last_name = models.CharField(max_length=63)
     position = models.CharField(max_length=63)
@@ -95,13 +95,21 @@ class Organizer(models.Model):
 
 
 class Event(models.Model):
+    service = models.ForeignKey("Service", on_delete=models.CASCADE)
     organizers = models.ManyToManyField(
         Organizer,
     )
+
     description = models.TextField()
-    name = models.CharField(max_length=63)
+    string_validator = RegexValidator(
+        regex=r'^[a-zA-Zа-яА-Я]+$',
+        message="Word must contain only letters."
+    )
+    name = models.CharField(max_length=63, validators=[string_validator])
+    city = models.CharField(max_length=63, validators=[string_validator])
+    venue = models.CharField(max_length=63)
     number_of_guests = models.IntegerField()
-    event_type = models.OneToOneField(EventType, on_delete=models.CASCADE)
+    event_type = models.ForeignKey(EventType, on_delete=models.CASCADE)
     date = models.DateField()
     style = models.CharField(
         max_length=63,
@@ -114,8 +122,8 @@ class Event(models.Model):
 
 
 class Advice(models.Model):
-    question = models.TextField()
-    answer = models.TextField()
+    question = models.TextField(max_length=255)
+    answer = models.TextField(max_length=511)
 
     def __str__(self):
         return self.question
@@ -139,9 +147,13 @@ class Review(models.Model):
 
 class CallRequest(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
-    name = models.CharField(max_length=63)
+    string_validator = RegexValidator(
+        regex=r'^[a-zA-Zа-яА-Я]+$',
+        message="Word must contain only letters."
+    )
+    name = models.CharField(max_length=63, validators=[string_validator])
     description = models.TextField(null=True, blank=True, max_length=255)
-    city = models.CharField(max_length=63, null=True, blank=True)
+    city = models.CharField(max_length=63, null=True, blank=True, validators=[string_validator])
 
     phone_validator = RegexValidator(
         regex=r'^\+380\d{9}$',

@@ -71,12 +71,11 @@ class OrganizerListSerializer(serializers.ModelSerializer):
 
 
 class EventSerializer(serializers.ModelSerializer):
-    organizers = OrganizerSerializer(many=True, read_only=True)
-
     class Meta:
         model = Event
         fields = (
             "id",
+            "service",
             "organizers",
             "description",
             "name",
@@ -86,6 +85,8 @@ class EventSerializer(serializers.ModelSerializer):
             "style",
             "user",
             "created_at",
+            "city",
+            "venue",
         )
 
 
