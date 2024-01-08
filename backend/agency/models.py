@@ -95,7 +95,7 @@ class Organizer(models.Model):
 
 
 class Event(models.Model):
-    # service
+    service = models.ForeignKey("Service", on_delete=models.CASCADE)
     organizers = models.ManyToManyField(
         Organizer,
     )
