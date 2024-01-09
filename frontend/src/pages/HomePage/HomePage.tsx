@@ -25,7 +25,7 @@ export const HomePage = () => {
     <div className="home-page">
       <section className="home-page__hero">
         <div className="home-page__hero-content">
-          <p className="home-page__hero-decorative-text">
+          <p className="home-page__hero-content-text">
             Організовуємо мрії та перетворюємо їх у реальність - ваші події,
             наша справа!
           </p>
@@ -35,6 +35,8 @@ export const HomePage = () => {
             className="home-page__hero-button"
           />
         </div>
+
+        <div className="home-page__hero-banner" />
       </section>
 
       <section className="home-page__about-us">

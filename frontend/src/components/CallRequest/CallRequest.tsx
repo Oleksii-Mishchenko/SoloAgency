@@ -1,4 +1,4 @@
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import './call-request.scss';
 import { CallRequestData } from '../../types/CallRequestData';
 import { MainButton } from '../MainButton';
@@ -20,10 +20,14 @@ export const CallRequest = () => {
     formState: { errors },
     handleSubmit,
     reset,
-  } = useForm<CallRequestData>({ mode: 'onBlur' });
+  } = useForm<CallRequestData>({
+    mode: 'onChange',
+  });
 
-  const onSubmit = (callRequestData: CallRequestData) => {
-    dispatch(callRequestActions.add(callRequestData));
+  const onSubmit: SubmitHandler<CallRequestData> = async (
+    data: CallRequestData,
+  ) => {
+    await dispatch(callRequestActions.add(data));
     reset();
   };
 
@@ -48,6 +52,7 @@ export const CallRequest = () => {
       {!serverErrors && !callRequest && (
         <form className="call-request__form" onSubmit={handleSubmit(onSubmit)}>
           <Input
+            className="call-request__input"
             type="text"
             placeholder="Ім'я"
             errors={errors}
@@ -67,6 +72,7 @@ export const CallRequest = () => {
           />
 
           <Input
+            className="call-request__input"
             type="text"
             placeholder="Місто"
             errors={errors}
@@ -86,6 +92,7 @@ export const CallRequest = () => {
           />
 
           <Input
+            className="call-request__input"
             type="tel"
             placeholder="+380000000000"
             errors={errors}
@@ -103,6 +110,7 @@ export const CallRequest = () => {
           />
 
           <Textarea
+            className="call-request__input"
             rows={5}
             placeholder="Деталі"
             errors={errors}

@@ -1,8 +1,10 @@
 import React, { FC, InputHTMLAttributes, TextareaHTMLAttributes } from 'react';
 import './input.scss';
 import { FieldErrors, FieldValues } from 'react-hook-form';
+import classNames from 'classnames';
 
 type InputProps = InputHTMLAttributes<HTMLInputElement> & {
+  className?: string;
   errors: FieldErrors<FieldValues>;
   register: {
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -13,6 +15,7 @@ type InputProps = InputHTMLAttributes<HTMLInputElement> & {
 };
 
 type TextAreaProps = TextareaHTMLAttributes<HTMLTextAreaElement> & {
+  className?: string;
   errors: FieldErrors<FieldValues>;
   register: {
     onChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
@@ -22,13 +25,22 @@ type TextAreaProps = TextareaHTMLAttributes<HTMLTextAreaElement> & {
   };
 };
 
-export const Input: FC<InputProps> = ({ register, errors, ...props }) => {
+export const Input: FC<InputProps> = ({
+  className,
+  register,
+  errors,
+  ...props
+}) => {
   const { name } = register;
   const error = errors[name]?.message as string;
 
   return (
     <>
-      <input className="input" {...register} {...props} />
+      <input
+        className={classNames('input', className)}
+        {...register}
+        {...props}
+      />
       {errors[name] && (
         <p className="input__error">
           {error || 'Помилка при валідації даних.'}
@@ -38,13 +50,22 @@ export const Input: FC<InputProps> = ({ register, errors, ...props }) => {
   );
 };
 
-export const Textarea: FC<TextAreaProps> = ({ register, errors, ...props }) => {
+export const Textarea: FC<TextAreaProps> = ({
+  className,
+  register,
+  errors,
+  ...props
+}) => {
   const { name } = register;
   const error = errors[name]?.message as string;
 
   return (
     <>
-      <textarea className="input input--textarea" {...register} {...props} />
+      <textarea
+        className={classNames('input', 'input--textarea', className)}
+        {...register}
+        {...props}
+      />
       {errors[name] && (
         <p className="input__error">
           {error || 'Помилка при валідації даних.'}

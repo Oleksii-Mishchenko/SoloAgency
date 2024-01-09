@@ -2,13 +2,23 @@
 
 .footer {
   background-color: $color-green-light;
-  padding-block: 80px;
+  padding-block: 32px;
+
+  @include on-desktop {
+    padding-block: 80px;
+  }
 
   &__container {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 100px;
+    gap: 32px;
     @include page-container;
+
+    @include on-desktop {
+    flex-direction: row;
+    gap: 100px;
+    }
   }
 
   &__nav-bar {
@@ -17,7 +27,12 @@
 
   &__nav-list {
     display: flex;
+    flex-direction: column;
     gap: 60px;
+
+    @include on-desktop {
+      flex-direction: row;
+    }
   }
 
   &__nav-link {
