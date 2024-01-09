@@ -86,6 +86,7 @@ class EventSerializer(serializers.ModelSerializer):
             "created_at",
             "city",
             "venue",
+            "phone",
         )
 
 

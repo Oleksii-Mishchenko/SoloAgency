@@ -114,6 +114,13 @@ class Event(models.Model):
         max_length=63,
     )
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_events")
+
+    phone_validator = RegexValidator(
+        regex=r"^\+380\d{9}$",
+        message="Phone number must be entered in the format: '+380XXXXXXXXX'.",
+    )
+    phone = models.CharField(max_length=13, validators=[phone_validator])
+
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
