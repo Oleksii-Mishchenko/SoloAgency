@@ -12,7 +12,7 @@ load_dotenv()
 @receiver(post_save, sender=Event)
 def send_telegram_message_event_request(sender, instance, **kwargs):
     text = (
-        f"Заявка на послуги {instance}: {instance.name}\n"
+        f"Заявка на послуги {instance}: {instance.phone}\n"
         f"Яке планується на {instance.date.strftime('%Y-%m-%d')},\n"
         f"Святкування планується у стилі {instance.style}\n"
         f"Орієнтовна кількість гостей {instance.number_of_guests}\n"

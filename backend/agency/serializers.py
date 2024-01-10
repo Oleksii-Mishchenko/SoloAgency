@@ -79,7 +79,6 @@ class EventSerializer(serializers.ModelSerializer):
             "id",
             "service",
             "description",
-            "name",
             "number_of_guests",
             "event_type",
             "date",
@@ -95,24 +94,28 @@ class EventListSerializer(serializers.ModelSerializer):
     customer = serializers.CharField(source="user.first_name", read_only=True)
     event_type_name = serializers.CharField(source='event_type.name', read_only=True)
     service_name = serializers.CharField(source='service.name', read_only=True)
+    event_name = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Event
         fields = (
             "id",
             "customer",
+            "event_name",
             "service_name",
             "description",
-            "name",
             "number_of_guests",
             "event_type_name",
             "date",
             "style",
-            "created_at",
             "city",
             "venue",
             "phone",
+            "created_at",
         )
+
+    def get_event_name(self, obj):
+        return f"{obj.event_type} Customer: {obj.user.first_name}"
 
 
 class AdviceSerializer(serializers.ModelSerializer):
