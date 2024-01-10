@@ -75,7 +75,6 @@ class EventSerializer(serializers.ModelSerializer):
         fields = (
             "id",
             "service",
-            "organizers",
             "description",
             "name",
             "number_of_guests",
