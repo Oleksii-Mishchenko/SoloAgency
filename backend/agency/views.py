@@ -24,7 +24,7 @@ from agency.serializers import (
     CallRequestSerializer,
     ArticleSerializer,
     ReviewListSerializer,
-    OrganizerListSerializer,
+    OrganizerListSerializer, EventListSerializer,
 )
 import telebot
 
@@ -56,7 +56,18 @@ class OrganizerViewSet(viewsets.ModelViewSet):
 
 class EventViewSet(viewsets.ModelViewSet):
     queryset = Event.objects.all()
-    serializer_class = EventSerializer
+
+    def get_serializer_class(self):
+        if self.action == "list":
+            return EventListSerializer
+        return EventSerializer
+
+    def perform_create(self, serializer):
+        user = self.request.user
+        serializer.save(user=user)
+
+    def create(self, request, *args, **kwargs):
+        return super().create(request, *args, **kwargs)
 
 
 class AdviceViewSet(viewsets.ModelViewSet):

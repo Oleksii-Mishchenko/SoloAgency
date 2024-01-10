@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from agency.models import (
     Service,
@@ -10,6 +11,8 @@ from agency.models import (
     CallRequest,
     Article,
 )
+
+User = get_user_model()
 
 
 class ArticleSerializer(serializers.ModelSerializer):
@@ -75,14 +78,36 @@ class EventSerializer(serializers.ModelSerializer):
         fields = (
             "id",
             "service",
-            "organizers",
             "description",
             "name",
             "number_of_guests",
             "event_type",
             "date",
             "style",
-            "user",
+            "created_at",
+            "city",
+            "venue",
+            "phone",
+        )
+
+
+class EventListSerializer(serializers.ModelSerializer):
+    customer = serializers.CharField(source="user.first_name", read_only=True)
+    event_type_name = serializers.CharField(source='event_type.name', read_only=True)
+    service_name = serializers.CharField(source='service.name', read_only=True)
+
+    class Meta:
+        model = Event
+        fields = (
+            "id",
+            "customer",
+            "service_name",
+            "description",
+            "name",
+            "number_of_guests",
+            "event_type_name",
+            "date",
+            "style",
             "created_at",
             "city",
             "venue",

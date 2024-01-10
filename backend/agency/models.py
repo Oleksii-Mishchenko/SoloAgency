@@ -96,10 +96,6 @@ class Organizer(models.Model):
 
 class Event(models.Model):
     service = models.ForeignKey("Service", on_delete=models.CASCADE)
-    organizers = models.ManyToManyField(
-        Organizer,
-    )
-
     description = models.TextField()
     string_validator = RegexValidator(
         regex=r"^[a-zA-Zа-яА-Я]+$", message="Word must contain only letters."
