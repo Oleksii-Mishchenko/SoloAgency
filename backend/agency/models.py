@@ -100,7 +100,6 @@ class Event(models.Model):
     string_validator = RegexValidator(
         regex=r"^[a-zA-Zа-яА-Я]+$", message="Word must contain only letters."
     )
-    name = models.CharField(max_length=63, validators=[string_validator])
     city = models.CharField(max_length=63, validators=[string_validator])
     venue = models.CharField(max_length=63)
     number_of_guests = models.IntegerField()
@@ -120,7 +119,7 @@ class Event(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.name} - {self.event_type.name}"
+        return f"{self.phone} - {self.event_type.name}"
 
 
 class Advice(models.Model):
