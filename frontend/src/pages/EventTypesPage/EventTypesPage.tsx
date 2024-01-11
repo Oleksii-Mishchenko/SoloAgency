@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { EventType } from '../../components/EventType';
-import * as eventTypesActions from '../../features/eventTypesSlice';
+import * as eventTypesPageActions from '../../features/eventTypesPageSlice';
 import './event-types-page.scss';
 import { Loader } from '../../components/Loader';
 import { LoaderElement } from '../../types/LoaderElement';
@@ -9,12 +9,14 @@ import { Errors } from '../../components/Errors';
 
 export const EventTypesPage = () => {
   const dispatch = useAppDispatch();
-  const { eventTypes, isLoadingEventTypes, errors } = useAppSelector(
-    state => state.eventTypes,
-  );
+  const {
+    eventTypesPage: { num_pages, count, next, previous, results },
+    isLoadingEventTypes,
+    errors,
+  } = useAppSelector(state => state.eventTypesPage);
 
   useEffect(() => {
-    dispatch(eventTypesActions.init());
+    dispatch(eventTypesPageActions.init());
   }, [dispatch]);
 
   return (
@@ -28,9 +30,9 @@ export const EventTypesPage = () => {
         />
       )}
 
-      {!!eventTypes.length && !errors && (
+      {!!results.length && !errors && (
         <section className="event-types-page__events">
-          {eventTypes.map(eventType => (
+          {results.map(eventType => (
             <EventType eventType={eventType} key={eventType.id} />
           ))}
         </section>
