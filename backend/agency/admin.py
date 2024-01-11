@@ -30,7 +30,7 @@ class OrganizerAdmin(admin.ModelAdmin):
 
 @admin.register(Advice)
 class AdviceAdmin(admin.ModelAdmin):
-    list_display = ("question", "answer")
+    list_display = ("question", "answer", "priority")
 
 
 @admin.register(Review)

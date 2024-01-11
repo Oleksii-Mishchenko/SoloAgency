@@ -121,7 +121,12 @@ class EventListSerializer(serializers.ModelSerializer):
 class AdviceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Advice
-        fields = ("id", "question", "answer")
+        fields = (
+            "id",
+            "question",
+            "answer",
+            "priority",
+        )
 
 
 class CallRequestSerializer(serializers.ModelSerializer):
