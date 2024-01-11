@@ -139,6 +139,9 @@ class Advice(models.Model):
     def __str__(self):
         return self.question
 
+    class Meta:
+        ordering = ["-priority"]
+
 
 class Review(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
