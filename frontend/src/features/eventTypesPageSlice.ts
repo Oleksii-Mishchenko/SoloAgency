@@ -1,17 +1,23 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { loadEventTypes } from '../api/eventTypes';
-import { EventType } from '../types/EventType';
+import { loadEventTypes } from '../api/eventTypesPage';
+import { EventTypesPage } from '../types/EventType';
 import { ServerErrorResponse } from '../types/ServerErrorResponse';
 import { parseErrors } from '../helpers/parseErrors';
 
 export type EventTypesState = {
-  eventTypes: EventType[];
+  eventTypesPage: EventTypesPage;
   isLoadingEventTypes: boolean;
   errors: ServerErrorResponse | null;
 };
 
 const initialState: EventTypesState = {
-  eventTypes: [],
+  eventTypesPage: {
+    num_pages: 0,
+    count: 0,
+    next: null,
+    previous: null,
+    results: [],
+  },
   isLoadingEventTypes: false,
   errors: null,
 };
@@ -22,28 +28,26 @@ export const init = createAsyncThunk('fetch/eventTypes', async () => {
   return response;
 });
 
-export const eventTypesSlice = createSlice({
+export const eventTypesPageSlice = createSlice({
   name: 'eventTypes',
   initialState,
   reducers: {},
   extraReducers: builder => {
     builder.addCase(init.pending, state => {
       state.isLoadingEventTypes = true;
-      state.eventTypes = [];
       state.errors = null;
     });
 
     builder.addCase(init.fulfilled, (state, action) => {
-      state.eventTypes = action.payload;
+      state.eventTypesPage = action.payload;
       state.isLoadingEventTypes = false;
     });
 
     builder.addCase(init.rejected, (state, action) => {
       state.isLoadingEventTypes = false;
-      state.eventTypes = [];
       state.errors = parseErrors(action.error.message);
     });
   },
 });
 
-export default eventTypesSlice.reducer;
+export default eventTypesPageSlice.reducer;
