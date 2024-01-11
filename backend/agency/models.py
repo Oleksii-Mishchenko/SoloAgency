@@ -125,9 +125,22 @@ class Event(models.Model):
 class Advice(models.Model):
     question = models.TextField(max_length=255)
     answer = models.TextField(max_length=511)
+    priority = models.IntegerField(
+        default=1,
+        choices=[
+            (1, 'Low'),
+            (2, 'Medium'),
+            (3, 'High'),
+            (4, 'Very High'),
+            (5, 'Critical')
+        ]
+    )
 
     def __str__(self):
         return self.question
+
+    class Meta:
+        ordering = ["-priority"]
 
 
 class Review(models.Model):
