@@ -13,6 +13,7 @@ from agency.models import (
     CallRequest,
     Article,
 )
+from agency.pagination import LargeResultsSetPagination
 from agency.serializers import (
     ServiceSerializer,
     AgencySerializer,
@@ -42,6 +43,7 @@ class AgencyViewSet(viewsets.ModelViewSet):
 class EventTypeViewSet(viewsets.ModelViewSet):
     queryset = EventType.objects.all()
     serializer_class = EventTypeSerializer
+    pagination_class = LargeResultsSetPagination
 
 
 class OrganizerViewSet(viewsets.ModelViewSet):
