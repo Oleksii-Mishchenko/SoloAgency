@@ -42,7 +42,7 @@ class EventTypeSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         representation = super(EventTypeSerializer, self).to_representation(instance)
-        representation['name'] = representation['name'].title()
+        representation["name"] = representation["name"].title()
         return representation
 
 
@@ -97,8 +97,8 @@ class EventSerializer(serializers.ModelSerializer):
 
 class EventListSerializer(serializers.ModelSerializer):
     customer = serializers.CharField(source="user.first_name", read_only=True)
-    event_type_name = serializers.CharField(source='event_type.name', read_only=True)
-    service_name = serializers.CharField(source='service.name', read_only=True)
+    event_type_name = serializers.CharField(source="event_type.name", read_only=True)
+    service_name = serializers.CharField(source="service.name", read_only=True)
     event_name = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
