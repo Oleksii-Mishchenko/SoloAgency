@@ -11,10 +11,6 @@ p {
 
 a {
   text-decoration: none;
-
-  &:focus {
-    outline: 0.5px dashed $color-grey-blocks;
-  }
 }
 
 ul {

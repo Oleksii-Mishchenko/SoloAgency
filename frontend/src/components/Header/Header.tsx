@@ -9,9 +9,13 @@ export const Header = () => {
       <div className="header__container">
         <Logo />
 
-        <NavBar />
+        <div className="header__menu">
+          <NavBar />
 
-        <Auth />
+          <Auth />
+        </div>
+
+        <button className="header__burger" />
       </div>
     </header>
   );

@@ -2,12 +2,20 @@
 
 .call-request {
   &__info {
-    margin-bottom: 20px;
+    margin-bottom: 16px;
+
+    @include on-desktop {
+      margin-bottom: 20px;
+    }
   }
 
   &__title {
     @extend %h2;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
+
+    @include on-desktop {
+      margin-bottom: 20px;
+    }
   }
 
   &__description {
@@ -16,7 +24,21 @@
   }
 
   &__form {
-    width: 80%;
+    @include on-desktop {
+      width: 80%;
+    }
+  }
+
+  &__input {
+    margin-bottom: 10px;
+
+    &.input--textarea:last-of-type {
+      margin-bottom: 16px;
+
+      @include on-desktop {
+        margin-bottom: 20px;
+      }
+    }
   }
 
   &__button {

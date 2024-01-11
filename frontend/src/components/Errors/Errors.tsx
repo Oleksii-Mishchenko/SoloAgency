@@ -1,16 +1,18 @@
 import React from 'react';
 import './errors.scss';
 import { ServerErrorResponse } from '../../types/ServerErrorResponse';
+import classNames from 'classnames';
 
 type Props = {
   errors: ServerErrorResponse;
+  className?: string;
 };
 
-export const Errors: React.FC<Props> = ({ errors }) => {
+export const Errors: React.FC<Props> = ({ errors, className }) => {
   const preparedErrors = Object.entries(errors);
 
   return (
-    <div className="errors">
+    <div className={classNames('errors', className)}>
       <p className="errors__title">Помилки при завантаженні:</p>
 
       {preparedErrors.map(([errorName, messages], i) => {

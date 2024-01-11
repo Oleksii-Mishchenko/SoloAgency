@@ -3,8 +3,12 @@
 .article {
   &__title {
     @extend %h1;
-    margin-bottom: 20px;
-    text-align: center;
+    margin-bottom: 16px;
+
+    @include on-desktop {
+      margin-bottom: 20px;
+      text-align: center;
+    }
   }
 
   &__content {
