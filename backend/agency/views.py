@@ -51,17 +51,15 @@ class EventTypeViewSet(viewsets.ModelViewSet):
         page = self.paginate_queryset(queryset)
 
         if page is not None:
-            serializer = EventTypeSerializer(page, many=True, context={'request': request})
-            return self.get_paginated_response({
-                'num_pages': self.paginator.page.paginator.num_pages,
-                'results': serializer.data
-            })
+            serializer = EventTypeSerializer(
+                page, many=True, context={"request": request}
+            )
+            return self.get_paginated_response({"results": serializer.data})
 
-        serializer = EventTypeSerializer(queryset, many=True, context={'request': request})
-        return Response({
-            'num_pages': 1,
-            'results': serializer.data
-        })
+        serializer = EventTypeSerializer(
+            queryset, many=True, context={"request": request}
+        )
+        return Response({"num_pages": 1, "results": serializer.data})
 
 
 class OrganizerViewSet(viewsets.ModelViewSet):

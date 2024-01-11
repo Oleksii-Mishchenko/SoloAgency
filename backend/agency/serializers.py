@@ -44,10 +44,10 @@ class EventTypeSerializer(serializers.ModelSerializer):
         representation = super(EventTypeSerializer, self).to_representation(instance)
         representation["name"] = representation["name"].title()
 
-        request = self.context.get('request', None)
+        request = self.context.get("request", None)
         if request is not None:
             photo_url = instance.photo.url
-            representation['photo'] = request.build_absolute_uri(photo_url)
+            representation["photo"] = request.build_absolute_uri(photo_url)
 
         return representation
 
