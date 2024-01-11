@@ -25,7 +25,8 @@ from agency.serializers import (
     CallRequestSerializer,
     ArticleSerializer,
     ReviewListSerializer,
-    OrganizerListSerializer, EventListSerializer,
+    OrganizerListSerializer,
+    EventListSerializer,
 )
 import telebot
 
@@ -44,6 +45,22 @@ class EventTypeViewSet(viewsets.ModelViewSet):
     queryset = EventType.objects.all()
     serializer_class = EventTypeSerializer
     pagination_class = LargeResultsSetPagination
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        page = self.paginate_queryset(queryset)
+
+        if page is not None:
+            serializer = EventTypeSerializer(page, many=True)
+            return self.get_paginated_response(
+                {
+                    "num_pages": self.paginator.page.paginator.num_pages,
+                    "results": serializer.data,
+                }
+            )
+
+        serializer = EventTypeSerializer(queryset, many=True)
+        return Response({"num_pages": 1, "results": serializer.data})
 
 
 class OrganizerViewSet(viewsets.ModelViewSet):
@@ -102,12 +119,12 @@ class ReviewViewSet(viewsets.ModelViewSet):
 
         return queryset
 
-    @action(detail=True, methods=['POST'])
+    @action(detail=True, methods=["POST"])
     def approve(self, request, pk=None):
         review = self.get_object()
         review.is_approved = True
         review.save()
-        return Response({'status': 'Comment approved'}, status=status.HTTP_200_OK)
+        return Response({"status": "Comment approved"}, status=status.HTTP_200_OK)
 
 
 class CallRequestViewSet(viewsets.ModelViewSet):

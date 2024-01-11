@@ -128,12 +128,12 @@ class Advice(models.Model):
     priority = models.IntegerField(
         default=1,
         choices=[
-            (1, 'Low'),
-            (2, 'Medium'),
-            (3, 'High'),
-            (4, 'Very High'),
-            (5, 'Critical')
-        ]
+            (1, "Low"),
+            (2, "Medium"),
+            (3, "High"),
+            (4, "Very High"),
+            (5, "Critical"),
+        ],
     )
 
     def __str__(self):
