@@ -10,6 +10,16 @@
     @extend %h1;
   }
 
+  &__loader {
+    grid-column: 1 / -1;
+    margin: 0 auto;
+  }
+
+  &__error {
+    grid-column: 1 / -1;
+    margin: 0 auto;
+  }
+
   &__events {
     grid-column: 1 / -1;
     --columns: 1;

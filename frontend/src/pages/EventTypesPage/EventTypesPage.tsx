@@ -1,50 +1,42 @@
+import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { EventType } from '../../components/EventType';
-import { EventType as EventVariant } from '../../types/EventType';
+import * as eventTypesActions from '../../features/eventTypesSlice';
 import './event-types-page.scss';
-
-const eventTypes: EventVariant[] = [
-  {
-    id: 1,
-    name: 'День народження',
-    description: 'Short description',
-    photo: 'https://placehold.co/300x150',
-  },
-  {
-    id: 2,
-    name: 'Весілля',
-    description: 'Long long description',
-    photo: 'https://placehold.co/500x200',
-  },
-  {
-    id: 3,
-    name: 'Вечірка',
-    description: 'Long long long description',
-    photo: 'https://placehold.co/500x450',
-  },
-  {
-    id: 4,
-    name: 'Заручини',
-    description: 'Long long long long description',
-    photo: 'https://placehold.co/300x450',
-  },
-  {
-    id: 5,
-    name: 'Корпоратив',
-    description: 'Very long long long long long long long long description',
-    photo: 'https://placehold.co/500x600',
-  },
-];
+import { Loader } from '../../components/Loader';
+import { LoaderElement } from '../../types/LoaderElement';
+import { Errors } from '../../components/Errors';
 
 export const EventTypesPage = () => {
+  const dispatch = useAppDispatch();
+  const { eventTypes, isLoadingEventTypes, errors } = useAppSelector(
+    state => state.eventTypes,
+  );
+
+  useEffect(() => {
+    dispatch(eventTypesActions.init());
+  }, [dispatch]);
+
   return (
     <div className="event-types-page">
       <h2 className="event-types-page__title">Послуги</h2>
 
-      <section className="event-types-page__events">
-        {eventTypes.map(eventType => (
-          <EventType eventType={eventType} key={eventType.id} />
-        ))}
-      </section>
+      {isLoadingEventTypes && (
+        <Loader
+          className="event-types-page__loader"
+          element={LoaderElement.Block}
+        />
+      )}
+
+      {!!eventTypes.length && !errors && (
+        <section className="event-types-page__events">
+          {eventTypes.map(eventType => (
+            <EventType eventType={eventType} key={eventType.id} />
+          ))}
+        </section>
+      )}
+
+      {errors && <Errors className="event-types-page__error" errors={errors} />}
 
       <section className="event-types-page__info">
         <h2 className="event-types-page__info-title">Додаткова інформація</h2>
