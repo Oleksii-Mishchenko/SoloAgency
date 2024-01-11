@@ -10,7 +10,7 @@ import { HomePage } from './src/pages/HomePage';
 import { AboutUsPage } from './src/pages/AboutUsPage';
 import { PageNotFound } from './src/pages/PageNotFound';
 import { AdvicesPage } from './src/pages/AdvicesPage';
-import { ServicesPage } from './src/pages/ServicesPage';
+import { EventTypesPage } from './src/pages/EventTypesPage';
 import { ContactsPage } from './src/pages/ContactsPage';
 
 export const Root = () => (
@@ -21,7 +21,7 @@ export const Root = () => (
         <Route path="home" element={<Navigate to="/" replace />} />
         <Route path="about-us" element={<AboutUsPage />} />
         <Route path="advices" element={<AdvicesPage />} />
-        <Route path="services" element={<ServicesPage />} />
+        <Route path="event-types" element={<EventTypesPage />} />
         <Route path="contacts" element={<ContactsPage />} />
         <Route path="*" element={<PageNotFound />} />
       </Route>

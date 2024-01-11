@@ -3,9 +3,9 @@ import './call-request.scss';
 import { CallRequestData } from '../../types/CallRequestData';
 import { MainButton } from '../MainButton';
 import { Input, Textarea } from '../Input';
+import { Errors } from '../Errors';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import * as callRequestActions from '../../features/callRequestSlice';
-import { Errors } from '../Errors';
 
 export const CallRequest = () => {
   const dispatch = useAppDispatch();
@@ -67,6 +67,7 @@ export const CallRequest = () => {
                   value: 63,
                   message: `Занадто довге ім'я`,
                 },
+                validate: input => input,
               }),
             }}
           />

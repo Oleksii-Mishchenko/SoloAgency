@@ -3,7 +3,11 @@ scroll-behavior: smooth;
 
   &__body {
     margin: 0;
-    padding-top: 50px;
+    padding-top: 32px;
     background-color: $color-white;
+
+    @include on-desktop {
+      padding-top: 50px;
+    }
   }
 }
