@@ -40,6 +40,11 @@ class EventTypeSerializer(serializers.ModelSerializer):
         model = EventType
         fields = ("id", "name", "description", "photo")
 
+    def to_representation(self, instance):
+        representation = super(EventTypeSerializer, self).to_representation(instance)
+        representation['name'] = representation['name'].title()
+        return representation
+
 
 class OrganizerSerializer(serializers.ModelSerializer):
     class Meta:
