@@ -9,16 +9,20 @@ import { Errors } from '../Errors';
 import { Media } from '../../types/Media';
 
 export const ReviewsSlider: React.FC = () => {
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [position, setPosition] = useState<number>(0);
   const dispatch = useAppDispatch();
   const { reviews, isLoading, errors } = useAppSelector(state => state.reviews);
   const windowWidth = window.innerWidth;
   const shift = {
-    wide: `translateX(calc(-${currentIndex * 50}% - ${currentIndex * 10}px))`,
-    tablet: `translateX(calc(-${currentIndex * 100}%))`,
+    wide: `translateX(calc(-${position * 50}% - ${position * 10}px))`,
+    tablet: `translateX(calc(-${position * 100}%))`,
   };
   const currentShift =
-    windowWidth <= Media.TabletMax ? shift.tablet : shift.wide;
+    windowWidth < Media.TabletMax ? shift.tablet : shift.wide;
+  const isRightDisabled =
+    windowWidth < Media.TabletMax
+      ? position >= Math.ceil(reviews.length / 2) - 1
+      : position === reviews.length - 1;
 
   useEffect(() => {
     dispatch(reviewsActions.init());
@@ -46,19 +50,21 @@ export const ReviewsSlider: React.FC = () => {
             </div>
           </div>
 
-          <button
-            type="button"
-            className="reviews-slider__button reviews-slider__button--left"
-            onClick={() => setCurrentIndex(currentIndex - 1)}
-            disabled={currentIndex <= 0}
-          />
+          <div className="reviews-slider__buttons">
+            <button
+              type="button"
+              className="reviews-slider__button reviews-slider__button--left"
+              onClick={() => setPosition(position - 1)}
+              disabled={position <= 0}
+            />
 
-          <button
-            type="button"
-            className="reviews-slider__button reviews-slider__button--right"
-            onClick={() => setCurrentIndex(currentIndex + 1)}
-            disabled={currentIndex === reviews.length - 1 || !reviews.length}
-          />
+            <button
+              type="button"
+              className="reviews-slider__button reviews-slider__button--right"
+              onClick={() => setPosition(position + 1)}
+              disabled={isRightDisabled}
+            />
+          </div>
         </>
       )}
 
