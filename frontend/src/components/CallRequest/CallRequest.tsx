@@ -21,7 +21,7 @@ export const CallRequest = () => {
     handleSubmit,
     reset,
   } = useForm<CallRequestData>({
-    mode: 'onChange',
+    mode: 'onBlur',
   });
 
   const onSubmit: SubmitHandler<CallRequestData> = async (
@@ -67,7 +67,6 @@ export const CallRequest = () => {
                   value: 63,
                   message: `Занадто довге ім'я`,
                 },
-                validate: input => input,
               }),
             }}
           />
