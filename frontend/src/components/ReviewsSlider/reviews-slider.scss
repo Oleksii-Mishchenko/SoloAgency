@@ -19,8 +19,8 @@
   }
 
   &__button {
-    position: absolute;
-    top: 50%;
+    // position: absolute;
+    // top: 50%;
     width: 32px;
     height: 32px;
     border: 0.5px solid $color-grey-elements;
@@ -32,41 +32,41 @@
     transition: all 0.3s;
 
     &--left {
-      left: -20px;
-      transform: translate(-100%, -50%);
+      // left: -20px;
+      // transform: translate(-100%, -50%);
       background-image: url(../../assets/img/chevron-left.svg);
 
       &:hover {
-        transform: translate(-100%, -50%) scale(1.1);
+        // transform: translate(-100%, -50%) scale(1.1);
       }
 
       &:active {
-        transform: translate(-100%, -50%) scale(1);
+        // transform: translate(-100%, -50%) scale(1);
       }
 
       &:disabled {
         opacity: 0.5;
-        transform: translate(-100%, -50%) scale(1);
+        // transform: translate(-100%, -50%) scale(1);
         cursor: auto;
       }
     }
 
     &--right {
-      right: -20px;
-      transform: translate(100%, -50%);
+      // right: -20px;
+      // transform: translate(100%, -50%);
       background-image: url(../../assets/img/chevron-right.svg);
 
       &:hover {
-        transform: translate(100%, -50%) scale(1.1);
+        // transform: translate(100%, -50%) scale(1.1);
       }
 
       &:active {
-        transform: translate(100%, -50%) scale(1);
+        // transform: translate(100%, -50%) scale(1);
       }
 
       &:disabled {
         opacity: 0.5;
-        transform: translate(100%, -50%) scale(1);
+        // transform: translate(100%, -50%) scale(1);
         cursor: auto;
       }
     }
