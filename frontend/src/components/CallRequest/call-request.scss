@@ -4,7 +4,7 @@
   &__info {
     margin-bottom: 16px;
 
-    @include on-desktop {
+    @include on-tablet {
       margin-bottom: 20px;
     }
   }
@@ -13,7 +13,7 @@
     @extend %h2;
     margin-bottom: 16px;
 
-    @include on-desktop {
+    @include on-tablet {
       margin-bottom: 20px;
     }
   }
@@ -24,7 +24,7 @@
   }
 
   &__form {
-    @include on-desktop {
+    @include on-tablet {
       width: 80%;
     }
   }
@@ -35,7 +35,7 @@
     &.input--textarea:last-of-type {
       margin-bottom: 16px;
 
-      @include on-desktop {
+      @include on-tablet {
         margin-bottom: 20px;
       }
     }

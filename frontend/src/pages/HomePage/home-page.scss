@@ -14,8 +14,13 @@
     &-content {
       grid-column: 1 / -1;
 
-      @include on-desktop {
+      @include on-tablet {
         position: absolute;
+        top: 20px;
+        grid-column: 3 / -3;
+      }
+
+      @include on-desktop {
         top: 50px;
         grid-column: 4 / 10;
       }
@@ -27,12 +32,18 @@
         font-weight: 400;
         line-height: 22px;
         text-align: left;
-        
+
+        @include on-tablet {
+          margin-bottom: 10px;
+          text-align: center;
+          font-size: 20px;
+          line-height: 28px;
+        }
+
         @include on-desktop {
           margin-bottom: 20px;
           font-size: 24px;
           line-height: 34px;
-          text-align: center;
         }
       }
     }
@@ -40,7 +51,7 @@
     &-button {
       display: block;
 
-      @include on-desktop {
+      @include on-tablet {
         margin: 0 auto;
       }
     }
@@ -59,11 +70,11 @@
     grid-column: 1 / -1;
 
     @include on-tablet {
-      grid-column: 2 / span 4;
+      grid-column: 2 / -2;
     }
 
     @include on-desktop {
-      grid-column: 3 / span 8;
+      grid-column: 3 / -3;
     }
 
     &-loader {
@@ -73,7 +84,7 @@
     &-article {
       margin-bottom: 24px;
 
-      @include on-desktop {
+      @include on-tablet {
         margin-bottom: 50px;
       }
 
@@ -87,7 +98,7 @@
     grid-column: 1 / -1;
 
     @include on-tablet {
-      grid-column: 2 / span 4;
+      grid-column: 3 / -3;
     }
 
     @include on-desktop {
@@ -98,15 +109,23 @@
       @extend %h1;
       margin-bottom: 24px;
 
+      @include on-tablet {
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
       @include on-desktop {
         margin-bottom: 50px;
-        text-align: center;
       }
     }
 
     &-content {
       @include grid-container(2, 100px);
       row-gap: 24px;
+
+      @include on-tablet {
+        row-gap: 30px;
+      }
     }
 
     &-items {
@@ -120,7 +139,7 @@
     &-item {
       margin-bottom: 16px;
 
-      @include on-desktop {
+      @include on-tablet {
         margin-bottom: 20px;
       }
 
@@ -155,11 +174,11 @@
     grid-column: 1 / -1;
 
     @include on-tablet {
-      grid-column: 2 / span 4;
+      grid-column: 3 / -3;
     }
 
     @include on-desktop {
-      grid-column: 2 / 12;
+      grid-column: 2 / -2;
     }
 
     &-title {
@@ -167,9 +186,13 @@
 
       @extend %h1;
 
+      @include on-tablet {
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
       @include on-desktop {
         margin-bottom: 50px;
-        text-align: center;
       }
     }
   }

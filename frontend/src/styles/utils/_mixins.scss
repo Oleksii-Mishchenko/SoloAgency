@@ -24,16 +24,18 @@
 
 @mixin page-grid {
   --columns: 2;
+  --column-gap: 8px;
   row-gap: 32px;
 
-  @include grid-container(var(--columns), 20px);
+  @include grid-container(var(--columns), var(--column-gap));
 
   @include on-tablet {
-    --columns: 6;
+    --columns: 12;
+    --column-gap: 32px;
   }
 
   @include on-desktop {
-    --columns: 12;
+    --column-gap: 20px;
     row-gap: 50px;
   }
 }

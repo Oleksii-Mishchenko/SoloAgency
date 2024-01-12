@@ -5,7 +5,7 @@
     @extend %h1;
     margin-bottom: 16px;
 
-    @include on-desktop {
+    @include on-tablet {
       margin-bottom: 20px;
       text-align: center;
     }

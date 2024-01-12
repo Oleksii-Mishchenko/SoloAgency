@@ -1,28 +1,61 @@
 @import '../../styles/main.scss';
 
+$button-size: 32px;
+$button-gap: 20px;
+
 .reviews-slider {
-  position: relative;
+  @include on-tablet {
+    position: relative;
+  }
 
   &__screen {
     overflow: hidden;
+    margin-bottom: 16px;
+
+    @include on-tablet {
+      margin-bottom: 0;
+    }
   }
 
   &__film {
-    display: flex;
-    column-gap: 20px;
-    width: 100%;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: repeat(2, 1fr);
+    grid-auto-flow: column;
+    grid-auto-columns: 100%;
+    row-gap: 16px;
     transition: all 0.3s;
 
     @include on-tablet {
-      column-gap: 0;
+      row-gap: 20px;
+    }
+
+    @include on-desktop {
+      grid-template-columns: repeat(2, calc(50% - 10px));
+      grid-template-rows: 1fr;
+      grid-auto-columns: calc(50% - 10px);
+      column-gap: 20px;
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: center;
+    column-gap: 14px;
+
+    @include on-tablet {
+      position: absolute;
+      top: 50%;
+      left: -(calc($button-gap + $button-size));
+      transform: translateY(-50%);
+      justify-content: space-between;
+      width: calc(100% + $button-size * 2 + $button-gap * 2);
     }
   }
 
   &__button {
-    position: absolute;
-    top: 50%;
-    width: 32px;
-    height: 32px;
+    width: $button-size;
+    height: $button-size;
     border: 0.5px solid $color-grey-elements;
     border-radius: 5px;
     background-repeat: no-repeat;
@@ -31,44 +64,26 @@
     cursor: pointer;
     transition: all 0.3s;
 
+    &:hover {
+      transform: scale(1.1);
+    }
+
+    &:active {
+      transform: scale(1);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      transform: none;
+      cursor: auto;
+    }
+
     &--left {
-      left: -20px;
-      transform: translate(-100%, -50%);
       background-image: url(../../assets/img/chevron-left.svg);
-
-      &:hover {
-        transform: translate(-100%, -50%) scale(1.1);
-      }
-
-      &:active {
-        transform: translate(-100%, -50%) scale(1);
-      }
-
-      &:disabled {
-        opacity: 0.5;
-        transform: translate(-100%, -50%) scale(1);
-        cursor: auto;
-      }
     }
 
     &--right {
-      right: -20px;
-      transform: translate(100%, -50%);
       background-image: url(../../assets/img/chevron-right.svg);
-
-      &:hover {
-        transform: translate(100%, -50%) scale(1.1);
-      }
-
-      &:active {
-        transform: translate(100%, -50%) scale(1);
-      }
-
-      &:disabled {
-        opacity: 0.5;
-        transform: translate(100%, -50%) scale(1);
-        cursor: auto;
-      }
     }
   }
 
