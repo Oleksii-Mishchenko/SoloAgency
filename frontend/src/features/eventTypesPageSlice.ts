@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { loadEventTypes } from '../api/eventTypesPage';
+import { loadEventTypesPage } from '../api/eventTypesPage';
 import { EventTypesPage } from '../types/EventType';
 import { ServerErrorResponse } from '../types/ServerErrorResponse';
 import { parseErrors } from '../helpers/parseErrors';
@@ -13,20 +13,23 @@ export type EventTypesState = {
 const initialState: EventTypesState = {
   eventTypesPage: {
     num_pages: 0,
-    count: 0,
-    next: null,
-    previous: null,
+    current_page: 1,
+    next_page: null,
+    previous_page: null,
     results: [],
   },
   isLoadingEventTypes: false,
   errors: null,
 };
 
-export const init = createAsyncThunk('fetch/eventTypes', async () => {
-  const response = await loadEventTypes();
+export const init = createAsyncThunk(
+  'fetch/eventTypes',
+  async (page: string) => {
+    const response = await loadEventTypesPage(page);
 
-  return response;
-});
+    return response;
+  },
+);
 
 export const eventTypesPageSlice = createSlice({
   name: 'eventTypes',

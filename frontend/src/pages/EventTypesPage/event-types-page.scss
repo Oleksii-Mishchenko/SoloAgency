@@ -35,6 +35,11 @@
     @include grid-container(var(--columns), 20px);
 
     row-gap: 50px;
+
+    &-pagination {
+      grid-column: 1 / -1;
+      margin: 0 auto;
+    }
   }
 
   &__info {

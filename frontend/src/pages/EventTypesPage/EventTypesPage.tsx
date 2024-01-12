@@ -6,18 +6,31 @@ import './event-types-page.scss';
 import { Loader } from '../../components/Loader';
 import { LoaderElement } from '../../types/LoaderElement';
 import { Errors } from '../../components/Errors';
+import { useSearchParams } from 'react-router-dom';
+import { Pagination } from '../../components/Pagination';
+import { getSearchWith } from '../../helpers/getSearchWith';
 
 export const EventTypesPage = () => {
+  const [searchParams] = useSearchParams();
+  const page = searchParams.get('page') || 1;
   const dispatch = useAppDispatch();
   const {
-    eventTypesPage: { num_pages, count, next, previous, results },
+    eventTypesPage: {
+      num_pages,
+      current_page,
+      next_page,
+      previous_page,
+      results,
+    },
     isLoadingEventTypes,
     errors,
   } = useAppSelector(state => state.eventTypesPage);
 
   useEffect(() => {
-    dispatch(eventTypesPageActions.init());
-  }, [dispatch]);
+    const params = getSearchWith({ page }, searchParams);
+
+    dispatch(eventTypesPageActions.init(`?${params}`));
+  }, [dispatch, page, searchParams]);
 
   return (
     <div className="event-types-page">
@@ -35,6 +48,13 @@ export const EventTypesPage = () => {
           {results.map(eventType => (
             <EventType eventType={eventType} key={eventType.id} />
           ))}
+
+          {num_pages > 1 && (
+            <Pagination
+              className="event-types-page__events-pagination"
+              config={{ num_pages, current_page, next_page, previous_page }}
+            />
+          )}
         </section>
       )}
 
