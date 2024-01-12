@@ -1,3 +1,5 @@
+import { PaginationConfig } from './PaginationConfig';
+
 export interface EventType {
   id: number;
   name: string;
@@ -5,10 +7,6 @@ export interface EventType {
   photo: string;
 }
 
-export interface EventTypesPage {
-  num_pages: number;
-  count: number;
-  next: string | null;
-  previous: string | null;
+export interface EventTypesPage extends PaginationConfig {
   results: EventType[];
 }

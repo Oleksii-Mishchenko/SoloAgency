@@ -56,6 +56,12 @@
 
     color: $color-white;
   }
+
+  &-green {
+    @extend %body-bold-button;
+
+    color: $color-green-dark;
+  }
 }
 
 %body-error {

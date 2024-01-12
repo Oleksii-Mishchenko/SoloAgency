@@ -1,8 +1,10 @@
 import { EventTypesPage } from '../types/EventType';
 import { client } from '../utils/axiosClient';
 
-const eventTypesUrl = 'agency/event-types';
+const eventTypesUrl = 'agency/event-types/';
 
-export const loadEventTypes = (): Promise<EventTypesPage> => {
-  return client.get<EventTypesPage>(eventTypesUrl);
+export const loadEventTypesPage = (params: string): Promise<EventTypesPage> => {
+  const url = eventTypesUrl + params;
+
+  return client.get<EventTypesPage>(url);
 };
