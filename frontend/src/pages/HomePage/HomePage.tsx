@@ -1,6 +1,5 @@
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { Loader } from '../../components/Loader';
-import { MainButton } from '../../components/MainButton';
 import { LoaderElement } from '../../types/LoaderElement';
 import * as articlesActions from '../../features/articlesSlice';
 import './home-page.scss';
@@ -10,6 +9,7 @@ import { SocialMedia } from '../../components/SocialMedia';
 import { CallRequest } from '../../components/CallRequest';
 import { Errors } from '../../components/Errors';
 import { ReviewsSlider } from '../../components/ReviewsSlider';
+import { Hero } from '../../components/Hero';
 
 export const HomePage = () => {
   const dispatch = useAppDispatch();
@@ -23,21 +23,7 @@ export const HomePage = () => {
 
   return (
     <div className="home-page">
-      <section className="home-page__hero">
-        <div className="home-page__hero-content">
-          <p className="home-page__hero-content-text">
-            Організовуємо мрії та перетворюємо їх у реальність - ваші події,
-            наша справа!
-          </p>
-
-          <MainButton
-            text="Замовити послугу"
-            className="home-page__hero-button"
-          />
-        </div>
-
-        <div className="home-page__hero-banner" />
-      </section>
+      <Hero relPage="home-page" />
 
       <section className="home-page__about-us">
         {isLoadingArticles && (
