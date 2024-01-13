@@ -8,7 +8,7 @@
     grid-column: 1 / -1;
   }
 
-  &__about-us {
+  &__articles {
     grid-column: 1 / -1;
 
     @include on-tablet {
@@ -17,22 +17,6 @@
 
     @include on-desktop {
       grid-column: 3 / -3;
-    }
-
-    &-loader {
-      margin: 0 auto;
-    }
-
-    &-article {
-      margin-bottom: 24px;
-
-      @include on-tablet {
-        margin-bottom: 50px;
-      }
-
-      &:last-child {
-        margin-bottom: 0;
-      }
     }
   }
 

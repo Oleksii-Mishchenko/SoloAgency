@@ -1,50 +1,16 @@
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { Loader } from '../../components/Loader';
-import { LoaderElement } from '../../types/LoaderElement';
-import * as articlesActions from '../../features/articlesSlice';
 import './home-page.scss';
-import { useEffect } from 'react';
-import { Article } from '../../components/Article';
 import { SocialMedia } from '../../components/SocialMedia';
 import { CallRequest } from '../../components/CallRequest';
-import { Errors } from '../../components/Errors';
 import { ReviewsSlider } from '../../components/ReviewsSlider';
 import { Hero } from '../../components/Hero';
+import { Articles } from '../../components/Articles';
 
 export const HomePage = () => {
-  const dispatch = useAppDispatch();
-  const { articles, isLoadingArticles, errors } = useAppSelector(
-    state => state.articles,
-  );
-
-  useEffect(() => {
-    dispatch(articlesActions.init());
-  }, [dispatch]);
-
   return (
     <div className="home-page">
       <Hero relPage="home-page" />
 
-      <section className="home-page__about-us">
-        {isLoadingArticles && (
-          <Loader
-            element={LoaderElement.Block}
-            className="home-page__about-us-loader"
-          />
-        )}
-
-        {!!articles.length &&
-          !errors &&
-          articles.map(article => (
-            <Article
-              key={article.id}
-              article={article}
-              className="home-page__about-us-article"
-            />
-          ))}
-
-        {errors && <Errors errors={errors} />}
-      </section>
+      <Articles relPage="home-page" />
 
       <section className="home-page__contacts">
         <h1 className="home-page__contacts-title">Наші контакти</h1>
