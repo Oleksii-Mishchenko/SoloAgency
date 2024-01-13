@@ -1,3 +1,5 @@
+@import '../../styles/main.scss';
+
 .nav-bar {
   display: flex;
   justify-content: center;
@@ -8,7 +10,25 @@
 
   &__list {
     display: flex;
-    align-items: center;
-    gap: 60px;
+    flex-direction: column;
+    width: 100%;
+
+    @include on-desktop {
+      align-items: center;
+      justify-content: center;
+      flex-direction: row;
+      gap: 60px;
+    }
+  }
+
+  &__item {
+    width: 100%;
+    padding-block: 15px;
+    text-align: center;
+
+    @include on-desktop {
+      width: auto;
+      padding: 0;
+    }
   }
 }

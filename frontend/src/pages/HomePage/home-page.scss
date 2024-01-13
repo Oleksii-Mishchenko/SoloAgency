@@ -120,11 +120,15 @@
     }
 
     &-content {
-      @include grid-container(2, 100px);
+      @include grid-container(2, 50px);
       row-gap: 24px;
 
       @include on-tablet {
         row-gap: 30px;
+      }
+
+      @include on-wide-screen {
+        column-gap: 100px;
       }
     }
 
