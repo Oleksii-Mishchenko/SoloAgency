@@ -7,7 +7,11 @@ import { Errors } from '../Errors';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import * as callRequestActions from '../../features/callRequestSlice';
 
-export const CallRequest = () => {
+type Props = {
+  relPage: string;
+};
+
+export const CallRequest: React.FC<Props> = ({ relPage }) => {
   const dispatch = useAppDispatch();
   const {
     callRequest,
@@ -20,6 +24,8 @@ export const CallRequest = () => {
     formState: { errors },
     handleSubmit,
     reset,
+    setValue,
+    trigger,
   } = useForm<CallRequestData>({
     mode: 'onBlur',
   });
@@ -39,7 +45,7 @@ export const CallRequest = () => {
   };
 
   return (
-    <div className="home-page__call-request call-request">
+    <div className={`${relPage}__call-request call-request`}>
       <div className="call-request__info">
         <h2 className="call-request__title">Замовити дзвінок?</h2>
 
@@ -66,6 +72,18 @@ export const CallRequest = () => {
                 maxLength: {
                   value: 63,
                   message: `Занадто довге ім'я`,
+                },
+                onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                  const transformedValue = e.target.value
+                    .split(' ')
+                    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                    .join(' ');
+
+                  setValue('name', transformedValue);
+
+                  if (errors.name) {
+                    trigger('name');
+                  }
                 },
               }),
             }}

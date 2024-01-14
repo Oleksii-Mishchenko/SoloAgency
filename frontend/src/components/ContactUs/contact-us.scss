@@ -1,0 +1,28 @@
+@import '../../styles/main.scss';
+
+.contact-us {
+  &__contact {
+    margin-bottom: 16px;
+
+    @include on-tablet {
+      margin-bottom: 20px;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    &-name {
+      @extend %body-bold-button;
+      margin-bottom: 10px;
+
+      &--social {
+        margin-bottom: 15px;
+      }
+    }
+
+    &-value {
+      @extend %body;
+    }
+  }
+}

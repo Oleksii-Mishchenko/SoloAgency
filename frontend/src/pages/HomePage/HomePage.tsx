@@ -1,9 +1,9 @@
 import './home-page.scss';
-import { SocialMedia } from '../../components/SocialMedia';
 import { CallRequest } from '../../components/CallRequest';
 import { ReviewsSlider } from '../../components/ReviewsSlider';
 import { Hero } from '../../components/Hero';
 import { Articles } from '../../components/Articles';
+import { ContactUs } from '../../components/ContactUs';
 
 export const HomePage = () => {
   return (
@@ -16,36 +16,9 @@ export const HomePage = () => {
         <h1 className="home-page__contacts-title">Наші контакти</h1>
 
         <div className="home-page__contacts-content">
-          <CallRequest />
+          <CallRequest relPage="home-page" />
 
-          <div className="home-page__contacts-items">
-            <div className="home-page__contacts-item">
-              <p className="home-page__contacts-item-name">Номер телефону</p>
-
-              <p className="home-page__contacts-item-value">+380222222222</p>
-            </div>
-
-            <div className="home-page__contacts-item">
-              <p className="home-page__contacts-item-name">Електронна адреса</p>
-
-              <p className="home-page__contacts-item-value">
-                soloagency@gmail.com
-              </p>
-            </div>
-
-            <div className="home-page__contacts-item">
-              <p
-                className="
-                  home-page__contacts-item-name
-                  home-page__contacts-item-name--social
-                "
-              >
-                Шукайте нас також в соціальних мережах:
-              </p>
-
-              <SocialMedia />
-            </div>
-          </div>
+          <ContactUs relPage="home-page" />
         </div>
       </section>
 

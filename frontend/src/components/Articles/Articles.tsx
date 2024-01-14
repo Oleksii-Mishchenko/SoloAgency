@@ -28,8 +28,8 @@ export const Articles: React.FC<Props> = ({ relPage }) => {
 
       {!!articles.length &&
         !errors &&
-        articles.map(({ title, content }) => (
-          <article className="articles__article">
+        articles.map(({ id, title, content }) => (
+          <article key={id} className="articles__article">
             <h1 className="articles__article-title">{title}</h1>
 
             <p className="articles__article-content">{content}</p>
