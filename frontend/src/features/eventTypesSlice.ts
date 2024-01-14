@@ -1,17 +1,17 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { loadEventTypesPage } from '../api/eventTypesPage';
-import { EventTypesPage } from '../types/EventType';
+import { loadEventTypes } from '../api/eventTypes';
+import { EventTypes } from '../types/EventType';
 import { ServerErrorResponse } from '../types/ServerErrorResponse';
 import { parseErrors } from '../helpers/parseErrors';
 
 export type EventTypesState = {
-  eventTypesPage: EventTypesPage;
+  eventTypes: EventTypes;
   isLoadingEventTypes: boolean;
   errors: ServerErrorResponse | null;
 };
 
 const initialState: EventTypesState = {
-  eventTypesPage: {
+  eventTypes: {
     num_pages: 0,
     current_page: 1,
     next_page: null,
@@ -25,13 +25,13 @@ const initialState: EventTypesState = {
 export const init = createAsyncThunk(
   'fetch/eventTypes',
   async (page: string) => {
-    const response = await loadEventTypesPage(page);
+    const response = await loadEventTypes(page);
 
     return response;
   },
 );
 
-export const eventTypesPageSlice = createSlice({
+export const eventTypesSlice = createSlice({
   name: 'eventTypes',
   initialState,
   reducers: {},
@@ -42,7 +42,7 @@ export const eventTypesPageSlice = createSlice({
     });
 
     builder.addCase(init.fulfilled, (state, action) => {
-      state.eventTypesPage = action.payload;
+      state.eventTypes = action.payload;
       state.isLoadingEventTypes = false;
     });
 
@@ -53,4 +53,4 @@ export const eventTypesPageSlice = createSlice({
   },
 });
 
-export default eventTypesPageSlice.reducer;
+export default eventTypesSlice.reducer;

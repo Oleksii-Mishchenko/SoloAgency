@@ -3,7 +3,7 @@ import advicesReducer from '../features/advicesSlice';
 import articlesReducer from '../features/articlesSlice';
 import callRequestReducer from '../features/callRequestSlice';
 import reviewsReducer from '../features/reviewsSlice';
-import eventTypesPageSlice from '../features/eventTypesPageSlice';
+import eventTypesSlice from '../features/eventTypesSlice';
 
 import {
   configureStore,
@@ -29,7 +29,7 @@ const rootReducer = combineReducers({
   articles: articlesReducer,
   callRequest: callRequestReducer,
   reviews: reviewsReducer,
-  eventTypesPage: eventTypesPageSlice,
+  eventTypes: eventTypesSlice,
 });
 
 const persistConfig = {

@@ -7,6 +7,7 @@ import classNames from 'classnames';
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
 
@@ -24,7 +25,7 @@ export const Header = () => {
             'header__menu--open': isMenuOpen,
           })}
         >
-          <NavBar />
+          <NavBar menu={{ isMenuOpen, toggleMenu }} />
 
           <Auth />
 
