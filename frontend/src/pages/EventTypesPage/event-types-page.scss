@@ -10,36 +10,8 @@
     @extend %h1;
   }
 
-  &__loader {
+  &__event-types {
     grid-column: 1 / -1;
-    margin: 0 auto;
-  }
-
-  &__error {
-    grid-column: 1 / -1;
-    margin: 0 auto;
-  }
-
-  &__events {
-    grid-column: 1 / -1;
-    --columns: 1;
-
-    @include on-tablet {
-      --columns: 2;
-    }
-
-    @include on-desktop {
-      --columns: 3;
-    }
-
-    @include grid-container(var(--columns), 20px);
-
-    row-gap: 50px;
-
-    &-pagination {
-      grid-column: 1 / -1;
-      margin: 0 auto;
-    }
   }
 
   &__info {

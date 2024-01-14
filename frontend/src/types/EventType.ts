@@ -7,6 +7,6 @@ export interface EventType {
   photo: string;
 }
 
-export interface EventTypesPage extends PaginationConfig {
+export interface EventTypes extends PaginationConfig {
   results: EventType[];
 }
