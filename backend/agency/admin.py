@@ -8,7 +8,8 @@ from .models import (
     Advice,
     Review,
     CallRequest,
-    Article, Portfolio,
+    Article,
+    Portfolio,
 )
 
 

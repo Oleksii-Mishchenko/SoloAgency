@@ -39,10 +39,14 @@ class PaginationMixin:
         page = self.paginate_queryset(queryset)
 
         if page is not None:
-            serializer_instance = serializer(page, many=True, context={"request": self.request})
+            serializer_instance = serializer(
+                page, many=True, context={"request": self.request}
+            )
             return self.get_paginated_response({"results": serializer_instance.data})
 
-        serializer_instance = serializer(queryset, many=True, context={"request": self.request})
+        serializer_instance = serializer(
+            queryset, many=True, context={"request": self.request}
+        )
         return Response({"num_pages": 1, "results": serializer_instance.data})
 
 
@@ -56,7 +60,10 @@ class AgencyViewSet(viewsets.ModelViewSet):
     serializer_class = AgencySerializer
 
 
-class EventTypeViewSet(PaginationMixin, viewsets.ModelViewSet, ):
+class EventTypeViewSet(
+    PaginationMixin,
+    viewsets.ModelViewSet,
+):
     queryset = EventType.objects.all()
     serializer_class = EventTypeSerializer
 
@@ -91,7 +98,10 @@ class EventViewSet(viewsets.ModelViewSet):
         return super().create(request, *args, **kwargs)
 
 
-class AdviceViewSet(PaginationMixin, viewsets.ModelViewSet, ):
+class AdviceViewSet(
+    PaginationMixin,
+    viewsets.ModelViewSet,
+):
     queryset = Advice.objects.all()
     serializer_class = AdviceSerializer
 
@@ -143,9 +153,23 @@ class ArticleViewSet(viewsets.ModelViewSet):
     serializer_class = ArticleSerializer
 
 
-class PortfolioViewSet(PaginationMixin, viewsets.ModelViewSet, ):
-    queryset = Portfolio.objects.all()
+class PortfolioViewSet(
+    PaginationMixin,
+    viewsets.ModelViewSet,
+):
     serializer_class = PortfolioSerializer
+    queryset = Portfolio.objects.all()
+
+    def get_queryset(self):
+        queryset = Portfolio.objects.all()
+
+        # filtering by title
+        title = self.request.query_params.get("title")
+
+        if title:
+            queryset = queryset.filter(title__icontains=title)
+
+        return queryset
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
