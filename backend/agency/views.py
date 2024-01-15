@@ -91,6 +91,22 @@ class EventViewSet(viewsets.ModelViewSet):
 class AdviceViewSet(viewsets.ModelViewSet):
     queryset = Advice.objects.all()
     serializer_class = AdviceSerializer
+    pagination_class = LargeResultsSetPagination
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        page = self.paginate_queryset(queryset)
+
+        if page is not None:
+            serializer = AdviceSerializer(
+                page, many=True, context={"request": request}
+            )
+            return self.get_paginated_response({"results": serializer.data})
+
+        serializer = AdviceSerializer(
+            queryset, many=True, context={"request": request}
+        )
+        return Response({"num_pages": 1, "results": serializer.data})
 
 
 class ReviewViewSet(viewsets.ModelViewSet):
