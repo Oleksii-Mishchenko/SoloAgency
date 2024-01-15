@@ -28,7 +28,20 @@ from agency.serializers import (
     OrganizerListSerializer,
     EventListSerializer,
 )
-import telebot
+
+
+class PaginationMixin:
+    pagination_class = LargeResultsSetPagination
+
+    def paginated_response(self, queryset, serializer):
+        page = self.paginate_queryset(queryset)
+
+        if page is not None:
+            serializer_instance = serializer(page, many=True, context={"request": self.request})
+            return self.get_paginated_response({"results": serializer_instance.data})
+
+        serializer_instance = serializer(queryset, many=True, context={"request": self.request})
+        return Response({"num_pages": 1, "results": serializer_instance.data})
 
 
 class ServiceViewSet(viewsets.ModelViewSet):
@@ -41,25 +54,14 @@ class AgencyViewSet(viewsets.ModelViewSet):
     serializer_class = AgencySerializer
 
 
-class EventTypeViewSet(viewsets.ModelViewSet):
+class EventTypeViewSet(viewsets.ModelViewSet, PaginationMixin):
     queryset = EventType.objects.all()
     serializer_class = EventTypeSerializer
     pagination_class = LargeResultsSetPagination
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
-        page = self.paginate_queryset(queryset)
-
-        if page is not None:
-            serializer = EventTypeSerializer(
-                page, many=True, context={"request": request}
-            )
-            return self.get_paginated_response({"results": serializer.data})
-
-        serializer = EventTypeSerializer(
-            queryset, many=True, context={"request": request}
-        )
-        return Response({"num_pages": 1, "results": serializer.data})
+        return self.paginated_response(queryset, EventTypeSerializer)
 
 
 class OrganizerViewSet(viewsets.ModelViewSet):
@@ -88,25 +90,14 @@ class EventViewSet(viewsets.ModelViewSet):
         return super().create(request, *args, **kwargs)
 
 
-class AdviceViewSet(viewsets.ModelViewSet):
+class AdviceViewSet(viewsets.ModelViewSet, PaginationMixin):
     queryset = Advice.objects.all()
     serializer_class = AdviceSerializer
     pagination_class = LargeResultsSetPagination
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
-        page = self.paginate_queryset(queryset)
-
-        if page is not None:
-            serializer = AdviceSerializer(
-                page, many=True, context={"request": request}
-            )
-            return self.get_paginated_response({"results": serializer.data})
-
-        serializer = AdviceSerializer(
-            queryset, many=True, context={"request": request}
-        )
-        return Response({"num_pages": 1, "results": serializer.data})
+        return self.paginated_response(queryset, AdviceSerializer)
 
 
 class ReviewViewSet(viewsets.ModelViewSet):
