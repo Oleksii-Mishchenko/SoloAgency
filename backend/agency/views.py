@@ -12,6 +12,7 @@ from agency.models import (
     Review,
     CallRequest,
     Article,
+    Portfolio,
 )
 from agency.pagination import LargeResultsSetPagination
 from agency.serializers import (
@@ -27,6 +28,7 @@ from agency.serializers import (
     ReviewListSerializer,
     OrganizerListSerializer,
     EventListSerializer,
+    PortfolioSerializer,
 )
 
 
@@ -54,10 +56,9 @@ class AgencyViewSet(viewsets.ModelViewSet):
     serializer_class = AgencySerializer
 
 
-class EventTypeViewSet(viewsets.ModelViewSet, PaginationMixin):
+class EventTypeViewSet(PaginationMixin, viewsets.ModelViewSet, ):
     queryset = EventType.objects.all()
     serializer_class = EventTypeSerializer
-    pagination_class = LargeResultsSetPagination
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
@@ -90,10 +91,9 @@ class EventViewSet(viewsets.ModelViewSet):
         return super().create(request, *args, **kwargs)
 
 
-class AdviceViewSet(viewsets.ModelViewSet, PaginationMixin):
+class AdviceViewSet(PaginationMixin, viewsets.ModelViewSet, ):
     queryset = Advice.objects.all()
     serializer_class = AdviceSerializer
-    pagination_class = LargeResultsSetPagination
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
@@ -141,3 +141,12 @@ class CallRequestViewSet(viewsets.ModelViewSet):
 class ArticleViewSet(viewsets.ModelViewSet):
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
+
+
+class PortfolioViewSet(PaginationMixin, viewsets.ModelViewSet, ):
+    queryset = Portfolio.objects.all()
+    serializer_class = PortfolioSerializer
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        return self.paginated_response(queryset, PortfolioSerializer)

@@ -9,7 +9,7 @@ from agency.models import (
     Advice,
     Review,
     CallRequest,
-    Article,
+    Article, Portfolio,
 )
 
 User = get_user_model()
@@ -178,4 +178,16 @@ class ReviewListSerializer(serializers.ModelSerializer):
             "rating",
             "created_at",
             "is_approved",
+        )
+
+
+class PortfolioSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Portfolio
+        fields = (
+            "id",
+            "title",
+            "description",
+            "photo",
+            "created_at",
         )

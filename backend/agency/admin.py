@@ -8,7 +8,7 @@ from .models import (
     Advice,
     Review,
     CallRequest,
-    Article,
+    Article, Portfolio,
 )
 
 
@@ -44,3 +44,4 @@ admin.site.register(CallRequest)
 admin.site.register(Event)
 admin.site.register(Article)
 admin.site.register(Agency)
+admin.site.register(Portfolio)

@@ -24,6 +24,14 @@ def event_type_photo_file_path(instance, filename):
 
     return os.path.join("uploads/event-types", filename)
 
+def portfolio_photo_file_path(instance, filename):
+    _, extension = os.path.splitext(filename)
+    filename = f"{slugify(instance.title)}-{uuid.uuid4()}{extension}"
+
+    return os.path.join("uploads/portfolio", filename)
+
+
+
 
 class Article(models.Model):
     title = models.CharField(max_length=255)
@@ -178,3 +186,12 @@ class CallRequest(models.Model):
 
     def __str__(self):
         return f"CallRequest: {self.name} {self.phone}"
+
+
+class Portfolio(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    photo = models.ImageField(
+        upload_to=portfolio_photo_file_path,
+    )
+    description = models.TextField(max_length=1023)
+    title = models.CharField(max_length=120)
