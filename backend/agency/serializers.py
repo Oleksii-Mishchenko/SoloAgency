@@ -9,7 +9,8 @@ from agency.models import (
     Advice,
     Review,
     CallRequest,
-    Article, Portfolio,
+    Article,
+    Portfolio,
 )
 
 User = get_user_model()

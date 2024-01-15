@@ -24,13 +24,12 @@ def event_type_photo_file_path(instance, filename):
 
     return os.path.join("uploads/event-types", filename)
 
+
 def portfolio_photo_file_path(instance, filename):
     _, extension = os.path.splitext(filename)
     filename = f"{slugify(instance.title)}-{uuid.uuid4()}{extension}"
 
     return os.path.join("uploads/portfolio", filename)
-
-
 
 
 class Article(models.Model):
