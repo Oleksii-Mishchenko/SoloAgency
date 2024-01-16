@@ -5,6 +5,7 @@ import classNames from 'classnames';
 
 type InputProps = InputHTMLAttributes<HTMLInputElement> & {
   className?: string;
+  label: string;
   errors: FieldErrors<FieldValues>;
   register: {
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -16,6 +17,7 @@ type InputProps = InputHTMLAttributes<HTMLInputElement> & {
 
 type TextAreaProps = TextareaHTMLAttributes<HTMLTextAreaElement> & {
   className?: string;
+  label: string;
   errors: FieldErrors<FieldValues>;
   register: {
     onChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
@@ -27,6 +29,7 @@ type TextAreaProps = TextareaHTMLAttributes<HTMLTextAreaElement> & {
 
 export const Input: FC<InputProps> = ({
   className,
+  label,
   register,
   errors,
   ...props
@@ -35,23 +38,29 @@ export const Input: FC<InputProps> = ({
   const error = errors[name]?.message as string;
 
   return (
-    <>
+    <label className={classNames('input', className)}>
+      <p className="input__label">{label}</p>
+
       <input
-        className={classNames('input', className)}
+        className={classNames('input__field', {
+          'input__field--error': !!errors[name],
+        })}
         {...register}
         {...props}
       />
+
       {errors[name] && (
         <p className="input__error">
           {error || 'Помилка при валідації даних.'}
         </p>
       )}
-    </>
+    </label>
   );
 };
 
 export const Textarea: FC<TextAreaProps> = ({
   className,
+  label,
   register,
   errors,
   ...props
@@ -60,17 +69,20 @@ export const Textarea: FC<TextAreaProps> = ({
   const error = errors[name]?.message as string;
 
   return (
-    <>
+    <label className={classNames('input', className)}>
+      <p className="input__label">{label}</p>
+
       <textarea
-        className={classNames('input', 'input--textarea', className)}
+        className="input__field input__field--textarea"
         {...register}
         {...props}
       />
+
       {errors[name] && (
         <p className="input__error">
           {error || 'Помилка при валідації даних.'}
         </p>
       )}
-    </>
+    </label>
   );
 };

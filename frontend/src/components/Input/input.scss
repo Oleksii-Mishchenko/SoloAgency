@@ -1,59 +1,88 @@
 @import '../../styles/main.scss';
 
 .input {
-  display: block;
-  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  padding: 10px 20px;
-  border: 0.5px solid $color-grey-blocks;
-  border-radius: 5px;
-  background-color: transparent;
-  outline: none;
-  transition: all 0.3s;
-  color: $color-grey-text;
 
-  @extend %secondary-body;
+  &__label {
+    margin-bottom: 8px;
+    padding-inline: 8px;
+    color: $color-grey-text;
 
-  &:-webkit-autofill:focus {
-    -webkit-text-fill-color: $color-grey-text;
-    -webkit-box-shadow: 0 100px 0 0 $color-white inset;
-    -webkit-box-shadow: 0 0 5px 2px rgba($color-grey-blocks, 0.3);
-    transition: background-color 5000s ease-in-out 0s;
-  }
-
-  &--textarea {
-    resize: none;
-  }
-
-  &:hover {
-    border: 0.5px solid $color-black;
-    box-shadow: 0 0 5px rgba($color-grey-blocks, 0.3);
-  }
-
-  &:focus {
-    border: 0.5px solid $color-black;
-    outline: 0.5px solid $color-grey-elements;
-    box-shadow: 0 0 5px rgba($color-black, 0.4);
-  }
-
-  &::placeholder {
     @extend %secondary-body;
-    color: $color-grey-elements;
+  }
+
+  &__field {
+    padding: 7px 16px;
+    border: 1px solid $color-grey-blocks;
+    border-radius: 5px;
+    background-color: transparent;
+    outline: none;
+    transition: all 0.3s;
+    color: $color-black;
+  
+    @extend %body;
+
+
+    &:-webkit-autofill:focus {
+      -webkit-text-fill-color: $color-black;
+      -webkit-box-shadow: 0 100px 0 0 $color-white inset;
+      -webkit-box-shadow: 0 0 5px 2px rgba($color-grey-blocks, 0.3);
+      transition: background-color 5000s ease-in-out 0s;
+    }
+
+    &:hover {
+      border-color: $color-black;
+      box-shadow: 0 0 5px rgba($color-grey-blocks, 0.3);
+    }
+
+    &:focus {
+      border-color: $color-black;
+      box-shadow: 0 0 5px rgba($color-black, 0.4);
+    }
+
+    &::placeholder {
+      @extend %body;
+      color: $color-grey-elements;
+    }
+
+    &--error {
+      border-color: $color-red-error;
+      color: $color-red-error;
+
+      &:hover {
+        border-color: $color-red-error;
+        box-shadow: 0 0 5px rgba($color-red-error, 0.3);
+      }
+
+      &:focus {
+        border-color: $color-red-error;
+        box-shadow: 0 0 5px rgba($color-red-error, 0.4);
+      }
+    }
+
+    &--textarea {
+      resize: none;
+    }
   }
 
   &__error {
+    position: relative;
+    margin-top: 8px;
+    padding-left: 30px;
+
     @extend %body-error;
-    transform: translateY(-11px);
 
     &::before {
       content: '';
-      display: inline-block;
-      width: 12px;
-      height: 12px;
+      position: absolute;
+      top: 1px;
+      left: 8px;
+      width: 14px;
+      height: 14px;
       background-image: url(../../assets/img/error.svg);
       background-size: contain;
-      margin-inline: 8px;
-      transform: translateY(2px);
     }
   }
 }
