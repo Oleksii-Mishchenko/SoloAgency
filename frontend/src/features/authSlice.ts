@@ -49,7 +49,7 @@ export const register = createAsyncThunk(
   },
 );
 
-export const AuthState = createSlice({
+export const authState = createSlice({
   name: 'auth',
   initialState,
   reducers: {},
@@ -104,4 +104,4 @@ export const AuthState = createSlice({
   },
 });
 
-export default AuthState.reducer;
+export default authState.reducer;

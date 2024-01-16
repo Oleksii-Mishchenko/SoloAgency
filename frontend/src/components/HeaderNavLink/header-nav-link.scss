@@ -5,10 +5,14 @@
   transition: all 0.3s;
 
   &:hover {
-    color: $color-green-dark;
+    color: $color-green-hover;
   }
 
   &--active {
     color: $color-green-dark;
+
+    &:hover {
+      color: $color-green-dark;
+    }
   }
 }

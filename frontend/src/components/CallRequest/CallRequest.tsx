@@ -6,6 +6,11 @@ import { Input, Textarea } from '../Input';
 import { Errors } from '../Errors';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import * as callRequestActions from '../../features/callRequestSlice';
+import {
+  handleCityChange,
+  handleNameChange,
+  trimString,
+} from '../../helpers/textManipulator';
 
 type Props = {
   relPage: string;
@@ -25,9 +30,8 @@ export const CallRequest: React.FC<Props> = ({ relPage }) => {
     handleSubmit,
     reset,
     setValue,
-    trigger,
   } = useForm<CallRequestData>({
-    mode: 'onBlur',
+    mode: 'onTouched',
   });
 
   const onSubmit: SubmitHandler<CallRequestData> = async (
@@ -57,87 +61,112 @@ export const CallRequest: React.FC<Props> = ({ relPage }) => {
 
       {!serverErrors && !callRequest && (
         <form className="call-request__form" onSubmit={handleSubmit(onSubmit)}>
-          <Input
-            className="call-request__input"
-            type="text"
-            placeholder="Ім'я"
-            errors={errors}
-            register={{
-              ...register('name', {
-                required: `Вкажіть ваше ім'я`,
-                minLength: {
-                  value: 3,
-                  message: 'Не менше 3 символів',
-                },
-                maxLength: {
-                  value: 63,
-                  message: `Занадто довге ім'я`,
-                },
-                onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                  const transformedValue = e.target.value
-                    .split(' ')
-                    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-                    .join(' ');
+          <fieldset className="call-request__form-fieldset">
+            <Input
+              className="call-request__input"
+              type="text"
+              label="Ваше ім’я"
+              placeholder="Ім'я"
+              errors={errors}
+              register={{
+                ...register('name', {
+                  required: `Вкажіть ваше ім'я`,
+                  minLength: {
+                    value: 2,
+                    message: 'Не менше 2 символів',
+                  },
+                  maxLength: {
+                    value: 30,
+                    message: `Не більше 30 символів`,
+                  },
+                  pattern: {
+                    value: /^[A-Za-zА-Яа-я ]+$/,
+                    message: 'Тільки українські та латинські літери',
+                  },
+                  onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
+                    const handledValue = handleNameChange(event.target.value);
 
-                  setValue('name', transformedValue);
+                    setValue('name', handledValue);
+                  },
 
-                  if (errors.name) {
-                    trigger('name');
-                  }
-                },
-              }),
-            }}
-          />
+                  onBlur: (event: React.ChangeEvent<HTMLInputElement>) => {
+                    const trimmedValue = trimString(event.target.value);
 
-          <Input
-            className="call-request__input"
-            type="text"
-            placeholder="Місто"
-            errors={errors}
-            register={{
-              ...register('city', {
-                required: 'Вкажіть з якого ви міста',
-                minLength: {
-                  value: 3,
-                  message: 'Не менше 3 символів',
-                },
-                maxLength: {
-                  value: 63,
-                  message: 'Занадто довга назва',
-                },
-              }),
-            }}
-          />
+                    setValue('name', trimmedValue);
+                  },
+                }),
+              }}
+            />
 
-          <Input
-            className="call-request__input"
-            type="tel"
-            placeholder="+380000000000"
-            errors={errors}
-            register={{
-              ...register('phone', {
-                required: 'Вкажіть ваш номер телефону',
-                value: '+380',
-                pattern: {
-                  value: /^\+380\d{9}$/,
-                  message: 'Формат номеру телефону +380123456789',
-                },
-                onChange: event => handlePhoneInput(event),
-              }),
-            }}
-          />
+            <Input
+              className="call-request__input"
+              type="text"
+              label="З якого Ви міста?"
+              placeholder="Місто"
+              errors={errors}
+              register={{
+                ...register('city', {
+                  required: 'Вкажіть з якого ви міста',
+                  minLength: {
+                    value: 2,
+                    message: 'Не менше 2 символів',
+                  },
+                  maxLength: {
+                    value: 30,
+                    message: 'Не більше 30 символів',
+                  },
+                  pattern: {
+                    value: /^[A-Za-zА-Яа-я ]+$/,
+                    message: 'Тільки українські та латинські літери',
+                  },
 
-          <Textarea
-            className="call-request__input"
-            rows={5}
-            placeholder="Деталі"
-            errors={errors}
-            register={{
-              ...register('description', {
-                maxLength: { value: 200, message: 'Не більше 200 символів' },
-              }),
-            }}
-          />
+                  onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
+                    const handledValue = handleCityChange(event.target.value);
+
+                    setValue('city', handledValue);
+                  },
+
+                  onBlur: (event: React.ChangeEvent<HTMLInputElement>) => {
+                    const trimmedValue = trimString(event.target.value);
+
+                    setValue('city', trimmedValue);
+                  },
+                }),
+              }}
+            />
+
+            <Input
+              className="call-request__input"
+              type="tel"
+              label="Залиште свій номер телефону"
+              placeholder="+380000000000"
+              errors={errors}
+              register={{
+                ...register('phone', {
+                  required: 'Вкажіть ваш номер телефону',
+                  value: '+380',
+                  pattern: {
+                    value: /^\+380\d{9}$/,
+                    message: 'Формат номеру телефону +380123456789',
+                  },
+                  onChange: event => handlePhoneInput(event),
+                }),
+              }}
+            />
+
+            <Textarea
+              className="call-request__input"
+              label="Опишіть тему звернення"
+              rows={5}
+              placeholder="Деталі"
+              errors={errors}
+              register={{
+                ...register('description', {
+                  maxLength: { value: 200, message: 'Не більше 200 символів' },
+                }),
+              }}
+            />
+          </fieldset>
 
           <MainButton
             isLoading={isUploading}
