@@ -99,6 +99,7 @@ class EventSerializer(serializers.ModelSerializer):
             "city",
             "venue",
             "phone",
+            "status"
         )
 
 
@@ -124,6 +125,7 @@ class EventListSerializer(serializers.ModelSerializer):
             "venue",
             "phone",
             "created_at",
+            "status",
         )
 
     def get_event_name(self, obj):

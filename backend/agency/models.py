@@ -125,6 +125,17 @@ class Event(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
 
+    status = models.CharField(
+        max_length=64,
+        choices=[
+            ("created", "created"),
+            ("done", "done"),
+            ("in_progress", "in_progress"),
+            ("rejected", "rejected")
+    ],
+        default="created",
+                              )
+
     def __str__(self):
         return f"{self.phone} - {self.event_type.name}"
 
