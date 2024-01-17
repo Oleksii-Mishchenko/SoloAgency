@@ -2,21 +2,23 @@
 
 .pagination {
   display: flex;
-  column-gap: 20px;
+  justify-content: center;
+  column-gap: 15px;
 
   &__button {
     height: 40px;
     width: 40px;
-    border: none;
+    border: 1px solid $color-green-dark;
     border-radius: 5px;
-    background-color: $color-green-dark;
+    background-color: transparent;
     background-repeat: no-repeat;
     background-position: center;
+    opacity: 0.65;
     cursor: pointer;
     transition: all 0.3s;
 
     &:hover {
-      box-shadow: 0 0 7px rgba($color-black, 0.5);
+      opacity: 0.9;
     }
 
     &:active {
@@ -24,18 +26,17 @@
     }
 
     &:disabled {
-      background-color: $color-green-disabled;
-      box-shadow: none;
+      opacity: 0.3;
       transform: none;
       cursor: auto;
     }
 
     &--left {
-      background-image: url(../../assets/img/chevron-left-white.svg);
+      background-image: url(../../assets/img/chevron-left.svg);
     }
 
     &--right {
-      background-image: url(../../assets/img/chevron-right-white.svg);
+      background-image: url(../../assets/img/chevron-right.svg);
     }
   }
 
@@ -51,7 +52,7 @@
     align-items: center;
     height: 40px;
     width: 40px;
-    border: 1px solid $color-green-dark;
+    border: 1px solid $color-white;
     border-radius: 5px;
     user-select: none;
     transition: all 0.3s;
@@ -59,8 +60,7 @@
     @extend %body-bold-button-green;
 
     &:hover {
-      background-color: $color-green-dark;
-      color: $color-white;
+      border-color: $color-green-dark;
     }
 
     &:active {
@@ -68,6 +68,7 @@
     }
 
     &--active {
+      border-color: $color-green-dark;
       background-color: $color-green-dark;
       color: $color-white;
 

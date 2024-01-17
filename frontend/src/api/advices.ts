@@ -3,8 +3,8 @@ import { client } from '../utils/axiosClient';
 
 const advicesUrl = 'agency/advices/';
 
-export const loadAdvices = (): Promise<Advices> => {
-  return client.get<Advices>(advicesUrl);
+export const loadAdvices = (params: string): Promise<Advices> => {
+  return client.get<Advices>(advicesUrl + params);
 };
 
 export const addAdvice = (advice: NewAdvice): Promise<Advice> => {

@@ -26,8 +26,8 @@ const initialState: AdvicesState = {
   errors: null,
 };
 
-export const init = createAsyncThunk('fetch/advices', async () => {
-  const response = await loadAdvices();
+export const init = createAsyncThunk('fetch/advices', async (page: string) => {
+  const response = await loadAdvices(page);
 
   return response;
 });

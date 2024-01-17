@@ -5,23 +5,30 @@ import { Loader } from '../Loader';
 import { LoaderElement } from '../../types/LoaderElement';
 import { AdviceAccordion } from '../AdviceAccordion';
 import './advices.scss';
+import { Pagination } from '../Pagination';
+import { useSearchParams } from 'react-router-dom';
+import { getSearchWith } from '../../helpers/getSearchWith';
 
 type Props = {
   relPage: string;
 };
 
 export const Advices: React.FC<Props> = ({ relPage }) => {
+  const [searchParams] = useSearchParams();
+  const page = searchParams.get('page') || 1;
   const [openedId, setOpenedId] = useState<number | null>(null);
   const dispatch = useAppDispatch();
   const {
-    advices: { results },
+    advices: { num_pages, current_page, next_page, previous_page, results },
     errors,
     isLoadingAdvices,
   } = useAppSelector(state => state.advices);
 
   useEffect(() => {
-    dispatch(advicesActions.init());
-  }, [dispatch]);
+    const params = getSearchWith({ page }, searchParams);
+
+    dispatch(advicesActions.init(`?${params}`));
+  }, [dispatch, searchParams, page]);
 
   // const handleRemove = (id: number) => {
   //   dispatch(advicesActions.remove(id));
@@ -52,6 +59,12 @@ export const Advices: React.FC<Props> = ({ relPage }) => {
             );
           })}
       </div>
+
+      {num_pages > 1 && (
+        <Pagination
+          config={{ num_pages, current_page, next_page, previous_page }}
+        />
+      )}
     </section>
   );
 };
