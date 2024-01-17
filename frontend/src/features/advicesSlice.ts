@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { Advice, NewAdvice } from '../types/Advice';
+import { Advices, NewAdvice } from '../types/Advice';
 import { addAdvice, removeAdvice, loadAdvices } from '../api/advices';
 import { ServerErrorResponse } from '../types/ServerErrorResponse';
 import { parseErrors } from '../helpers/parseErrors';
 
 export type AdvicesState = {
-  advices: Advice[];
+  advices: Advices;
   isLoadingAdvices: boolean;
   isUploadingAdvice: boolean;
   deletingAdviceId: number | null;
@@ -13,15 +13,21 @@ export type AdvicesState = {
 };
 
 const initialState: AdvicesState = {
-  advices: [],
+  advices: {
+    num_pages: 0,
+    current_page: 1,
+    next_page: null,
+    previous_page: null,
+    results: [],
+  },
   isLoadingAdvices: false,
   isUploadingAdvice: false,
   deletingAdviceId: null,
   errors: null,
 };
 
-export const init = createAsyncThunk('fetch/advices', async () => {
-  const response = await loadAdvices();
+export const init = createAsyncThunk('fetch/advices', async (page: string) => {
+  const response = await loadAdvices(page);
 
   return response;
 });
@@ -48,7 +54,6 @@ export const advicesSlice = createSlice({
   extraReducers: builder => {
     builder.addCase(init.pending, state => {
       state.isLoadingAdvices = true;
-      state.advices = [];
       state.errors = null;
     });
 
@@ -59,7 +64,6 @@ export const advicesSlice = createSlice({
 
     builder.addCase(init.rejected, (state, action) => {
       state.isLoadingAdvices = false;
-      state.advices = [];
       state.errors = parseErrors(action.error.message);
     });
 

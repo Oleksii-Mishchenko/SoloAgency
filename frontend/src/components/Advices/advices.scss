@@ -1,0 +1,40 @@
+@import '../../styles/main.scss';
+
+.advices {
+  &__title {
+    margin-bottom: 20px;
+    text-align: center;
+
+    @extend %h2;
+
+    @include on-tablet {
+      margin-bottom: 30px;
+      font-size: 32px;
+      line-height: 35px;
+    }
+  }
+
+  &__loader {
+    margin: 0 auto;
+  }
+
+  &__wrapper {
+    margin-bottom: 30px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__advice {
+    margin-bottom: 20px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    @include on-tablet {
+      margin-bottom: 30px;
+    }
+  }
+}

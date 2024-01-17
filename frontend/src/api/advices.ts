@@ -1,10 +1,10 @@
-import { Advice, NewAdvice } from '../types/Advice';
+import { Advice, Advices, NewAdvice } from '../types/Advice';
 import { client } from '../utils/axiosClient';
 
 const advicesUrl = 'agency/advices/';
 
-export const loadAdvices = (): Promise<Advice[]> => {
-  return client.get<Advice[]>(advicesUrl);
+export const loadAdvices = (params: string): Promise<Advices> => {
+  return client.get<Advices>(advicesUrl + params);
 };
 
 export const addAdvice = (advice: NewAdvice): Promise<Advice> => {
