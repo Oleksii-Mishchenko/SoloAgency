@@ -85,6 +85,16 @@ class OrganizerViewSet(viewsets.ModelViewSet):
 class EventViewSet(viewsets.ModelViewSet):
     queryset = Event.objects.all()
 
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_authenticated:
+            if user.is_staff:
+                return Event.objects.all()
+            else:
+                return Event.objects.filter(user=user)
+        else:
+            return Event.objects.none()
+
     def get_serializer_class(self):
         if self.action == "list":
             return EventListSerializer
