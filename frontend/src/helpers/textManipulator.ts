@@ -25,8 +25,8 @@ export const {
 } = textManipulator;
 
 const inputHandlers = {
-  handleNameChange: (string: string): string => {
-    const trimmedValue = removeLeadingSpace(string);
+  handleNameBlur: (string: string): string => {
+    const trimmedValue = trimString(string);
     const noDoubleSpaces = removeDoubleSpaces(trimmedValue);
     const capEveryValue = capEvery(noDoubleSpaces);
 
@@ -42,4 +42,4 @@ const inputHandlers = {
   },
 };
 
-export const { handleNameChange, handleCityChange } = inputHandlers;
+export const { handleNameBlur, handleCityChange } = inputHandlers;

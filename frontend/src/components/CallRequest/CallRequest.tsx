@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import * as callRequestActions from '../../features/callRequestSlice';
 import {
   handleCityChange,
-  handleNameChange,
+  handleNameBlur,
   trimString,
 } from '../../helpers/textManipulator';
 
@@ -30,6 +30,7 @@ export const CallRequest: React.FC<Props> = ({ relPage }) => {
     handleSubmit,
     reset,
     setValue,
+    trigger,
   } = useForm<CallRequestData>({
     mode: 'onTouched',
   });
@@ -83,16 +84,9 @@ export const CallRequest: React.FC<Props> = ({ relPage }) => {
                     value: /^[A-Za-zА-Яа-я ]+$/,
                     message: 'Тільки українські та латинські літери',
                   },
-                  onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
-                    const handledValue = handleNameChange(event.target.value);
-
-                    setValue('name', handledValue);
-                  },
-
                   onBlur: (event: React.ChangeEvent<HTMLInputElement>) => {
-                    const trimmedValue = trimString(event.target.value);
-
-                    setValue('name', trimmedValue);
+                    setValue('name', handleNameBlur(event.target.value));
+                    trigger('name');
                   },
                 }),
               }}
