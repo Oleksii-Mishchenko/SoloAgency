@@ -12,6 +12,6 @@
   }
 
   &__add-advice {
-    grid-column: 1 / -1;
+    @extend .advices-page__advices;
   }
 }

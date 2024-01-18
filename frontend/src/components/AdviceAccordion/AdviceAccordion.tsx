@@ -26,6 +26,7 @@ export const AdviceAccordion: FC<Props> = memo(
 
           <button
             type="button"
+            title={isOpen ? 'Згорнути' : 'Розгорнути'}
             className={classNames('advice__switcher', {
               'advice__switcher--open': isOpen,
             })}
@@ -43,9 +44,15 @@ export const AdviceAccordion: FC<Props> = memo(
             <p className="advice__answer">{answer}</p>
 
             <div className="advice__controls">
-              <button className="advice__control advice__control--edit" />
+              <button
+                className="advice__control advice__control--edit"
+                title="Редагувати"
+              />
 
-              <button className="advice__control advice__control--remove" />
+              <button
+                className="advice__control advice__control--remove"
+                title="Видалити"
+              />
             </div>
           </div>
         </div>

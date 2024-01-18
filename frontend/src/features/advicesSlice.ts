@@ -9,7 +9,8 @@ export type AdvicesState = {
   isLoadingAdvices: boolean;
   isUploadingAdvice: boolean;
   deletingAdviceId: number | null;
-  errors: ServerErrorResponse | null;
+  errorsLoading: ServerErrorResponse | null;
+  errorsUploading: ServerErrorResponse | null;
 };
 
 const initialState: AdvicesState = {
@@ -23,7 +24,8 @@ const initialState: AdvicesState = {
   isLoadingAdvices: false,
   isUploadingAdvice: false,
   deletingAdviceId: null,
-  errors: null,
+  errorsLoading: null,
+  errorsUploading: null,
 };
 
 export const init = createAsyncThunk('fetch/advices', async (page: string) => {
@@ -54,7 +56,7 @@ export const advicesSlice = createSlice({
   extraReducers: builder => {
     builder.addCase(init.pending, state => {
       state.isLoadingAdvices = true;
-      state.errors = null;
+      state.errorsLoading = null;
     });
 
     builder.addCase(init.fulfilled, (state, action) => {
@@ -64,22 +66,22 @@ export const advicesSlice = createSlice({
 
     builder.addCase(init.rejected, (state, action) => {
       state.isLoadingAdvices = false;
-      state.errors = parseErrors(action.error.message);
+      state.errorsLoading = parseErrors(action.error.message);
     });
 
     builder.addCase(add.pending, state => {
       state.isUploadingAdvice = true;
-      state.errors = null;
+      state.errorsUploading = null;
     });
 
     builder.addCase(add.fulfilled, (state, action) => {
       state.isUploadingAdvice = false;
-      state.advices.push(action.payload);
+      state.advices.results.push(action.payload);
     });
 
     builder.addCase(add.rejected, (state, action) => {
       state.isUploadingAdvice = false;
-      state.errors = parseErrors(action.error.message);
+      state.errorsUploading = parseErrors(action.error.message);
     });
 
     builder.addCase(remove.pending, (state, action) => {

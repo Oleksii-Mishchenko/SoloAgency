@@ -8,6 +8,7 @@ import './advices.scss';
 import { Pagination } from '../Pagination';
 import { useSearchParams } from 'react-router-dom';
 import { getSearchWith } from '../../helpers/getSearchWith';
+import { Errors } from '../Errors';
 
 type Props = {
   relPage: string;
@@ -20,7 +21,7 @@ export const Advices: React.FC<Props> = ({ relPage }) => {
   const dispatch = useAppDispatch();
   const {
     advices: { num_pages, current_page, next_page, previous_page, results },
-    errors,
+    errorsLoading,
     isLoadingAdvices,
   } = useAppSelector(state => state.advices);
 
@@ -43,8 +44,12 @@ export const Advices: React.FC<Props> = ({ relPage }) => {
           <Loader className="advices__loader" element={LoaderElement.Block} />
         )}
 
+        {errorsLoading && (
+          <Errors className="advices__errors" errors={errorsLoading} />
+        )}
+
         {!!results.length &&
-          !errors &&
+          !errorsLoading &&
           results.map(advice => {
             const isOpen = advice.id === openedId;
 

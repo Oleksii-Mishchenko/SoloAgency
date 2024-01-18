@@ -1,7 +1,7 @@
 import React, { FC, InputHTMLAttributes, TextareaHTMLAttributes } from 'react';
-import './input.scss';
 import { FieldErrors, FieldValues } from 'react-hook-form';
 import classNames from 'classnames';
+import './input.scss';
 
 type InputProps = InputHTMLAttributes<HTMLInputElement> & {
   className?: string;
@@ -11,18 +11,6 @@ type InputProps = InputHTMLAttributes<HTMLInputElement> & {
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     onBlur: (event: React.FocusEvent<HTMLInputElement>) => void;
     ref: React.RefCallback<HTMLInputElement>;
-    name: string;
-  };
-};
-
-type TextAreaProps = TextareaHTMLAttributes<HTMLTextAreaElement> & {
-  className?: string;
-  label: string;
-  errors: FieldErrors<FieldValues>;
-  register: {
-    onChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
-    onBlur: (event: React.FocusEvent<HTMLTextAreaElement>) => void;
-    ref: React.RefCallback<HTMLTextAreaElement>;
     name: string;
   };
 };
@@ -56,6 +44,18 @@ export const Input: FC<InputProps> = ({
       )}
     </label>
   );
+};
+
+type TextAreaProps = TextareaHTMLAttributes<HTMLTextAreaElement> & {
+  className?: string;
+  label: string;
+  errors: FieldErrors<FieldValues>;
+  register: {
+    onChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+    onBlur: (event: React.FocusEvent<HTMLTextAreaElement>) => void;
+    ref: React.RefCallback<HTMLTextAreaElement>;
+    name: string;
+  };
 };
 
 export const Textarea: FC<TextAreaProps> = ({
