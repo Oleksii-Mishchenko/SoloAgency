@@ -1,0 +1,32 @@
+@import '../../styles/main.scss';
+
+.notification {
+  box-sizing: border-box;
+  max-width: 450px;
+  padding: 40px;
+  border: 1px solid $color-green-element;
+  border-radius: 20px;
+  background-color: $color-white;
+  box-shadow: 0 0 7px rgba($color-black, 0.5);
+
+  &--error {
+    border-color: $color-red-error;
+    box-shadow: 0 0 7px rgba($color-red-error, 0.5);
+  }
+
+  &__message {
+    @extend %h3;
+
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  &__errors {
+    margin: 0 auto 20px;
+  }
+
+  &__button {
+    display: block;
+    margin: 0 auto;
+  }
+}

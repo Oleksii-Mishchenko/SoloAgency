@@ -33,6 +33,13 @@ const inputHandlers = {
     return capEveryValue;
   },
 
+  handleMessageBlur: (string: string): string => {
+    const trimmedValue = trimString(string);
+    const capFirstValue = capFirst(trimmedValue);
+
+    return capFirstValue;
+  },
+
   handleCityChange: (string: string): string => {
     const trimmedValue = removeLeadingSpace(string);
     const noDoubleSpaces = removeDoubleSpaces(trimmedValue);
@@ -42,4 +49,5 @@ const inputHandlers = {
   },
 };
 
-export const { handleNameBlur, handleCityChange } = inputHandlers;
+export const { handleNameBlur, handleCityChange, handleMessageBlur } =
+  inputHandlers;
