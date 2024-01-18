@@ -1,20 +1,10 @@
-# Використовуйте офіційний образ Node.js як базовий образ
-FROM node:21
+FROM node:21.2.0
 
-# Встановити робочий каталог /app
 WORKDIR /app
+COPY frontend/package*.json ./
+RUN npm install
 
-# Копіювати package.json та package-lock.json
-COPY frontend/package*.json .
+COPY . .
 
-# Встановити залежності та запустити додаткові команди
-RUN npm install -g npm@10.2.5; npm cache clean --force
-
-# Копіювати решту коду додатка
-COPY frontend/ .
-
-# Відкрити порт, на якому буде працювати React-додаток
-EXPOSE 3000
-
-# Команда для запуску додатка у режимі розробки
-CMD ["npm", "install", "--legacy-peer-deps", "&&", "npm", "run", "dev"]
+CMD ["npm", "run", "dev"]
+#CMD ["sleep", "80000"]
