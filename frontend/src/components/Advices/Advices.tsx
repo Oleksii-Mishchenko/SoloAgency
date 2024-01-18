@@ -26,6 +26,8 @@ export const Advices: React.FC<Props> = ({ relPage }) => {
   } = useAppSelector(state => state.advices);
 
   useEffect(() => {
+    setOpenedId(null);
+
     const params = getSearchWith({ page }, searchParams);
 
     dispatch(advicesActions.init(`?${params}`));

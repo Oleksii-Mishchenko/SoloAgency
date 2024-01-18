@@ -2,6 +2,7 @@ import { memo, FC, useRef } from 'react';
 import { Advice } from '../../types/Advice';
 import './advice.scss';
 import classNames from 'classnames';
+import { Confirmation } from '../Confirmation';
 
 type Props = {
   className: string;
@@ -56,6 +57,11 @@ export const AdviceAccordion: FC<Props> = memo(
             </div>
           </div>
         </div>
+
+        <Confirmation
+          className="advice__confirmation"
+          message="Хочете видалити питання?"
+        />
       </article>
     );
   },
