@@ -1,4 +1,4 @@
-import 'confirmation.scss';
+import './confirmation.scss';
 
 type Props = {
   className: string;
