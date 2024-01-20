@@ -35,9 +35,13 @@ export const client = {
   },
 
   patch: async <T, D>(url: string, data: D): Promise<T> => {
-    const response = await instance.patch<T>(url, data);
+    try {
+      const response: AxiosResponse<T> = await instance.patch<T>(url, data);
 
-    return response.data;
+      return response.data;
+    } catch (error) {
+      return handleErrorFromServer(error);
+    }
   },
 
   delete: async <T>(url: string): Promise<T> => {

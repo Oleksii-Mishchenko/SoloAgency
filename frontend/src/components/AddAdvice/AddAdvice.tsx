@@ -4,7 +4,6 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { handleMessageBlur } from '../../helpers/textManipulator';
 import { Input, Textarea } from '../Input';
-import './add-advice.scss';
 import { RatingType } from '../../types/Rating';
 import { Rating } from '../Rating';
 import { MainButton } from '../MainButton';
@@ -12,6 +11,8 @@ import { Notification } from '../Notification';
 import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { getSearchWith } from '../../helpers/getSearchWith';
+
+import './add-advice.scss';
 
 type Props = {
   relPage: string;

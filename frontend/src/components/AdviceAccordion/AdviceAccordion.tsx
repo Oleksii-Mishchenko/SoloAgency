@@ -2,6 +2,8 @@ import { memo, FC, useRef, useState } from 'react';
 import { Advice } from '../../types/Advice';
 import classNames from 'classnames';
 import { Confirmation } from '../Confirmation';
+import { EditAdvice } from '../EditAdvice';
+
 import './advice.scss';
 
 type Props = {
@@ -16,13 +18,15 @@ type Props = {
 export const AdviceAccordion: FC<Props> = memo(
   ({
     className,
-    advice: { id, question, answer },
+    advice,
     isExpanded,
     setExpandedId,
     handleRemove,
     isDeleting,
   }) => {
-    const [hasConfirmation, setHasConfirmation] = useState<boolean>(false);
+    const { id, question, answer } = advice;
+    const [hasDelConfirm, setHasDelConfirm] = useState<boolean>(false);
+    const [isEditing, setIsEditing] = useState<boolean>(false);
     const drawerRef = useRef<HTMLDivElement>(null);
 
     return (
@@ -57,6 +61,10 @@ export const AdviceAccordion: FC<Props> = memo(
               <button
                 className="advice__control advice__control--edit"
                 title="Редагувати"
+                onClick={event => {
+                  event.stopPropagation();
+                  setIsEditing(true);
+                }}
               />
 
               <button
@@ -64,20 +72,28 @@ export const AdviceAccordion: FC<Props> = memo(
                 title="Видалити"
                 onClick={event => {
                   event.stopPropagation();
-                  setHasConfirmation(true);
+                  setHasDelConfirm(true);
                 }}
               />
             </div>
           </div>
         </div>
 
-        {hasConfirmation && (
+        {hasDelConfirm && (
           <Confirmation
             className="advice__confirmation"
             message="Бажаєте видалити питання?"
-            onReject={() => setHasConfirmation(false)}
+            onReject={() => setHasDelConfirm(false)}
             onConfirm={() => handleRemove(id)}
             isLoading={isDeleting}
+          />
+        )}
+
+        {isEditing && (
+          <EditAdvice
+            className="advice__edit-advice"
+            advice={advice}
+            closeEditor={() => setIsEditing(false)}
           />
         )}
       </article>

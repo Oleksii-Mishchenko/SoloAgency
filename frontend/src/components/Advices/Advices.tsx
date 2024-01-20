@@ -21,11 +21,13 @@ export const Advices: React.FC<Props> = ({ relPage }) => {
   const dispatch = useAppDispatch();
   const {
     advices: { num_pages, current_page, next_page, previous_page, results },
-    errorsLoading,
     isLoadingAdvices,
+    errorsLoading,
+    isPatchedAdvice,
     deletingAdviceId,
     deletedAdviceId,
     errorsDelete,
+    errorsPatch,
   } = useAppSelector(state => state.advices);
 
   const [expandedId, setExpandedId] = useState<number | null>(null);
@@ -99,6 +101,23 @@ export const Advices: React.FC<Props> = ({ relPage }) => {
           message="Питання і відповідь не видалені"
           errors={errorsDelete}
           onClose={() => dispatch(advicesActions.clearErrorsDelete())}
+        />
+      )}
+
+      {isPatchedAdvice && (
+        <Notification
+          className="advices__notification"
+          message="Питання і відповідь були успішно змінені"
+          onClose={() => dispatch(advicesActions.clearIsPatched())}
+        />
+      )}
+
+      {errorsPatch && (
+        <Notification
+          className="advices__notification"
+          message="Питання і відповідь не були змінені"
+          errors={errorsPatch}
+          onClose={() => dispatch(advicesActions.clearErrorsPatch())}
         />
       )}
     </section>

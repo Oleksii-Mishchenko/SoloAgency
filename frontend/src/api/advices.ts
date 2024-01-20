@@ -14,3 +14,7 @@ export const addAdvice = (advice: NewAdvice): Promise<Advice> => {
 export const removeAdvice = (adviceId: number): Promise<number> => {
   return client.delete<number>(`${advicesUrl}${adviceId}`);
 };
+
+export const editAdvice = (data: Advice): Promise<Advice> => {
+  return client.patch<Advice, Advice>(`${advicesUrl}${data.id}/`, data);
+};

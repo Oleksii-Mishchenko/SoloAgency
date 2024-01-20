@@ -1,6 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { Advices, NewAdvice } from '../types/Advice';
-import { addAdvice, removeAdvice, loadAdvices } from '../api/advices';
+import { Advice, Advices, NewAdvice } from '../types/Advice';
+import {
+  addAdvice,
+  removeAdvice,
+  loadAdvices,
+  editAdvice,
+} from '../api/advices';
 import { ServerErrorResponse } from '../types/ServerErrorResponse';
 import { parseErrors } from '../helpers/parseErrors';
 
@@ -8,11 +13,14 @@ export type AdvicesState = {
   advices: Advices;
   isLoadingAdvices: boolean;
   isUploadingAdvice: boolean;
+  isPatchingAdvice: boolean;
+  isPatchedAdvice: boolean;
   deletingAdviceId: number | null;
   deletedAdviceId: number | null;
   errorsLoading: ServerErrorResponse | null;
   errorsUploading: ServerErrorResponse | null;
   errorsDelete: ServerErrorResponse | null;
+  errorsPatch: ServerErrorResponse | null;
 };
 
 const initialState: AdvicesState = {
@@ -25,11 +33,14 @@ const initialState: AdvicesState = {
   },
   isLoadingAdvices: false,
   isUploadingAdvice: false,
+  isPatchingAdvice: false,
+  isPatchedAdvice: false,
   deletingAdviceId: null,
   deletedAdviceId: null,
   errorsLoading: null,
   errorsUploading: null,
   errorsDelete: null,
+  errorsPatch: null,
 };
 
 export const init = createAsyncThunk('fetch/advices', async (page: string) => {
@@ -53,6 +64,12 @@ export const remove = createAsyncThunk('delete/advice', async (id: number) => {
   return id;
 });
 
+export const edit = createAsyncThunk('patch/advice', async (advice: Advice) => {
+  const response = await editAdvice(advice);
+
+  return response;
+});
+
 export const advicesSlice = createSlice({
   name: 'advices',
   initialState,
@@ -64,6 +81,14 @@ export const advicesSlice = createSlice({
 
     clearErrorsDelete: state => {
       state.errorsDelete = null;
+    },
+
+    clearIsPatched: state => {
+      state.isPatchedAdvice = false;
+    },
+
+    clearErrorsPatch: state => {
+      state.errorsPatch = null;
     },
   },
 
@@ -115,8 +140,32 @@ export const advicesSlice = createSlice({
       state.deletingAdviceId = null;
       state.errorsDelete = parseErrors(action.error.message);
     });
+
+    builder.addCase(edit.pending, state => {
+      state.isPatchingAdvice = true;
+      state.errorsPatch = null;
+    });
+
+    builder.addCase(edit.fulfilled, (state, action) => {
+      state.isPatchingAdvice = false;
+      state.advices.results = state.advices.results.map(advice => {
+        return advice.id === action.payload.id ? action.payload : advice;
+      });
+      state.isPatchedAdvice = true;
+    });
+
+    builder.addCase(edit.rejected, (state, action) => {
+      state.isPatchingAdvice = false;
+      state.errorsPatch = parseErrors(action.error.message);
+      console.log(action);
+    });
   },
 });
 
-export const { clearDeletedId, clearErrorsDelete } = advicesSlice.actions;
+export const {
+  clearDeletedId,
+  clearErrorsDelete,
+  clearIsPatched,
+  clearErrorsPatch,
+} = advicesSlice.actions;
 export default advicesSlice.reducer;

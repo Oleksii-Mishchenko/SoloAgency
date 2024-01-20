@@ -1,14 +1,9 @@
 @import '../../styles/main.scss';
 
 .confirmation {
-  box-sizing: border-box;
   max-width: 450px;
-  padding: 40px;
-  border: 1px solid $color-green-element;
-  border-radius: 20px;
-  background-color: $color-white;
-  box-shadow: 0 0 7px rgba($color-black, 0.5);
-  z-index: 1;
+
+  @extend %pop-up;
 
   &__message {
     @extend %body;
