@@ -40,9 +40,11 @@ export const client = {
     return response.data;
   },
 
-  delete: async (url: string) => {
+  delete: async <T>(url: string): Promise<T> => {
     try {
-      return await instance.delete(url);
+      const response: AxiosResponse<T> = await instance.delete<T>(url);
+
+      return response.data;
     } catch (error) {
       return handleErrorFromServer(error);
     }

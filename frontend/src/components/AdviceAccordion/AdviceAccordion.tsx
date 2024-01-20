@@ -1,44 +1,53 @@
-import { memo, FC, useRef } from 'react';
+import { memo, FC, useRef, useState } from 'react';
 import { Advice } from '../../types/Advice';
-import './advice.scss';
 import classNames from 'classnames';
 import { Confirmation } from '../Confirmation';
+import './advice.scss';
 
 type Props = {
   className: string;
   advice: Advice;
-  isOpen: boolean;
-  setOpenedId: (id: number | null) => void;
+  isExpanded: boolean;
+  setExpandedId: (id: number | null) => void;
+  handleRemove: (id: number) => void;
+  isDeleting: boolean;
 };
 
 export const AdviceAccordion: FC<Props> = memo(
-  ({ className, advice: { id, question, answer }, isOpen, setOpenedId }) => {
-    const handleAdviceOpening = () => {
-      setOpenedId(isOpen ? null : id);
-    };
+  ({
+    className,
+    advice: { id, question, answer },
+    isExpanded,
+    setExpandedId,
+    handleRemove,
+    isDeleting,
+  }) => {
+    const [hasConfirmation, setHasConfirmation] = useState<boolean>(false);
     const drawerRef = useRef<HTMLDivElement>(null);
 
     return (
       <article
-        className={classNames(className, 'advice', { 'advice--open': isOpen })}
+        className={classNames(className, 'advice', {
+          'advice--open': isExpanded,
+        })}
       >
         <div className="advice__header">
           <p className="advice__question">{question}</p>
 
           <button
             type="button"
-            title={isOpen ? 'Згорнути' : 'Розгорнути'}
+            title={isExpanded ? 'Згорнути' : 'Розгорнути'}
             className={classNames('advice__switcher', {
-              'advice__switcher--open': isOpen,
+              'advice__switcher--open': isExpanded,
             })}
-            onClick={handleAdviceOpening}
+            onClick={() => setExpandedId(isExpanded ? null : id)}
           />
         </div>
 
         <div
           className="advice__drawer"
           style={
-            isOpen ? { height: drawerRef.current?.scrollHeight } : undefined
+            isExpanded ? { height: drawerRef.current?.scrollHeight } : undefined
           }
         >
           <div className="advice__drawer-wrapper" ref={drawerRef}>
@@ -53,15 +62,24 @@ export const AdviceAccordion: FC<Props> = memo(
               <button
                 className="advice__control advice__control--remove"
                 title="Видалити"
+                onClick={event => {
+                  event.stopPropagation();
+                  setHasConfirmation(true);
+                }}
               />
             </div>
           </div>
         </div>
 
-        <Confirmation
-          className="advice__confirmation"
-          message="Хочете видалити питання?"
-        />
+        {hasConfirmation && (
+          <Confirmation
+            className="advice__confirmation"
+            message="Бажаєте видалити питання?"
+            onReject={() => setHasConfirmation(false)}
+            onConfirm={() => handleRemove(id)}
+            isLoading={isDeleting}
+          />
+        )}
       </article>
     );
   },

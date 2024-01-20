@@ -3,6 +3,8 @@ import { ServerErrorResponse } from '../../types/ServerErrorResponse';
 import './notification.scss';
 import { Errors } from '../Errors';
 import { MainButton } from '../MainButton';
+import { useRef } from 'react';
+import { useOuterClick } from '../../customHooks/useOuterClick';
 
 type Props = {
   className: string;
@@ -17,8 +19,13 @@ export const Notification: React.FC<Props> = ({
   errors,
   onClose,
 }) => {
+  const notificationRef = useRef<HTMLDivElement>(null);
+
+  useOuterClick(notificationRef, onClose);
+
   return (
     <div
+      ref={notificationRef}
       className={classNames(className, 'notification', {
         'notification--error': !!errors,
       })}

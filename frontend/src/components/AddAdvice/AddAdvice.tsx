@@ -10,12 +10,15 @@ import { Rating } from '../Rating';
 import { MainButton } from '../MainButton';
 import { Notification } from '../Notification';
 import { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { getSearchWith } from '../../helpers/getSearchWith';
 
 type Props = {
   relPage: string;
 };
 
 export const AddAdvice: React.FC<Props> = ({ relPage }) => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [isNotified, setIsNotified] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const { isUploadingAdvice, errorsUploading } = useAppSelector(
@@ -40,6 +43,8 @@ export const AddAdvice: React.FC<Props> = ({ relPage }) => {
 
   const onSubmit: SubmitHandler<NewAdvice> = async (data: NewAdvice) => {
     const response = await dispatch(advicesActions.add(data));
+
+    setSearchParams(getSearchWith({ page: null }, searchParams));
 
     setIsNotified(true);
 

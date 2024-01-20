@@ -1,41 +1,50 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import * as advicesActions from '../../features/advicesSlice';
 import { Loader } from '../Loader';
 import { LoaderElement } from '../../types/LoaderElement';
 import { AdviceAccordion } from '../AdviceAccordion';
-import './advices.scss';
 import { Pagination } from '../Pagination';
 import { useSearchParams } from 'react-router-dom';
 import { getSearchWith } from '../../helpers/getSearchWith';
 import { Errors } from '../Errors';
+import { Notification } from '../Notification';
+import './advices.scss';
 
 type Props = {
   relPage: string;
 };
 
 export const Advices: React.FC<Props> = ({ relPage }) => {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const page = searchParams.get('page') || 1;
-  const [openedId, setOpenedId] = useState<number | null>(null);
   const dispatch = useAppDispatch();
   const {
     advices: { num_pages, current_page, next_page, previous_page, results },
     errorsLoading,
     isLoadingAdvices,
+    deletingAdviceId,
+    deletedAdviceId,
+    errorsDelete,
   } = useAppSelector(state => state.advices);
 
+  const [expandedId, setExpandedId] = useState<number | null>(null);
+
   useEffect(() => {
-    setOpenedId(null);
+    if (expandedId) {
+      setExpandedId(null);
+    }
 
     const params = getSearchWith({ page }, searchParams);
 
     dispatch(advicesActions.init(`?${params}`));
-  }, [dispatch, searchParams, page]);
+  }, [page, results.length]);
 
-  // const handleRemove = (id: number) => {
-  //   dispatch(advicesActions.remove(id));
-  // };
+  const handleRemove = useCallback(async (id: number) => {
+    await dispatch(advicesActions.remove(id));
+
+    setSearchParams(getSearchWith({ page: null }, searchParams));
+  }, []);
 
   return (
     <section className={`${relPage}__advices advices`}>
@@ -53,15 +62,18 @@ export const Advices: React.FC<Props> = ({ relPage }) => {
         {!!results.length &&
           !errorsLoading &&
           results.map(advice => {
-            const isOpen = advice.id === openedId;
+            const isExpanded = advice.id === expandedId;
+            const isDeleting = deletingAdviceId === advice.id;
 
             return (
               <AdviceAccordion
                 key={advice.id}
                 className="advices__advice"
                 advice={advice}
-                isOpen={isOpen}
-                setOpenedId={setOpenedId}
+                isExpanded={isExpanded}
+                setExpandedId={setExpandedId}
+                handleRemove={handleRemove}
+                isDeleting={isDeleting}
               />
             );
           })}
@@ -70,6 +82,23 @@ export const Advices: React.FC<Props> = ({ relPage }) => {
       {num_pages > 1 && (
         <Pagination
           config={{ num_pages, current_page, next_page, previous_page }}
+        />
+      )}
+
+      {deletedAdviceId && (
+        <Notification
+          className="advices__notification"
+          message="Питання і відповідь успішно видалені"
+          onClose={() => dispatch(advicesActions.clearDeletedId())}
+        />
+      )}
+
+      {errorsDelete && (
+        <Notification
+          className="advices__notification"
+          message="Питання і відповідь не видалені"
+          errors={errorsDelete}
+          onClose={() => dispatch(advicesActions.clearErrorsDelete())}
         />
       )}
     </section>

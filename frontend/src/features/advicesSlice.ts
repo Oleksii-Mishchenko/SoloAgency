@@ -9,8 +9,10 @@ export type AdvicesState = {
   isLoadingAdvices: boolean;
   isUploadingAdvice: boolean;
   deletingAdviceId: number | null;
+  deletedAdviceId: number | null;
   errorsLoading: ServerErrorResponse | null;
   errorsUploading: ServerErrorResponse | null;
+  errorsDelete: ServerErrorResponse | null;
 };
 
 const initialState: AdvicesState = {
@@ -24,8 +26,10 @@ const initialState: AdvicesState = {
   isLoadingAdvices: false,
   isUploadingAdvice: false,
   deletingAdviceId: null,
+  deletedAdviceId: null,
   errorsLoading: null,
   errorsUploading: null,
+  errorsDelete: null,
 };
 
 export const init = createAsyncThunk('fetch/advices', async (page: string) => {
@@ -52,7 +56,17 @@ export const remove = createAsyncThunk('delete/advice', async (id: number) => {
 export const advicesSlice = createSlice({
   name: 'advices',
   initialState,
-  reducers: {},
+
+  reducers: {
+    clearDeletedId: state => {
+      state.deletedAdviceId = null;
+    },
+
+    clearErrorsDelete: state => {
+      state.errorsDelete = null;
+    },
+  },
+
   extraReducers: builder => {
     builder.addCase(init.pending, state => {
       state.isLoadingAdvices = true;
@@ -86,21 +100,23 @@ export const advicesSlice = createSlice({
 
     builder.addCase(remove.pending, (state, action) => {
       state.deletingAdviceId = action.meta.arg;
-      state.errors = null;
+      state.errorsDelete = null;
     });
 
     builder.addCase(remove.fulfilled, (state, action) => {
       state.deletingAdviceId = null;
-      state.advices = state.advices.filter(
+      state.advices.results = state.advices.results.filter(
         advice => advice.id !== action.payload,
       );
+      state.deletedAdviceId = action.payload;
     });
 
     builder.addCase(remove.rejected, (state, action) => {
       state.deletingAdviceId = null;
-      state.errors = parseErrors(action.error.message);
+      state.errorsDelete = parseErrors(action.error.message);
     });
   },
 });
 
+export const { clearDeletedId, clearErrorsDelete } = advicesSlice.actions;
 export default advicesSlice.reducer;

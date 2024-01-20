@@ -1,6 +1,7 @@
 @import '../../styles/main.scss';
 
 .advice {
+  position: relative;
   padding-inline: 20px;
   padding-block: 0;
   border: 1px solid $color-green-element;
@@ -88,6 +89,11 @@
   }
 
   &__confirmation {
-    
+    position: absolute;
+    margin: 0 auto;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
   }
 }
