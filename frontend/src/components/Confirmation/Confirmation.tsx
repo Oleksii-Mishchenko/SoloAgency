@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { MainButton } from '../MainButton';
-import './confirmation.scss';
 import { useOuterClick } from '../../customHooks/useOuterClick';
+import './confirmation.scss';
 
 type Props = {
   className: string;

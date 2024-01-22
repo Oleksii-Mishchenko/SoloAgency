@@ -3,7 +3,8 @@ import { Advice } from '../../types/Advice';
 import classNames from 'classnames';
 import { Confirmation } from '../Confirmation';
 import { EditAdvice } from '../EditAdvice';
-
+import { ControlButton } from '../ControlButton';
+import { ControlButtonType } from '../../types/ControlButtonType';
 import './advice.scss';
 
 type Props = {
@@ -58,8 +59,9 @@ export const AdviceAccordion: FC<Props> = memo(
             <p className="advice__answer">{answer}</p>
 
             <div className="advice__controls">
-              <button
-                className="advice__control advice__control--edit"
+              <ControlButton
+                buttonType={ControlButtonType.Edit}
+                type="button"
                 title="Редагувати"
                 onClick={event => {
                   event.stopPropagation();
@@ -67,8 +69,9 @@ export const AdviceAccordion: FC<Props> = memo(
                 }}
               />
 
-              <button
-                className="advice__control advice__control--remove"
+              <ControlButton
+                buttonType={ControlButtonType.Remove}
+                type="button"
                 title="Видалити"
                 onClick={event => {
                   event.stopPropagation();
