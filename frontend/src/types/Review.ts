@@ -1,7 +1,9 @@
+import { RatingType } from './Rating';
+
 export interface Review {
   id: number;
   user_name: string;
   text: string;
-  rating: number;
+  rating: RatingType;
   is_approved: boolean;
 }

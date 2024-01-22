@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import './reviews-slider.scss';
 import { Review } from '../Review';
 import { Loader } from '../Loader';
 import { LoaderElement } from '../../types/LoaderElement';
@@ -7,6 +6,7 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import * as reviewsActions from '../../features/reviewsSlice';
 import { Errors } from '../Errors';
 import { Media } from '../../types/Media';
+import './reviews-slider.scss';
 
 export const ReviewsSlider: React.FC = () => {
   const [position, setPosition] = useState<number>(0);
@@ -44,9 +44,9 @@ export const ReviewsSlider: React.FC = () => {
               className="reviews-slider__film"
               style={{ transform: currentShift }}
             >
-              {reviews.map(review => (
-                <Review review={review} key={review.id} />
-              ))}
+              {reviews.map(review => {
+                return <Review review={review} key={review.id} />;
+              })}
             </div>
           </div>
 

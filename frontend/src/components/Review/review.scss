@@ -1,6 +1,7 @@
 @import '../../styles/main.scss';
 
 .review {
+  position: relative;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -84,5 +85,23 @@
     display: flex;
     justify-content: center;
     column-gap: 10px;
+  }
+
+  &__confirmation {
+    position: absolute;
+    margin: 0 auto;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+  }
+
+  &__notification {
+    position: absolute;
+    margin: 0 auto;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
   }
 }
