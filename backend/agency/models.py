@@ -158,7 +158,7 @@ class Advice(models.Model):
         return self.question
 
     class Meta:
-        ordering = ["-priority"]
+        ordering = ["-priority", "question"]
 
 
 class Review(models.Model):
