@@ -157,31 +157,36 @@ class CallRequestSerializer(serializers.ModelSerializer):
 
 
 class ReviewSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Review
-        fields = (
-            "id",
-            "user",
-            "text",
-            "rating",
-            "created_at",
-            "is_approved",
-        )
-
-
-class ReviewListSerializer(serializers.ModelSerializer):
     user_name = serializers.CharField(source="user.first_name", read_only=True)
 
     class Meta:
         model = Review
         fields = (
             "id",
+            "user",
             "user_name",
             "text",
             "rating",
             "created_at",
             "is_approved",
         )
+
+
+# class ReviewListSerializer(serializers.ModelSerializer):
+#
+#     user_name = serializers.CharField(source="user.first_name", read_only=True)
+#
+#     class Meta:
+#         model = Review
+#         fields = (
+#             "id",
+#             "user",
+#             "user_name",
+#             "text",
+#             "rating",
+#             "created_at",
+#             "is_approved",
+#         )
 
 
 class PortfolioSerializer(serializers.ModelSerializer):

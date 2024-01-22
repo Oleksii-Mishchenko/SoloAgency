@@ -25,7 +25,7 @@ from agency.serializers import (
     ReviewSerializer,
     CallRequestSerializer,
     ArticleSerializer,
-    ReviewListSerializer,
+    # ReviewListSerializer,
     OrganizerListSerializer,
     EventListSerializer,
     PortfolioSerializer,
@@ -122,11 +122,12 @@ class AdviceViewSet(
 
 class ReviewViewSet(viewsets.ModelViewSet):
     queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
 
-    def get_serializer_class(self):
-        if self.action == "list":
-            return ReviewListSerializer
-        return ReviewSerializer
+    # def get_serializer_class(self):
+    #     if self.action == "list":
+    #         return ReviewListSerializer
+    #     return ReviewSerializer
 
     def get_queryset(self):
         queryset = Review.objects.all()
