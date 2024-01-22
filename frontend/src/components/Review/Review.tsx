@@ -12,16 +12,17 @@ import './review.scss';
 
 type Props = {
   review: ReviewType;
+  onDelete: (id: number) => Promise<void>;
 };
 
 export const Review: React.FC<Props> = React.memo(
-  ({ review: { id, text, user_name, rating, is_approved } }) => {
+  ({ review: { id, text, user_name, rating, is_approved }, onDelete }) => {
     const [hasApproveConfirm, setHasApproveConfirm] = useState<boolean>(false);
-    const [isApproveNotified, setIsApproveNotified] = useState<boolean>(false);
+    const [hasDeleteConfirm, setHasDeleteConfirm] = useState<boolean>(false);
+    const [hasApproveNote, setHasApproveNote] = useState<boolean>(false);
     const dispatch = useAppDispatch();
-    const { approvingId, approvedReview, approveErrors } = useAppSelector(
-      state => state.reviews,
-    );
+    const { approvingId, approvedReview, approveErrors, deletingId } =
+      useAppSelector(state => state.reviews);
     const initial = user_name[0].toUpperCase();
 
     const avaColor = useMemo(() => {
@@ -32,8 +33,13 @@ export const Review: React.FC<Props> = React.memo(
       await dispatch(reviewsActions.approve(id));
 
       setHasApproveConfirm(false);
-      setIsApproveNotified(true);
+      setHasApproveNote(true);
     }, []);
+
+    const handleNotificationClose = () => {
+      dispatch(reviewsActions.clearApproveData());
+      setHasApproveNote(false);
+    };
 
     return (
       <article className="review">
@@ -64,6 +70,10 @@ export const Review: React.FC<Props> = React.memo(
               buttonType={ControlButtonType.Remove}
               type="button"
               title="Видалити"
+              onClick={event => {
+                event.stopPropagation();
+                setHasDeleteConfirm(true);
+              }}
             />
 
             {!is_approved && (
@@ -90,20 +100,30 @@ export const Review: React.FC<Props> = React.memo(
           />
         )}
 
-        {isApproveNotified && approvedReview && (
+        {hasApproveNote && approvedReview && (
           <Notification
             className="review__notification"
             message={`Відгук від ${approvedReview.user_name} було успішно опубліковано.`}
-            onClose={() => dispatch(reviewsActions.clearApproveData())}
+            onClose={handleNotificationClose}
           />
         )}
 
-        {isApproveNotified && approveErrors && (
+        {hasApproveNote && approveErrors && (
           <Notification
             className="review__notification"
             message="Відгук не опубліковано!"
             errors={approveErrors}
-            onClose={() => dispatch(reviewsActions.clearApproveData())}
+            onClose={handleNotificationClose}
+          />
+        )}
+
+        {hasDeleteConfirm && (
+          <Confirmation
+            className="review__confirmation"
+            message="Хочете видалити відгук?"
+            isLoading={deletingId === id}
+            onReject={() => setHasDeleteConfirm(false)}
+            onConfirm={() => onDelete(id)}
           />
         )}
       </article>

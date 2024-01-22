@@ -4,9 +4,7 @@ $button-size: 32px;
 $button-gap: 20px;
 
 .reviews-slider {
-  @include on-tablet {
-    position: relative;
-  }
+  position: relative;
 
   &__screen {
     overflow: hidden;
@@ -89,5 +87,14 @@ $button-gap: 20px;
 
   &__loader {
     margin: 0 auto;
+  }
+
+  &__notification {
+    position: absolute;
+    margin: 0 auto;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
   }
 }
