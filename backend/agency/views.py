@@ -124,10 +124,8 @@ class ReviewViewSet(viewsets.ModelViewSet):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
 
-    # def get_serializer_class(self):
-    #     if self.action == "list":
-    #         return ReviewListSerializer
-    #     return ReviewSerializer
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
     def get_queryset(self):
         queryset = Review.objects.all()

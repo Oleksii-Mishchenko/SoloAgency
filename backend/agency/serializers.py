@@ -170,23 +170,7 @@ class ReviewSerializer(serializers.ModelSerializer):
             "created_at",
             "is_approved",
         )
-
-
-# class ReviewListSerializer(serializers.ModelSerializer):
-#
-#     user_name = serializers.CharField(source="user.first_name", read_only=True)
-#
-#     class Meta:
-#         model = Review
-#         fields = (
-#             "id",
-#             "user",
-#             "user_name",
-#             "text",
-#             "rating",
-#             "created_at",
-#             "is_approved",
-#         )
+        read_only_fields = ("user",)
 
 
 class PortfolioSerializer(serializers.ModelSerializer):
