@@ -3,4 +3,5 @@ export interface Review {
   user_name: string;
   text: string;
   rating: number;
+  is_approved: boolean;
 }

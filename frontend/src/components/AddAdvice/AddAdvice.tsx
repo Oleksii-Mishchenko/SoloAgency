@@ -4,18 +4,22 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { handleMessageBlur } from '../../helpers/textManipulator';
 import { Input, Textarea } from '../Input';
-import './add-advice.scss';
 import { RatingType } from '../../types/Rating';
 import { Rating } from '../Rating';
 import { MainButton } from '../MainButton';
 import { Notification } from '../Notification';
 import { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { getSearchWith } from '../../helpers/getSearchWith';
+
+import './add-advice.scss';
 
 type Props = {
   relPage: string;
 };
 
 export const AddAdvice: React.FC<Props> = ({ relPage }) => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [isNotified, setIsNotified] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const { isUploadingAdvice, errorsUploading } = useAppSelector(
@@ -40,6 +44,8 @@ export const AddAdvice: React.FC<Props> = ({ relPage }) => {
 
   const onSubmit: SubmitHandler<NewAdvice> = async (data: NewAdvice) => {
     const response = await dispatch(advicesActions.add(data));
+
+    setSearchParams(getSearchWith({ page: null }, searchParams));
 
     setIsNotified(true);
 

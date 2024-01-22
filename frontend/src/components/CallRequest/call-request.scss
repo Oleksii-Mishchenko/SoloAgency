@@ -1,6 +1,8 @@
 @import '../../styles/main.scss';
 
 .call-request {
+  position: relative;
+
   &__info {
     margin-bottom: 16px;
 
@@ -80,5 +82,14 @@
   &__go-back-button {
     display: block;
     margin: 0 auto;
+  }
+
+  &__notification {
+    position: absolute;
+    margin: 0 auto;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
   }
 }

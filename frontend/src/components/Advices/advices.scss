@@ -1,6 +1,8 @@
 @import '../../styles/main.scss';
 
 .advices {
+  position: relative;
+
   &__title {
     margin-bottom: 20px;
     text-align: center;
@@ -40,5 +42,14 @@
     @include on-tablet {
       margin-bottom: 30px;
     }
+  }
+
+  &__notification {
+    position: absolute;
+    margin: 0 auto;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
   }
 }

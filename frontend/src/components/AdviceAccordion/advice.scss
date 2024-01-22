@@ -1,6 +1,7 @@
 @import '../../styles/main.scss';
 
 .advice {
+  position: relative;
   padding-inline: 20px;
   padding-block: 0;
   border: 1px solid $color-green-element;
@@ -70,24 +71,20 @@
     column-gap: 10px;
   }
 
-  &__control {
-    height: 24px;
-    width: 24px;
-    background-color: transparent;
-    background-position: center;
-    border: none;
-    cursor: pointer;
-
-    &--edit {
-      background-image: url(../../assets/img/pencil.svg);
-    }
-
-    &--remove {
-      background-image: url(../../assets/img/trash-bin.svg);
-    }
+  &__confirmation {
+    position: absolute;
+    margin: 0 auto;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
   }
 
-  &__confirmation {
-    
+  &__edit-advice {
+    position: absolute;
+    margin: 0 auto;
+    top: 0;
+    left: 0;
+    right: 0;
   }
 }

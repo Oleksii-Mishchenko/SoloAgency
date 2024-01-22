@@ -2,6 +2,8 @@ import React, { useMemo } from 'react';
 import { avatarColors } from '../../assets/libs/avatarColors';
 import { getRandomElement } from '../../helpers/getRandomElement';
 import { Review as ReviewType } from '../../types/Review';
+import { ControlButton } from '../ControlButton';
+import { ControlButtonType } from '../../types/ControlButtonType';
 import './review.scss';
 
 type Props = {
@@ -19,21 +21,35 @@ export const Review: React.FC<Props> = React.memo(({ review }) => {
     <article className="review">
       <p className="review__text">{text}</p>
 
-      <div className="review__person">
-        <div className="review__avatar" style={{ backgroundColor: avaColor }}>
-          {initial}
+      <div className="review__wrapper">
+        <div className="review__person">
+          <div className="review__avatar" style={{ backgroundColor: avaColor }}>
+            {initial}
+          </div>
+          <div className="review__info">
+            <p className="review__name">{user_name}</p>
+            <div className={`review__stars review__stars--${rating}`}>
+              <div className="review__stars-star" />
+              <div className="review__stars-star" />
+              <div className="review__stars-star" />
+              <div className="review__stars-star" />
+              <div className="review__stars-star" />
+            </div>
+          </div>
         </div>
 
-        <div className="review__info">
-          <p className="review__name">{user_name}</p>
+        <div className="review__controls">
+          <ControlButton
+            buttonType={ControlButtonType.Remove}
+            type="button"
+            title="Видалити"
+          />
 
-          <div className={`review__stars review__stars--${rating}`}>
-            <div className="review__stars-star" />
-            <div className="review__stars-star" />
-            <div className="review__stars-star" />
-            <div className="review__stars-star" />
-            <div className="review__stars-star" />
-          </div>
+          <ControlButton
+            buttonType={ControlButtonType.Approve}
+            type="button"
+            title="Опублікувати"
+          />
         </div>
       </div>
     </article>

@@ -7,6 +7,7 @@ import classNames from 'classnames';
 type Props = {
   text: string;
   isLoading?: boolean;
+  white?: boolean;
 };
 
 type MainButton = FC<Props & ButtonHTMLAttributes<HTMLButtonElement>>;
@@ -15,10 +16,16 @@ export const MainButton: MainButton = ({
   text,
   className,
   isLoading,
+  white,
   ...rest
 }) => {
   return (
-    <button className={classNames('main-button', className)} {...rest}>
+    <button
+      className={classNames(className, 'main-button', {
+        'main-button--white': white,
+      })}
+      {...rest}
+    >
       {text}
       {isLoading && (
         <div className="main-button__loader-container">

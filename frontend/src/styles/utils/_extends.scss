@@ -71,3 +71,13 @@
   line-height: 17px;
   color: $color-red-error;
 }
+
+%pop-up {
+  box-sizing: border-box;
+  padding: 40px;
+  border: 1px solid $color-green-element;
+  border-radius: 20px;
+  background-color: $color-white;
+  box-shadow: 0 0 7px rgba($color-black, 0.5);
+  z-index: 1;
+}

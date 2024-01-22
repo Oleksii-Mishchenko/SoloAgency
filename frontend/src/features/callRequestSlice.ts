@@ -7,13 +7,13 @@ import { parseErrors } from '../helpers/parseErrors';
 export type CallRequestState = {
   callRequest: CallRequestData | null;
   isUploading: boolean;
-  errors: ServerErrorResponse | null;
+  callRequestErrors: ServerErrorResponse | null;
 };
 
 const initialState: CallRequestState = {
   callRequest: null,
   isUploading: false,
-  errors: null,
+  callRequestErrors: null,
 };
 
 export const add = createAsyncThunk(
@@ -29,16 +29,18 @@ export const callRequestSlice = createSlice({
   name: 'callRequest',
   initialState,
   reducers: {
-    clear: state => {
+    clearCallRequest: state => {
       state.callRequest = null;
-      state.errors = null;
+    },
+    clearCallRequestErrors: state => {
+      state.callRequestErrors = null;
     },
   },
   extraReducers: builder => {
     builder.addCase(add.pending, state => {
       state.isUploading = true;
       state.callRequest = null;
-      state.errors = null;
+      state.callRequestErrors = null;
     });
 
     builder.addCase(add.fulfilled, (state, action) => {
@@ -49,10 +51,11 @@ export const callRequestSlice = createSlice({
     builder.addCase(add.rejected, (state, action) => {
       state.isUploading = false;
       state.callRequest = null;
-      state.errors = parseErrors(action.error.message);
+      state.callRequestErrors = parseErrors(action.error.message);
     });
   },
 });
 
 export default callRequestSlice.reducer;
-export const { clear } = callRequestSlice.actions;
+export const { clearCallRequest, clearCallRequestErrors } =
+  callRequestSlice.actions;
