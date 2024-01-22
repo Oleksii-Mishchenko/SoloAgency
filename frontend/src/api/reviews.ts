@@ -18,3 +18,7 @@ export const approveReview = (id: number): Promise<Review> => {
     approveData,
   );
 };
+
+export const deleteReview = (id: number): Promise<number> => {
+  return client.delete<number>(`${reviewsUrl}${id}`);
+};

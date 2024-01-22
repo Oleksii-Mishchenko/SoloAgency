@@ -7,7 +7,7 @@ type Props = {
   className: string;
   message: string;
   onReject: () => void;
-  onConfirm: () => void;
+  onConfirm: () => Promise<void>;
   isLoading: boolean;
 };
 
@@ -22,8 +22,8 @@ export const Confirmation: React.FC<Props> = ({
 
   useOuterClick(confirmationRef, onReject);
 
-  const handleConfirm = () => {
-    onConfirm();
+  const handleConfirm = async () => {
+    await onConfirm();
     onReject();
   };
 

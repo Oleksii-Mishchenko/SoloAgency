@@ -12,7 +12,7 @@ type Props = {
   advice: Advice;
   isExpanded: boolean;
   setExpandedId: (id: number | null) => void;
-  handleRemove: (id: number) => void;
+  handleRemove: (id: number) => Promise<void>;
   isDeleting: boolean;
 };
 
