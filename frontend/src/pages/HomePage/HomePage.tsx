@@ -4,6 +4,7 @@ import { ReviewsSlider } from '../../components/ReviewsSlider';
 import { Hero } from '../../components/Hero';
 import { Articles } from '../../components/Articles';
 import { ContactUs } from '../../components/ContactUs';
+import { AddReview } from '../../components/AddReview';
 
 export const HomePage = () => {
   return (
@@ -27,6 +28,8 @@ export const HomePage = () => {
 
         <ReviewsSlider />
       </section>
+
+      <AddReview relPage="home-page" />
     </div>
   );
 };

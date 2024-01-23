@@ -1,0 +1,33 @@
+@import '../../styles/main.scss';
+
+.add-review {
+  position: relative;
+
+  &__title {
+    @extend %h2;
+
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+  }
+
+  &__button {
+    @include on-tablet {
+      width: 300px;
+    }
+  }
+
+  &__notification {
+    position: absolute;
+    margin: 0 auto;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+  }
+}

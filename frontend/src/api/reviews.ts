@@ -1,4 +1,5 @@
-import { Review } from '../types/Review';
+import { AxiosRequestConfig } from 'axios';
+import { NewReview, Review } from '../types/Review';
 import { client } from '../utils/axiosClient';
 
 const reviewsUrl = 'agency/reviews/';
@@ -21,4 +22,14 @@ export const approveReview = (id: number): Promise<Review> => {
 
 export const deleteReview = (id: number): Promise<number> => {
   return client.delete<number>(`${reviewsUrl}${id}`);
+};
+
+export const addReview = (token: string, data: NewReview): Promise<Review> => {
+  const config: AxiosRequestConfig = {
+    headers: {
+      Authorization: `token ${token}`,
+    },
+  };
+
+  return client.post<Review, NewReview>(reviewsUrl, data, config);
 };

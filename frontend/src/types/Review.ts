@@ -8,3 +8,5 @@ export interface Review {
   rating: RatingType;
   is_approved: boolean;
 }
+
+export type NewReview = Pick<Review, 'text' | 'rating'>;

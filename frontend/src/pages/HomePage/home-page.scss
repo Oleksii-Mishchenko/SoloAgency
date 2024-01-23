@@ -101,4 +101,16 @@
       }
     }
   }
+
+  &__add-review {
+    grid-column: 1 / -1;
+
+    @include on-tablet {
+      grid-column: 3 / -3;
+    }
+
+    @include on-desktop {
+      grid-column: 2 / -2;
+    }
+  }
 }

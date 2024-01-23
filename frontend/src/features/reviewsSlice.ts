@@ -1,7 +1,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { Review } from '../types/Review';
+import { NewReview, Review } from '../types/Review';
 import { ServerErrorResponse } from '../types/ServerErrorResponse';
-import { approveReview, deleteReview, loadAllReviews } from '../api/reviews';
+import {
+  addReview,
+  approveReview,
+  deleteReview,
+  loadAllReviews,
+} from '../api/reviews';
 import { parseErrors } from '../helpers/parseErrors';
 
 export type ReviewsState = {
@@ -14,6 +19,9 @@ export type ReviewsState = {
   deletingId: number | null;
   isDeleted: boolean;
   deleteErrors: ServerErrorResponse | null;
+  isAddingReview: boolean;
+  isAddSuccess: boolean;
+  addErrors: ServerErrorResponse | null;
 };
 
 const initialState: ReviewsState = {
@@ -26,6 +34,9 @@ const initialState: ReviewsState = {
   deletingId: null,
   isDeleted: false,
   deleteErrors: null,
+  isAddingReview: false,
+  isAddSuccess: false,
+  addErrors: null,
 };
 
 export const init = createAsyncThunk('fetch/reviews', async () => {
@@ -46,6 +57,15 @@ export const remove = createAsyncThunk('delete/review', async (id: number) => {
   return response;
 });
 
+export const add = createAsyncThunk(
+  'add/review',
+  async ({ token, data }: { token: string; data: NewReview }) => {
+    const response = await addReview(token, data);
+
+    return response;
+  },
+);
+
 export const reviewsSlice = createSlice({
   name: 'reviews',
   initialState,
@@ -58,6 +78,11 @@ export const reviewsSlice = createSlice({
     clearDeleteData: state => {
       state.deleteErrors = null;
       state.isDeleted = false;
+    },
+
+    clearAddData: state => {
+      state.addErrors = null;
+      state.isAddSuccess = false;
     },
   },
 
@@ -109,8 +134,24 @@ export const reviewsSlice = createSlice({
       state.deletingId = null;
       state.deleteErrors = parseErrors(action.error.message);
     });
+
+    builder.addCase(add.pending, state => {
+      state.isAddingReview = true;
+    });
+
+    builder.addCase(add.fulfilled, (state, action) => {
+      state.isAddingReview = false;
+      state.reviews.push(action.payload);
+      state.isAddSuccess = true;
+    });
+
+    builder.addCase(add.rejected, (state, action) => {
+      state.isAddingReview = false;
+      state.addErrors = parseErrors(action.error.message);
+    });
   },
 });
 
-export const { clearApproveData, clearDeleteData } = reviewsSlice.actions;
+export const { clearApproveData, clearDeleteData, clearAddData } =
+  reviewsSlice.actions;
 export default reviewsSlice.reducer;
