@@ -8,6 +8,7 @@ import { AuthData } from '../types/AuthData';
 
 export type AuthState = {
   authData: AuthData;
+  isLoginFormOpen: boolean;
   isLoggingIn: boolean;
   isGettingUser: boolean;
   isRegistering: boolean;
@@ -16,6 +17,7 @@ export type AuthState = {
 
 const initialState: AuthState = {
   authData: { token: null, user: null },
+  isLoginFormOpen: false,
   isLoggingIn: false,
   isGettingUser: false,
   isRegistering: false,
@@ -52,7 +54,19 @@ export const register = createAsyncThunk(
 export const authState = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    openLoginForm: state => {
+      state.isLoginFormOpen = true;
+    },
+
+    closeLoginForm: state => {
+      state.isLoginFormOpen = false;
+    },
+
+    clearErrors: state => {
+      state.errors = null;
+    },
+  },
   extraReducers: builder => {
     // login
     builder.addCase(login.pending, state => {
@@ -67,6 +81,7 @@ export const authState = createSlice({
 
     builder.addCase(login.rejected, (state, action) => {
       state.isLoggingIn = false;
+      state.isLoginFormOpen = false;
       state.errors = parseErrors(action.error.message);
     });
 
@@ -104,4 +119,5 @@ export const authState = createSlice({
   },
 });
 
+export const { openLoginForm, closeLoginForm, clearErrors } = authState.actions;
 export default authState.reducer;

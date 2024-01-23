@@ -27,7 +27,7 @@ export const Header = () => {
         >
           <NavBar menu={{ isMenuOpen, toggleMenu }} />
 
-          <Auth />
+          <Auth menu={{ isMenuOpen, toggleMenu }} />
 
           <button
             type="button"
