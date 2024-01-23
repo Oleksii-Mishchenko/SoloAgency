@@ -99,7 +99,7 @@ class EventSerializer(serializers.ModelSerializer):
             "city",
             "venue",
             "phone",
-            "status"
+            "status",
         )
 
 
