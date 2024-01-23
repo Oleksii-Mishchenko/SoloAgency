@@ -1,6 +1,7 @@
 @import '../../styles/main.scss';
 
 .input {
+  position: relative;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -83,6 +84,22 @@
       height: 14px;
       background-image: url(../../assets/img/error.svg);
       background-size: contain;
+    }
+  }
+
+  &__eye {
+    position: absolute;
+    right: 8px;
+    top: 35px;
+    height: 24px;
+    width: 24px;
+    border: none;
+    background-color: transparent;
+    background-image: url(../../assets/img/eye.svg);
+    cursor: pointer;
+
+    &--off {
+      background-image: url(../../assets/img/eye-off.svg);
     }
   }
 }

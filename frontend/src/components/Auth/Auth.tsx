@@ -1,11 +1,44 @@
 import React from 'react';
-import './auth.scss';
 import { MainButton } from '../MainButton';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import * as authActions from '../../features/authSlice';
+import './auth.scss';
 
-export const Auth: React.FC = () => {
+type Props = {
+  menu: {
+    isMenuOpen: boolean;
+    toggleMenu: () => void;
+  };
+};
+
+export const Auth: React.FC<Props> = ({ menu: { isMenuOpen, toggleMenu } }) => {
+  const dispatch = useAppDispatch();
+  const { authData } = useAppSelector(state => state.auth);
+
+  const handleMenuClosure = () => {
+    if (isMenuOpen) {
+      toggleMenu();
+    }
+  };
+
   return (
     <div className="auth">
-      <MainButton className="auth__enter-button" text="Вхід" />
+      {authData.token && authData.user ? (
+        <p>Authorized</p>
+      ) : (
+        <>
+          <MainButton white className="auth__button" text="Реєстрація" />
+          <MainButton
+            className="auth__button"
+            text="Вхід"
+            onClick={event => {
+              event.stopPropagation();
+              handleMenuClosure();
+              dispatch(authActions.openLoginForm());
+            }}
+          />
+        </>
+      )}
     </div>
   );
 };

@@ -1,8 +1,22 @@
+@import '../../styles/main.scss';
+
 .auth {
   display: flex;
+  flex-direction: column;
   gap: 20px;
 
-  &__enter-button {
-    margin: 0 auto;
+  @include on-desktop {
+    flex-direction: row;
+  }
+
+  &__button {
+    @include on-tablet {
+      margin: 0 auto;
+      width: 300px;
+    }
+
+    @include on-desktop {
+      width: auto;
+    }
   }
 }

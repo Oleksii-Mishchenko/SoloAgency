@@ -1,6 +1,7 @@
 @import './styles/main.scss';
 
 .App {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 32px;
@@ -13,5 +14,26 @@
   &__title {
     text-align: center;
     color:purple;
+  }
+
+  &__auth-form {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: 0 16px;
+    z-index: 1;
+
+    @include on-tablet {
+      margin: 0 auto;
+    }
+  }
+
+  &__notification {
+    position: absolute;
+    margin: 0 auto;
+    top: 0;
+    left: 0;
+    right: 0;
   }
 }
