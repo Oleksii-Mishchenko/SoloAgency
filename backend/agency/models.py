@@ -131,10 +131,10 @@ class Event(models.Model):
             ("created", "created"),
             ("done", "done"),
             ("in_progress", "in_progress"),
-            ("rejected", "rejected")
-    ],
+            ("rejected", "rejected"),
+        ],
         default="created",
-                              )
+    )
 
     def __str__(self):
         return f"{self.phone} - {self.event_type.name}"
