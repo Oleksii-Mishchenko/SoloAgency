@@ -30,4 +30,32 @@
     right: 0;
     transform: translateY(-50%);
   }
+
+  &__sign-up-warn {
+    @extend %secondary-body;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  &__sign-up-offer {
+    @extend %body;
+    text-align: center;
+
+    &-button {
+      padding: 0;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+
+      @extend %h3;
+
+      font-size: 16px;
+      line-height: 18px;
+
+      &:hover {
+        color: $color-green-dark;
+      }
+    }
+  }
 }

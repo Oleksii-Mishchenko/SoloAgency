@@ -6,6 +6,7 @@ import {
   approveReview,
   deleteReview,
   loadAllReviews,
+  loadApprovedReviews,
 } from '../api/reviews';
 import { parseErrors } from '../helpers/parseErrors';
 
@@ -39,11 +40,16 @@ const initialState: ReviewsState = {
   addErrors: null,
 };
 
-export const init = createAsyncThunk('fetch/reviews', async () => {
-  const response = await loadAllReviews();
+export const init = createAsyncThunk(
+  'fetch/reviews',
+  async (isStaff: boolean | undefined) => {
+    const response = isStaff
+      ? await loadAllReviews()
+      : await loadApprovedReviews();
 
-  return response;
-});
+    return response;
+  },
+);
 
 export const approve = createAsyncThunk('patch/review', async (id: number) => {
   const response = await approveReview(id);

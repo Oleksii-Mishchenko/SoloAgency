@@ -24,6 +24,7 @@ export const MainButton: MainButton = ({
       className={classNames(className, 'main-button', {
         'main-button--white': white,
       })}
+      disabled={isLoading}
       {...rest}
     >
       {text}

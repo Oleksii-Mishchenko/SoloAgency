@@ -11,6 +11,7 @@ export type AuthState = {
   isLoginFormOpen: boolean;
   isLoggingIn: boolean;
   isGettingUser: boolean;
+  isRegisterFormOpen: boolean;
   isRegistering: boolean;
   errors: ServerErrorResponse | null;
 };
@@ -20,6 +21,7 @@ const initialState: AuthState = {
   isLoginFormOpen: false,
   isLoggingIn: false,
   isGettingUser: false,
+  isRegisterFormOpen: false,
   isRegistering: false,
   errors: null,
 };
@@ -65,6 +67,14 @@ export const authState = createSlice({
 
     clearErrors: state => {
       state.errors = null;
+    },
+
+    openRegisterForm: state => {
+      state.isRegisterFormOpen = true;
+    },
+
+    closeRegisterForm: state => {
+      state.isRegisterFormOpen = false;
     },
   },
   extraReducers: builder => {
@@ -119,5 +129,11 @@ export const authState = createSlice({
   },
 });
 
-export const { openLoginForm, closeLoginForm, clearErrors } = authState.actions;
+export const {
+  openLoginForm,
+  closeLoginForm,
+  clearErrors,
+  openRegisterForm,
+  closeRegisterForm,
+} = authState.actions;
 export default authState.reducer;

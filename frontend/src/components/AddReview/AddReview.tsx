@@ -1,5 +1,6 @@
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import * as reviewsActions from '../../features/reviewsSlice';
+import * as authActions from '../../features/authSlice';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { Rating } from '../Rating';
 import { RatingType } from '../../types/Rating';
@@ -7,8 +8,9 @@ import { NewReview } from '../../types/Review';
 import { Textarea } from '../Input';
 import { handleMessageBlur } from '../../helpers/textManipulator';
 import { MainButton } from '../MainButton';
-import './add-review.scss';
 import { Notification } from '../Notification';
+import { scrollToTop } from '../../helpers/scrollToTop';
+import './add-review.scss';
 
 type Props = {
   relPage: string;
@@ -43,6 +45,22 @@ export const AddReview: React.FC<Props> = ({ relPage }) => {
     }
 
     reset();
+  };
+
+  const handleLogin = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
+    event.stopPropagation();
+    scrollToTop();
+    dispatch(authActions.openLoginForm());
+  };
+
+  const handleRegister = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
+    event.stopPropagation();
+    scrollToTop();
+    dispatch(authActions.openRegisterForm());
   };
 
   return (
@@ -105,7 +123,31 @@ export const AddReview: React.FC<Props> = ({ relPage }) => {
           )}
         </>
       ) : (
-        <p>Зареєструйся!!!</p>
+        <>
+          <p className="add-review__sign-up-warn">
+            Відгуки можуть залишати тільки зареєстровані користувачі.
+          </p>
+
+          <p className="add-review__sign-up-offer">
+            Будь ласка,{' '}
+            <button
+              type="button"
+              className="add-review__sign-up-offer-button"
+              onClick={handleRegister}
+            >
+              Зареєструйтесь
+            </button>{' '}
+            або{' '}
+            <button
+              type="button"
+              className="add-review__sign-up-offer-button"
+              onClick={handleLogin}
+            >
+              Увійдіть
+            </button>{' '}
+            в свій обліковий запис.
+          </p>
+        </>
       )}
     </section>
   );
