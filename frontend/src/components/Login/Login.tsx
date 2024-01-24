@@ -8,6 +8,8 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import * as authActions from '../../features/authSlice';
 import { unwrapResult } from '@reduxjs/toolkit';
 import './login.scss';
+import { AuthLink } from '../AuthLink';
+import { AuthLinkType } from '../../types/AuthLinkType';
 
 export const Login = () => {
   const loginRef = useRef(null);
@@ -81,9 +83,10 @@ export const Login = () => {
       </div>
 
       <div className="login__register">
-        <p className="login__register-title">Вперше з нами?</p>
-
-        <p className="login__register-link">Зареєструватись</p>
+        <p className="login__register-title">
+          Вперше з нами?{' '}
+          <AuthLink linkType={AuthLinkType.Register} name="Зареєструватись" />
+        </p>
       </div>
     </div>
   );

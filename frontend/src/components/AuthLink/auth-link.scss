@@ -1,0 +1,18 @@
+@import '../../styles/main.scss';
+
+.auth-link {
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s;
+
+  @extend %h3;
+
+  font-size: 16px;
+  line-height: 18px;
+
+  &:hover {
+    color: $color-green-dark;
+  }
+}

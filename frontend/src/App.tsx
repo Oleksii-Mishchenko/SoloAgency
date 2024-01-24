@@ -6,9 +6,12 @@ import { useAppDispatch, useAppSelector } from './app/hooks';
 import * as authActions from './features/authSlice';
 import { Notification } from './components/Notification';
 import './App.scss';
+import { Register } from './components/Register';
 
 export const App = () => {
-  const { isLoginFormOpen, errors } = useAppSelector(state => state.auth);
+  const { isLoginFormOpen, isRegisterFormOpen, errors } = useAppSelector(
+    state => state.auth,
+  );
   const dispatch = useAppDispatch();
 
   return (
@@ -20,6 +23,8 @@ export const App = () => {
       <Footer />
 
       {isLoginFormOpen && <Login />}
+
+      {isRegisterFormOpen && <Register />}
 
       {errors && (
         <Notification
