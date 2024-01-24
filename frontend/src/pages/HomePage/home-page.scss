@@ -28,6 +28,10 @@
     }
 
     @include on-desktop {
+      grid-column: 2 / span 10;
+    }
+
+    @include on-wide-screen {
       grid-column: 3 / span 8;
     }
 

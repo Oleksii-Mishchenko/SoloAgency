@@ -58,6 +58,7 @@ export const authState = createSlice({
   initialState,
   reducers: {
     openLoginForm: state => {
+      state.isRegisterFormOpen = false;
       state.isLoginFormOpen = true;
     },
 
@@ -70,6 +71,7 @@ export const authState = createSlice({
     },
 
     openRegisterForm: state => {
+      state.isLoginFormOpen = false;
       state.isRegisterFormOpen = true;
     },
 
@@ -119,11 +121,13 @@ export const authState = createSlice({
 
     builder.addCase(register.fulfilled, (state, action) => {
       state.isRegistering = false;
-      state.authData.user = action.payload;
+      state.isRegisterFormOpen = false;
+      state.authData = action.payload;
     });
 
     builder.addCase(register.rejected, (state, action) => {
       state.isRegistering = false;
+      state.isRegisterFormOpen = false;
       state.errors = parseErrors(action.error.message);
     });
   },

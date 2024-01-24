@@ -4,7 +4,7 @@
   position: relative;
 
   &__title {
-    @extend %h2;
+    @extend %h1;
 
     margin-bottom: 20px;
     text-align: center;
@@ -40,22 +40,5 @@
   &__sign-up-offer {
     @extend %body;
     text-align: center;
-
-    &-button {
-      padding: 0;
-      background-color: transparent;
-      border: none;
-      cursor: pointer;
-      transition: all 0.3s;
-
-      @extend %h3;
-
-      font-size: 16px;
-      line-height: 18px;
-
-      &:hover {
-        color: $color-green-dark;
-      }
-    }
   }
 }

@@ -27,7 +27,17 @@ export const Auth: React.FC<Props> = ({ menu: { isMenuOpen, toggleMenu } }) => {
         <p>Authorized</p>
       ) : (
         <>
-          <MainButton white className="auth__button" text="Реєстрація" />
+          <MainButton
+            white
+            className="auth__button"
+            text="Реєстрація"
+            onClick={event => {
+              event.stopPropagation();
+              handleMenuClosure();
+              dispatch(authActions.openRegisterForm());
+            }}
+          />
+
           <MainButton
             className="auth__button"
             text="Вхід"
