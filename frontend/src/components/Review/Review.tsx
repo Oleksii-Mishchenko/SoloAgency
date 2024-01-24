@@ -23,6 +23,7 @@ export const Review: React.FC<Props> = React.memo(
     const dispatch = useAppDispatch();
     const { approvingId, approvedReview, approveErrors, deletingId } =
       useAppSelector(state => state.reviews);
+    const { user, token } = useAppSelector(state => state.auth.authData);
     const initial = user_name[0].toUpperCase();
 
     const avaColor = useMemo(() => {
@@ -65,29 +66,31 @@ export const Review: React.FC<Props> = React.memo(
             </div>
           </div>
 
-          <div className="review__controls">
-            <ControlButton
-              buttonType={ControlButtonType.Remove}
-              type="button"
-              title="Видалити"
-              onClick={event => {
-                event.stopPropagation();
-                setHasDeleteConfirm(true);
-              }}
-            />
-
-            {!is_approved && (
+          {token && user?.is_staff && (
+            <div className="review__controls">
               <ControlButton
-                buttonType={ControlButtonType.Approve}
+                buttonType={ControlButtonType.Remove}
                 type="button"
-                title="Опублікувати"
+                title="Видалити"
                 onClick={event => {
                   event.stopPropagation();
-                  setHasApproveConfirm(true);
+                  setHasDeleteConfirm(true);
                 }}
               />
-            )}
-          </div>
+
+              {!is_approved && (
+                <ControlButton
+                  buttonType={ControlButtonType.Approve}
+                  type="button"
+                  title="Опублікувати"
+                  onClick={event => {
+                    event.stopPropagation();
+                    setHasApproveConfirm(true);
+                  }}
+                />
+              )}
+            </div>
+          )}
         </div>
 
         {hasApproveConfirm && (

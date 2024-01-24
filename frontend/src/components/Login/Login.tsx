@@ -4,7 +4,7 @@ import { LoginData } from '../../types/LoginData';
 import { MainButton } from '../MainButton';
 import { useRef } from 'react';
 import { useOuterClick } from '../../customHooks/useOuterClick';
-import { useAppDispatch } from '../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import * as authActions from '../../features/authSlice';
 import { unwrapResult } from '@reduxjs/toolkit';
 import './login.scss';
@@ -12,6 +12,7 @@ import './login.scss';
 export const Login = () => {
   const loginRef = useRef(null);
   const dispatch = useAppDispatch();
+  const { isLoggingIn, isGettingUser } = useAppSelector(state => state.auth);
   const onClose = () => dispatch(authActions.closeLoginForm());
 
   useOuterClick(loginRef, onClose);
@@ -74,6 +75,7 @@ export const Login = () => {
             className="login__enter-button"
             type="submit"
             text="Увійти"
+            isLoading={isLoggingIn || isGettingUser}
           />
         </form>
       </div>
