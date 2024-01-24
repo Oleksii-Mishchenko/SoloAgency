@@ -174,7 +174,7 @@ class Review(models.Model):
         return f"Review by {self.user.username} - {self.created_at}"
 
     class Meta:
-        ordering = ["-created_at"]
+        ordering = ["is_approved"]
 
 
 class CallRequest(models.Model):
