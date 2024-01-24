@@ -1,3 +1,4 @@
+from django.db.models.functions import Random
 from rest_framework import viewsets, serializers, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -134,7 +135,7 @@ class ReviewViewSet(viewsets.ModelViewSet):
 
         if is_approved_param is not None:
             if is_approved_param.lower() == "true":
-                queryset = queryset.filter(is_approved=True)
+                queryset = queryset.filter(is_approved=True).order_by(Random())
             elif is_approved_param.lower() == "false":
                 queryset = queryset.filter(is_approved=False)
             else:
