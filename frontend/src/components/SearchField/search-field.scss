@@ -13,8 +13,19 @@
     border-radius: 5px;
     outline: none;
     color: $color-black;
+    transition: all 0.3s;
 
     @extend %secondary-body;
+
+    &:hover {
+      border-color: $color-black;
+      box-shadow: 0 0 5px rgba($color-grey-blocks, 0.3);
+    }
+
+    &:focus {
+      border-color: $color-black;
+      box-shadow: 0 0 5px rgba($color-black, 0.4);
+    }
 
     &::placeholder {
       @extend %secondary-body;

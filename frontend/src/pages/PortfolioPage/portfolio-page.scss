@@ -14,4 +14,8 @@
       grid-column: 3 / -3;
     }
   }
+
+  &__portfolio {
+    @extend .portfolio-page__search-field;
+  }
 }

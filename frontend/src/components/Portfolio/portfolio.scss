@@ -1,0 +1,19 @@
+@import '../../styles/main.scss';
+
+.portfolio {
+  display: flex;
+  flex-direction: column;
+  row-gap: 30px;
+
+  &__title {
+    @extend %h1;
+
+    text-align: center;
+  }
+
+  &__projects {
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+  }
+}
