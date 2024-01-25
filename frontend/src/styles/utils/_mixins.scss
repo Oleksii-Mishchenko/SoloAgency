@@ -25,13 +25,14 @@
 @mixin page-grid {
   --columns: 2;
   --column-gap: 8px;
-  row-gap: 32px;
+  row-gap: 30px;
 
   @include grid-container(var(--columns), var(--column-gap));
 
   @include on-tablet {
     --columns: 12;
     --column-gap: 32px;
+    row-gap: 40px;
   }
 
   @include on-desktop {

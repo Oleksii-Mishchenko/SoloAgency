@@ -4,11 +4,15 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  row-gap: 30px;
   min-height: 100vh;
 
+  @include on-tablet {
+    row-gap: 40px;
+  }
+
   @include on-desktop {
-    gap: 100px;
+    row-gap: 50px;
   }
 
   &__title {

@@ -10,6 +10,7 @@ import { getSearchWith } from '../../helpers/getSearchWith';
 import { Errors } from '../Errors';
 import { Notification } from '../Notification';
 import './advices.scss';
+import { scrollToTop } from '../../helpers/scrollToTop';
 
 type Props = {
   relPage: string;
@@ -17,7 +18,7 @@ type Props = {
 
 export const Advices: React.FC<Props> = ({ relPage }) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const page = searchParams.get('page') || 1;
+  const page = searchParams.get('page') || null;
   const dispatch = useAppDispatch();
   const {
     advices: { num_pages, current_page, next_page, previous_page, results },
@@ -39,7 +40,8 @@ export const Advices: React.FC<Props> = ({ relPage }) => {
 
     const params = getSearchWith({ page }, searchParams);
 
-    dispatch(advicesActions.init(`?${params}`));
+    dispatch(advicesActions.init(params ? `?${params}` : ''));
+    scrollToTop();
   }, [page, results.length]);
 
   const handleRemove = useCallback(async (id: number) => {

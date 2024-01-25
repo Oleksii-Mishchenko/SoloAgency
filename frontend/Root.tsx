@@ -7,7 +7,7 @@ import {
 
 import { App } from './src/App';
 import { HomePage } from './src/pages/HomePage';
-import { AboutUsPage } from './src/pages/AboutUsPage';
+import { PortfolioPage } from './src/pages/PortfolioPage';
 import { PageNotFound } from './src/pages/PageNotFound';
 import { AdvicesPage } from './src/pages/AdvicesPage';
 import { EventTypesPage } from './src/pages/EventTypesPage';
@@ -19,7 +19,7 @@ export const Root = () => (
       <Route path="/" element={<App />}>
         <Route index element={<HomePage />} />
         <Route path="home" element={<Navigate to="/" replace />} />
-        <Route path="about-us" element={<AboutUsPage />} />
+        <Route path="portfolio" element={<PortfolioPage />} />
         <Route path="advices" element={<AdvicesPage />} />
         <Route path="event-types" element={<EventTypesPage />} />
         <Route path="contacts" element={<ContactsPage />} />
