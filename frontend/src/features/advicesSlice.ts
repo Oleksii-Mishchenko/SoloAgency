@@ -157,7 +157,6 @@ export const advicesSlice = createSlice({
     builder.addCase(edit.rejected, (state, action) => {
       state.isPatchingAdvice = false;
       state.errorsPatch = parseErrors(action.error.message);
-      console.log(action);
     });
   },
 });

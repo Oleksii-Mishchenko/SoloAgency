@@ -16,4 +16,12 @@
     flex-direction: column;
     row-gap: 30px;
   }
+
+  &__loader {
+    margin: 0 auto;
+  }
+
+  &__errors {
+    margin: 0 auto;
+  }
 }

@@ -8,6 +8,7 @@ import { getSearchWith } from '../../helpers/getSearchWith';
 import { Errors } from '../Errors';
 import { Loader } from '../Loader';
 import { LoaderElement } from '../../types/LoaderElement';
+import { scrollToTop } from '../../helpers/scrollToTop';
 
 type Props = {
   relPage: string;
@@ -27,6 +28,7 @@ export const EventTypes: React.FC<Props> = ({ relPage }) => {
     const params = getSearchWith({ page }, searchParams);
 
     dispatch(eventTypesActions.init(`?${params}`));
+    scrollToTop();
   }, [dispatch, page, searchParams]);
 
   return (

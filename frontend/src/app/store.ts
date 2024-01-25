@@ -4,6 +4,7 @@ import articlesReducer from '../features/articlesSlice';
 import callRequestReducer from '../features/callRequestSlice';
 import reviewsReducer from '../features/reviewsSlice';
 import eventTypesSlice from '../features/eventTypesSlice';
+import portfolioReducer from '../features/portfolioSlice';
 
 import {
   configureStore,
@@ -30,6 +31,7 @@ const rootReducer = combineReducers({
   callRequest: callRequestReducer,
   reviews: reviewsReducer,
   eventTypes: eventTypesSlice,
+  portfolio: portfolioReducer,
 });
 
 const persistConfig = {
