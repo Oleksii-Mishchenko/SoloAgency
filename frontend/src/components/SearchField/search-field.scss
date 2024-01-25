@@ -1,0 +1,54 @@
+@import '../../styles/main.scss';
+
+.search-field {
+  &__form {
+    position: relative;
+  }
+
+  &__input {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 11px 50px;
+    border: 1px solid $color-green-element;
+    border-radius: 5px;
+    outline: none;
+    color: $color-black;
+
+    @extend %secondary-body;
+
+    &::placeholder {
+      @extend %secondary-body;
+
+      font-weight: 400;
+      color: $color-grey-elements;
+    }
+  }
+
+  &__reset {
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    height: 24px;
+    width: 24px;
+    transform: translateY(-50%);
+    border: none;
+    background-color: transparent;
+    background-image: url(../../assets/img/close.svg);
+    background-position: center;
+    cursor: pointer;
+  }
+
+  &__submit {
+    position: absolute;
+    top: 50%;
+    left: 16px;
+    height: 24px;
+    width: 24px;
+    transform: translateY(-50%);
+    border: none;
+    background-color: transparent;
+    background-image: url(../../assets/img/magnify.svg);
+    background-position: center;
+    cursor: pointer;
+  }
+}
