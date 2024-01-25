@@ -1,4 +1,5 @@
 from django.db.models.functions import Random
+from drf_spectacular.utils import extend_schema, OpenApiParameter
 from rest_framework import viewsets, serializers, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -152,6 +153,19 @@ class ReviewViewSet(viewsets.ModelViewSet):
         review.save()
         return Response({"status": "Comment approved"}, status=status.HTTP_200_OK)
 
+    @extend_schema(
+        parameters=[
+            OpenApiParameter(
+                name="is_approved",
+                type={"type": "string"},
+                description="Filter theatre halls by is_approved.",
+                required=False,
+            )
+        ]
+    )
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
+
 
 class CallRequestViewSet(viewsets.ModelViewSet):
     queryset = CallRequest.objects.all()
@@ -181,6 +195,16 @@ class PortfolioViewSet(
 
         return queryset
 
+    @extend_schema(
+        parameters=[
+            OpenApiParameter(
+                name="title",
+                type=str,
+                description="Filter portfolios by title.",
+                required=False,
+            )
+        ]
+    )
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
         return self.paginated_response(queryset, PortfolioSerializer)
