@@ -3,13 +3,13 @@ import { RatingType } from '../../types/Rating';
 import './rating.scss';
 import classNames from 'classnames';
 
-type RatingProps = {
+type Props = {
   title: string;
   value: RatingType;
   onChange: (value: RatingType) => void;
 };
 
-export const Rating: React.FC<RatingProps> = ({ title, value, onChange }) => {
+export const Rating: React.FC<Props> = ({ title, value, onChange }) => {
   const stars: RatingType[] = useMemo(() => [1, 2, 3, 4, 5], []);
 
   return (

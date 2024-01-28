@@ -1,0 +1,68 @@
+@import '../../styles/main.scss';
+
+.attach-file {
+  &__label {
+    margin-bottom: 8px;
+    padding-inline: 8px;
+    color: $color-grey-text;
+
+    @extend %secondary-body;
+  }
+
+  &__inputs {
+    display: flex;
+    align-items: center;
+    column-gap: 20px;
+  }
+
+  &__remove-button {
+    height: 24px;
+    width: 24px;
+    background-color: transparent;
+    border: none;
+    background-image: url(../../assets/img/close.svg);
+    cursor: pointer;
+  }
+
+  &__input {
+    opacity: 0;
+    height: 0;
+    width: 0;
+    padding: 0;
+    margin: 0;
+    line-height: 0;
+    overflow: hidden;
+
+    &-button {
+      height: 24px;
+      width: 24px;
+      background-color: transparent;
+      border: none;
+      background-image: url(../../assets/img/paperclip.svg);
+      cursor: pointer;
+    }
+  }
+
+  &__file-name {
+    @extend %secondary-body;
+  }
+
+  &__error {
+    position: relative;
+    margin-top: 8px;
+    padding-left: 30px;
+
+    @extend %body-error;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 1px;
+      left: 8px;
+      width: 14px;
+      height: 14px;
+      background-image: url(../../assets/img/error.svg);
+      background-size: contain;
+    }
+  }
+}

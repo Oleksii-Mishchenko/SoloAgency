@@ -1,16 +1,15 @@
 import { useSearchParams } from 'react-router-dom';
-// import { Project as ProjectType } from '../../types/Project';
 import { Project } from '../Project';
 import { useEffect } from 'react';
 import { getSearchWith } from '../../helpers/getSearchWith';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import * as portfolioActions from '../../features/portfolioSlice';
-import './portfolio.scss';
 import { Loader } from '../Loader';
 import { LoaderElement } from '../../types/LoaderElement';
 import { Errors } from '../Errors';
 import { Pagination } from '../Pagination';
 import { scrollToTop } from '../../helpers/scrollToTop';
+import './portfolio.scss';
 
 type Props = {
   relPage: string;
@@ -26,6 +25,7 @@ export const Portfolio: React.FC<Props> = ({ relPage }) => {
       next_page,
       previous_page,
     },
+    hasLoaded,
     isLoadingPortfolio,
     errorsLoadingPortfolio,
   } = useAppSelector(state => state.portfolio);
@@ -58,6 +58,10 @@ export const Portfolio: React.FC<Props> = ({ relPage }) => {
             <Project key={project.id} project={project} />
           ))}
         </div>
+      )}
+
+      {hasLoaded && !projects.length && !errorsLoadingPortfolio && (
+        <p className="portfolio__no-results">Нічого не знайдено</p>
       )}
 
       {num_pages > 1 && (
