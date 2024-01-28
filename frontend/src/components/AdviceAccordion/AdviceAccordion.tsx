@@ -41,12 +41,14 @@ export const AdviceAccordion: FC<Props> = memo(
         <div className="advice__header">
           <p className="advice__question">{question}</p>
 
-          <button
+          <ControlButton
             type="button"
             title={isExpanded ? 'Згорнути' : 'Розгорнути'}
-            className={classNames('advice__switcher', {
-              'advice__switcher--open': isExpanded,
-            })}
+            buttonType={
+              isExpanded
+                ? ControlButtonType.CrossGreen
+                : ControlButtonType.PlusGreen
+            }
             onClick={() => setExpandedId(isExpanded ? null : id)}
           />
         </div>

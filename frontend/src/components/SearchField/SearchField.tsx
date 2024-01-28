@@ -3,6 +3,8 @@ import debounce from 'lodash.debounce';
 import { useCallback, useEffect, useState } from 'react';
 import { getSearchWith } from '../../helpers/getSearchWith';
 import './search-field.scss';
+import { ControlButton } from '../ControlButton';
+import { ControlButtonType } from '../../types/ControlButtonType';
 
 type Props = {
   relPage: string;
@@ -48,13 +50,22 @@ export const SearchField: React.FC<Props> = ({ relPage, searchBy }) => {
           onChange={handleChange}
         />
 
-        <input
+        <ControlButton
           type="reset"
           value=""
+          title="Скинути"
           className="search-field__reset"
+          buttonType={ControlButtonType.Cross}
           onClick={() => setSearchWith({ [searchBy]: null })}
         />
-        <input type="submit" value="" className="search-field__submit" />
+
+        <ControlButton
+          type="submit"
+          value=""
+          title="Знайти"
+          className="search-field__submit"
+          buttonType={ControlButtonType.Search}
+        />
       </form>
     </section>
   );

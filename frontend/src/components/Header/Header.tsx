@@ -4,6 +4,8 @@ import { Logo } from '../Logo';
 import { NavBar } from '../NavBar';
 import './header.scss';
 import classNames from 'classnames';
+import { ControlButton } from '../ControlButton';
+import { ControlButtonType } from '../../types/ControlButtonType';
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
@@ -29,14 +31,22 @@ export const Header = () => {
 
           <Auth menu={{ isMenuOpen, toggleMenu }} />
 
-          <button
+          <ControlButton
             type="button"
+            title="Закрити меню"
             className="header__menu-closer"
+            buttonType={ControlButtonType.Cross}
             onClick={toggleMenu}
           />
         </div>
 
-        <button className="header__burger" onClick={toggleMenu} />
+        <ControlButton
+          type="button"
+          title="Відкрити меню"
+          className="header__burger"
+          buttonType={ControlButtonType.Burger}
+          onClick={toggleMenu}
+        />
       </div>
     </header>
   );

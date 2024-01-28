@@ -10,6 +10,8 @@ import { unwrapResult } from '@reduxjs/toolkit';
 import './login.scss';
 import { AuthLink } from '../AuthLink';
 import { AuthLinkType } from '../../types/AuthLinkType';
+import { ControlButton } from '../ControlButton';
+import { ControlButtonType } from '../../types/ControlButtonType';
 
 export const Login = () => {
   const loginRef = useRef(null);
@@ -39,9 +41,11 @@ export const Login = () => {
       <div className="login__content">
         <h3 className="login__title">Увійти</h3>
 
-        <button
+        <ControlButton
           type="button"
           className="login__close-button"
+          title="Закрити"
+          buttonType={ControlButtonType.Cross}
           onClick={onClose}
         />
 
