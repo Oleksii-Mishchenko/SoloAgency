@@ -1,22 +1,31 @@
 @import '../../styles/main.scss';
 
 .event-types {
-  --columns: 1;
-
-  @include on-tablet {
-    --columns: 2;
-  }
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
 
   @include on-desktop {
-    --columns: 3;
+    row-gap: 30px;
   }
 
-  @include grid-container(var(--columns), 20px);
+  &__events {
+    --columns: 1;
+    row-gap: 20px;
 
-  row-gap: 50px;
+    @include on-tablet {
+      --columns: 2;
+    }
+
+    @include on-desktop {
+      --columns: 3;
+      row-gap: 50px;
+    }
+
+    @include grid-container(var(--columns), 20px);
+  }
 
   &__title {
-    grid-column: 1 / -1;
     text-align: center;
 
     @extend %h1;
@@ -65,17 +74,11 @@
     }
   }
 
-  &__pagination {
-    grid-column: 1 / -1;
-  }
-
   &__loader {
-    grid-column: 1 / -1;
     margin: 0 auto;
   }
 
   &__errors {
-    grid-column: 1 / -1;
     margin: 0 auto;
   }
 }

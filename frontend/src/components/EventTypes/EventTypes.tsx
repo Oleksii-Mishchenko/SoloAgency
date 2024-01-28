@@ -41,24 +41,27 @@ export const EventTypes: React.FC<Props> = ({ relPage }) => {
 
       {!!results.length && !errors && (
         <>
-          {results.map(({ id, photo, name, description }) => (
-            <article className="event-types__event" key={id}>
-              <div className="event-types__event-image-wrapper">
-                <img
-                  src={photo}
-                  alt={name}
-                  className="event-types__event-image"
-                />
-                <p className="event-types__event-description">{description}</p>
-              </div>
+          <div className="event-types__events">
+            {results.map(({ id, photo, name, description }) => (
+              <article className="event-types__event" key={id}>
+                <div className="event-types__event-image-wrapper">
+                  <img
+                    src={photo}
+                    alt={name}
+                    className="event-types__event-image"
+                  />
+                  <p className="event-types__event-description">
+                    {description}
+                  </p>
+                </div>
 
-              <h3 className="event-types__event-title">{name}</h3>
-            </article>
-          ))}
+                <h3 className="event-types__event-title">{name}</h3>
+              </article>
+            ))}
+          </div>
 
           {num_pages > 1 && (
             <Pagination
-              className="event-types__pagination"
               config={{ num_pages, current_page, next_page, previous_page }}
             />
           )}
