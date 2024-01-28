@@ -36,7 +36,9 @@ export const SearchField: React.FC<Props> = ({ relPage, searchBy }) => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    setSearchWith({ [searchBy]: query });
+    if (query) {
+      setSearchWith({ [searchBy]: query });
+    }
   };
 
   return (

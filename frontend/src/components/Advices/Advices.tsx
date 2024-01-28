@@ -9,8 +9,8 @@ import { useSearchParams } from 'react-router-dom';
 import { getSearchWith } from '../../helpers/getSearchWith';
 import { Errors } from '../Errors';
 import { Notification } from '../Notification';
+import { useScrollToRef } from '../../customHooks/useScrollToRef';
 import './advices.scss';
-import { scrollToTop } from '../../helpers/scrollToTop';
 
 type Props = {
   relPage: string;
@@ -38,11 +38,16 @@ export const Advices: React.FC<Props> = ({ relPage }) => {
       setExpandedId(null);
     }
 
-    const params = getSearchWith({ page }, searchParams);
+    const timerId = setTimeout(() => {
+      const params = getSearchWith({ page }, searchParams);
 
-    dispatch(advicesActions.init(params ? `?${params}` : ''));
-    scrollToTop();
+      dispatch(advicesActions.init(params ? `?${params}` : ''));
+    }, 300);
+
+    return () => clearTimeout(timerId);
   }, [page, results.length]);
+
+  const sectionRef = useScrollToRef([page]);
 
   const handleRemove = useCallback(async (id: number) => {
     await dispatch(advicesActions.remove(id));
@@ -51,7 +56,7 @@ export const Advices: React.FC<Props> = ({ relPage }) => {
   }, []);
 
   return (
-    <section className={`${relPage}__advices advices`}>
+    <section className={`${relPage}__advices advices`} ref={sectionRef}>
       <h1 className="advices__title">Найпоширеніші питання</h1>
 
       <div className="advices__wrapper">

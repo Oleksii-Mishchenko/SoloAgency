@@ -50,4 +50,12 @@
       white-space: pre-line;
     }
   }
+
+  &__loader {
+    margin: 0 auto;
+  }
+
+  &__errors {
+    margin: 0 auto;
+  }
 }

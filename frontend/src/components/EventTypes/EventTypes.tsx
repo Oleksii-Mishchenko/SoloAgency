@@ -7,8 +7,8 @@ import { getSearchWith } from '../../helpers/getSearchWith';
 import { Errors } from '../Errors';
 import { Loader } from '../Loader';
 import { LoaderElement } from '../../types/LoaderElement';
-import { scrollToTop } from '../../helpers/scrollToTop';
 import './event-types.scss';
+import { useScrollToRef } from '../../customHooks/useScrollToRef';
 
 type Props = {
   relPage: string;
@@ -16,7 +16,7 @@ type Props = {
 
 export const EventTypes: React.FC<Props> = ({ relPage }) => {
   const [searchParams] = useSearchParams();
-  const page = searchParams.get('page') || 1;
+  const page = searchParams.get('page') || null;
   const dispatch = useAppDispatch();
   const {
     eventTypes: { num_pages, current_page, next_page, previous_page, results },
@@ -25,14 +25,19 @@ export const EventTypes: React.FC<Props> = ({ relPage }) => {
   } = useAppSelector(state => state.eventTypes);
 
   useEffect(() => {
-    const params = getSearchWith({ page }, searchParams);
+    const timerId = setTimeout(() => {
+      const params = getSearchWith({ page }, searchParams);
 
-    dispatch(eventTypesActions.init(`?${params}`));
-    scrollToTop();
-  }, [dispatch, page, searchParams]);
+      dispatch(eventTypesActions.init(params ? `?${params}` : ''));
+    }, 300);
+
+    return () => clearTimeout(timerId);
+  }, [page]);
+
+  const sectionRef = useScrollToRef([page]);
 
   return (
-    <section className={`${relPage}__event-types event-types`}>
+    <section className={`${relPage}__event-types event-types`} ref={sectionRef}>
       <h2 className="event-types__title">Більше послуг</h2>
 
       {isLoadingEventTypes && (
