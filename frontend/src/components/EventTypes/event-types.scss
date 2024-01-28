@@ -15,6 +15,13 @@
 
   row-gap: 50px;
 
+  &__title {
+    grid-column: 1 / -1;
+    text-align: center;
+
+    @extend %h1;
+  }
+
   &__event {
     &-image-wrapper {
       position: relative;

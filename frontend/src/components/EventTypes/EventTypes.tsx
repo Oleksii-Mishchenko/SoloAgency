@@ -1,6 +1,5 @@
 import { useSearchParams } from 'react-router-dom';
 import { Pagination } from '../Pagination';
-import './event-types.scss';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import * as eventTypesActions from '../../features/eventTypesSlice';
 import { useEffect } from 'react';
@@ -9,6 +8,7 @@ import { Errors } from '../Errors';
 import { Loader } from '../Loader';
 import { LoaderElement } from '../../types/LoaderElement';
 import { scrollToTop } from '../../helpers/scrollToTop';
+import './event-types.scss';
 
 type Props = {
   relPage: string;
@@ -33,6 +33,8 @@ export const EventTypes: React.FC<Props> = ({ relPage }) => {
 
   return (
     <section className={`${relPage}__event-types event-types`}>
+      <h2 className="event-types__title">Більше послуг</h2>
+
       {isLoadingEventTypes && (
         <Loader className="event-types__loader" element={LoaderElement.Block} />
       )}

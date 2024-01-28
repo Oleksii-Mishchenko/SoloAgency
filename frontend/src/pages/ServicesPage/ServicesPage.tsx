@@ -1,14 +1,12 @@
 import { EventTypes } from '../../components/EventTypes';
-import './event-types-page.scss';
+import './services-page.scss';
 
-export const EventTypesPage = () => {
+export const ServicesPage = () => {
   return (
-    <div className="event-types-page">
-      <h2 className="event-types-page__title">Послуги</h2>
+    <div className="services-page">
+      <EventTypes relPage="services-page" />
 
-      <EventTypes relPage="event-types-page" />
-
-      <section className="event-types-page__info">
+      <section className="services-page__info">
         <h2 className="event-types-page__info-title">Додаткова інформація</h2>
 
         <p className="event-types-page__info-description">

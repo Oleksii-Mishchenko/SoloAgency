@@ -1,14 +1,7 @@
 @import '../../styles/main.scss';
 
-.event-types-page {
+.services-page {
   @include page-grid;
-
-  &__title {
-    grid-column: 1 / -1;
-    text-align: center;
-
-    @extend %h1;
-  }
 
   &__event-types {
     grid-column: 1 / -1;
