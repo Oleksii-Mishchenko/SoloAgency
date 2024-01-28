@@ -78,7 +78,9 @@ export const Textarea: FC<TextAreaProps> = ({
       <p className="input__label">{label}</p>
 
       <textarea
-        className="input__field input__field--textarea"
+        className={classNames('input__field', 'input__field--textarea', {
+          'input__field--error': !!errors[name],
+        })}
         {...register}
         {...props}
       />

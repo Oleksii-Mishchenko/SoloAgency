@@ -24,4 +24,10 @@
   &__errors {
     margin: 0 auto;
   }
+
+  &__no-results {
+    @extend %h2;
+
+    text-align: center;
+  }
 }

@@ -18,4 +18,8 @@
   &__portfolio {
     @extend .portfolio-page__search-field;
   }
+
+  &__add-project {
+    @extend .portfolio-page__search-field;
+  }
 }
