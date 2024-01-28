@@ -1,15 +1,18 @@
 import { EventTypes } from '../../components/EventTypes';
+import { Services } from '../../components/Services';
 import './services-page.scss';
 
 export const ServicesPage = () => {
   return (
     <div className="services-page">
+      <Services relPage="services-page" />
+
       <EventTypes relPage="services-page" />
 
       <section className="services-page__info">
-        <h2 className="event-types-page__info-title">Додаткова інформація</h2>
+        <h2 className="services-page__info-title">Додаткова інформація</h2>
 
-        <p className="event-types-page__info-description">
+        <p className="services-page__info-description">
           Наша агенція пишається своїм висококваліфікованим персоналом, який
           володіє не тільки глибоким розумінням організації різноманітних
           заходів, але й створює атмосферу теплоти та професіоналізму для
