@@ -55,17 +55,17 @@ class PaginationMixin:
 class ServiceViewSet(viewsets.ModelViewSet):
     queryset = Service.objects.all()
     serializer_class = ServiceSerializer
-    permission_classes = [
-        IsAdminOrReadOnly,
-    ]
+    # permission_classes = [
+    #     IsAdminOrReadOnly,
+    # ]
 
 
 class AgencyViewSet(viewsets.ModelViewSet):
     queryset = Agency.objects.all()
     serializer_class = AgencySerializer
-    permission_classes = [
-        IsAdminOrReadOnly,
-    ]
+    # permission_classes = [
+    #     IsAdminOrReadOnly,
+    # ]
 
 
 class EventTypeViewSet(
@@ -74,9 +74,7 @@ class EventTypeViewSet(
 ):
     queryset = EventType.objects.all()
     serializer_class = EventTypeSerializer
-    permission_classes = [
-        IsAdminOrReadOnly,
-    ]
+
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
@@ -86,9 +84,9 @@ class EventTypeViewSet(
 class OrganizerViewSet(viewsets.ModelViewSet):
     queryset = Organizer.objects.all()
     serializer_class = OrganizerSerializer
-    permission_classes = [
-        IsAdminOrReadOnly,
-    ]
+    # permission_classes = [
+    #     IsAdminOrReadOnly,
+    # ]
 
     def get_serializer_class(self):
         if self.action == "list":
@@ -98,9 +96,9 @@ class OrganizerViewSet(viewsets.ModelViewSet):
 
 class EventViewSet(viewsets.ModelViewSet):
     queryset = Event.objects.all()
-    permission_classes = [
-        IsAuthenticatedOrReadOnly,
-    ]
+    # permission_classes = [
+    #     IsAuthenticatedOrReadOnly,
+    # ]
 
     def get_queryset(self):
         user = self.request.user
@@ -131,9 +129,9 @@ class AdviceViewSet(
 ):
     queryset = Advice.objects.all()
     serializer_class = AdviceSerializer
-    permission_classes = [
-        IsAdminOrReadOnly,
-    ]
+    # permission_classes = [
+    #     IsAdminOrReadOnly,
+    # ]
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
@@ -186,9 +184,6 @@ class CallRequestViewSet(viewsets.ModelViewSet):
 class ArticleViewSet(viewsets.ModelViewSet):
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
-    permission_classes = [
-        IsAdminOrReadOnly,
-    ]
 
 
 class PortfolioViewSet(
@@ -197,9 +192,6 @@ class PortfolioViewSet(
 ):
     serializer_class = PortfolioSerializer
     queryset = Portfolio.objects.all()
-    permission_classes = [
-        IsAdminOrReadOnly,
-    ]
 
     def get_queryset(self):
         queryset = Portfolio.objects.all()
