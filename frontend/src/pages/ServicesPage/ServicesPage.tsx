@@ -1,17 +1,21 @@
+import { AddEventType } from '../../components/AddEventType';
 import { EventTypes } from '../../components/EventTypes';
-import './event-types-page.scss';
+import { Services } from '../../components/Services';
+import './services-page.scss';
 
-export const EventTypesPage = () => {
+export const ServicesPage = () => {
   return (
-    <div className="event-types-page">
-      <h2 className="event-types-page__title">Послуги</h2>
+    <div className="services-page">
+      <Services relPage="services-page" />
 
-      <EventTypes relPage="event-types-page" />
+      <EventTypes relPage="services-page" />
 
-      <section className="event-types-page__info">
-        <h2 className="event-types-page__info-title">Додаткова інформація</h2>
+      <AddEventType relPage="services-page" />
 
-        <p className="event-types-page__info-description">
+      <section className="services-page__info">
+        <h2 className="services-page__info-title">Додаткова інформація</h2>
+
+        <p className="services-page__info-description">
           Наша агенція пишається своїм висококваліфікованим персоналом, який
           володіє не тільки глибоким розумінням організації різноманітних
           заходів, але й створює атмосферу теплоти та професіоналізму для

@@ -1,25 +1,25 @@
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import * as portfolioActions from '../../features/portfolioSlice';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { NewEventType } from '../../types/EventType';
+import * as eventTypesActions from '../../features/eventTypesSlice';
 import { Input, Textarea } from '../Input';
-import { MainButton } from '../MainButton';
-import { Notification } from '../Notification';
-import { NewProject } from '../../types/Project';
-import { AttachFile } from '../AttachFile';
 import {
   handleMessageBlur,
   handleNameBlur,
 } from '../../helpers/textManipulator';
-import './add-project.scss';
+import { AttachFile } from '../AttachFile';
+import { MainButton } from '../MainButton';
+import { Notification } from '../Notification';
+import './add-event-type.scss';
 
 type Props = {
   relPage: string;
 };
 
-export const AddProject: React.FC<Props> = ({ relPage }) => {
+export const AddEventType: React.FC<Props> = ({ relPage }) => {
   const dispatch = useAppDispatch();
   const { errorsAdding, isAdding, isAddSuccess } = useAppSelector(
-    state => state.portfolio,
+    state => state.eventTypes,
   );
   const {
     register,
@@ -29,11 +29,11 @@ export const AddProject: React.FC<Props> = ({ relPage }) => {
     reset,
     setValue,
     trigger,
-  } = useForm<NewProject>({
+  } = useForm<NewEventType>({
     mode: 'onTouched',
   });
 
-  const onSubmit: SubmitHandler<NewProject> = async (data: NewProject) => {
+  const onSubmit: SubmitHandler<NewEventType> = async (data: NewEventType) => {
     const formData = new FormData();
 
     Object.entries(data).forEach(([key, value]) => {
@@ -42,42 +42,42 @@ export const AddProject: React.FC<Props> = ({ relPage }) => {
       }
     });
 
-    await dispatch(portfolioActions.add(formData));
+    await dispatch(eventTypesActions.add(formData));
 
     reset();
   };
 
   return (
-    <section className={`${relPage}__add-project add-project`}>
-      <h2 className="add-project__title">Бажаєте додати подію?</h2>
+    <section className={`${relPage}__add-event-type add-event-type`}>
+      <h2 className="add-event-type__title">Бажаєте додати послугу?</h2>
 
       <form
-        className="add-project__form"
+        className="add-event-type__form"
         onSubmit={handleSubmit(onSubmit)}
         encType="multipart/form-data"
       >
         <Input
           type="text"
-          label="Дайте назву події"
+          label="Дайте назву послузі"
           placeholder="Назва"
           errors={errors}
           register={{
-            ...register('title', {
+            ...register('name', {
               required: `Назва не може бути порожньою`,
               pattern: {
                 value: /^[A-Za-zА-Яа-я ]+$/,
                 message: 'Тільки українські та латинські літери',
               },
               onBlur: (event: React.ChangeEvent<HTMLInputElement>) => {
-                setValue('title', handleNameBlur(event.target.value));
-                trigger('title');
+                setValue('name', handleNameBlur(event.target.value));
+                trigger('name');
               },
             }),
           }}
         />
 
         <Textarea
-          label="Опис нашої події"
+          label="Опис нашої послуги"
           rows={5}
           placeholder="Опис"
           errors={errors}
@@ -98,7 +98,7 @@ export const AddProject: React.FC<Props> = ({ relPage }) => {
           render={({ field: { value, onChange } }) => {
             return (
               <AttachFile
-                label="Оберіть фото події"
+                label="Оберіть фото послуги"
                 error={errors?.photo}
                 defaultValue={value?.name || ''}
                 value={value?.name}
@@ -114,7 +114,7 @@ export const AddProject: React.FC<Props> = ({ relPage }) => {
 
         <MainButton
           type="submit"
-          className="add-project__button"
+          className="add-event-type__button"
           text="Опублікувати"
           isLoading={isAdding}
         />
@@ -122,18 +122,18 @@ export const AddProject: React.FC<Props> = ({ relPage }) => {
 
       {isAddSuccess && (
         <Notification
-          className="add-project__notification"
-          message={'Ваша подія опублікована.'}
-          onClose={() => dispatch(portfolioActions.clearAddData())}
+          className="add-event-type__notification"
+          message={'Ваша послуга опублікована.'}
+          onClose={() => dispatch(eventTypesActions.clearAddData())}
         />
       )}
 
       {errorsAdding && (
         <Notification
-          className="add-project__notification"
-          message="Подія не була опублікована."
+          className="add-event-type__notification"
+          message="Послуга не була опублікована."
           errors={errorsAdding}
-          onClose={() => dispatch(portfolioActions.clearAddData())}
+          onClose={() => dispatch(eventTypesActions.clearAddData())}
         />
       )}
     </section>

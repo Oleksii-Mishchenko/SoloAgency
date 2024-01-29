@@ -78,9 +78,9 @@ export const portfolioSlice = createSlice({
       state.errorsAdding = null;
     });
 
-    builder.addCase(add.fulfilled, (state, action) => {
+    builder.addCase(add.fulfilled, state => {
       state.isAdding = false;
-      state.portfolio.results.push(action.payload);
+      state.isAddSuccess = true;
     });
 
     builder.addCase(add.rejected, (state, action) => {

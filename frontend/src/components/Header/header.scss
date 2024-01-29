@@ -39,15 +39,6 @@
       position: absolute;
       top: 32px;
       right: 16px;
-      width: 24px;
-      height: 24px;
-      padding: 0;
-      border: none;
-      background: transparent;
-      background-image: url(../../assets/img/close.svg);
-      background-position: center;
-      background-repeat: no-repeat;
-      cursor: pointer;
 
       @include on-tablet {
         right: 40px;
@@ -60,16 +51,6 @@
   }
 
   &__burger {
-    width: 24px;
-    height: 24px;
-    padding: 0;
-    border: none;
-    background: transparent;
-    background-image: url(../../assets/img/burger-menu.svg);
-    background-position: center;
-    background-repeat: no-repeat;
-    cursor: pointer;
-
     @include on-desktop {
       display: none;
     }

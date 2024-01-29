@@ -13,7 +13,7 @@ export const PortfolioPage = () => {
 
       <Portfolio relPage="portfolio-page" />
 
-      {user && token && <AddProject relPage="portfolio-page" />}
+      {user?.is_staff && token && <AddProject relPage="portfolio-page" />}
     </div>
   );
 };

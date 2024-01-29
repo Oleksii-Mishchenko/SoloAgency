@@ -1,25 +1,26 @@
 @import '../../styles/main.scss';
 
-.event-types-page {
+.services-page {
   @include page-grid;
 
-  &__title {
-    grid-column: 1 / -1;
-    text-align: center;
-
-    @extend %h1;
-  }
-
-  &__event-types {
-    grid-column: 1 / -1;
-  }
-
-  &__info {
+  &__services {
     grid-column: 1 / -1;
 
     @include on-tablet {
-      grid-column: 1 / 10;
+      grid-column: 2 / -2;
     }
+
+    @include on-desktop {
+      grid-column: 1 / -1;
+    }
+  }
+
+  &__event-types {
+    @extend .services-page__services;
+  }
+
+  &__info {
+    @extend .services-page__services;
 
     @include on-desktop {
       grid-column: 1 / 9;
@@ -34,5 +35,9 @@
     &-description {
       @extend %body;
     }
+  }
+
+  &__add-event-type {
+    @extend .services-page__info;
   }
 }

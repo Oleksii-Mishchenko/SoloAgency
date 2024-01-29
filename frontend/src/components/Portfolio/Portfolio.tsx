@@ -8,7 +8,7 @@ import { Loader } from '../Loader';
 import { LoaderElement } from '../../types/LoaderElement';
 import { Errors } from '../Errors';
 import { Pagination } from '../Pagination';
-import { scrollToTop } from '../../helpers/scrollToTop';
+import { useScrollToRef } from '../../customHooks/useScrollToRef';
 import './portfolio.scss';
 
 type Props = {
@@ -34,22 +34,33 @@ export const Portfolio: React.FC<Props> = ({ relPage }) => {
   const query = searchParams.get('title') || null;
 
   useEffect(() => {
-    const params = getSearchWith({ page, query }, searchParams);
+    const timerId = setTimeout(() => {
+      const params = getSearchWith({ page }, searchParams);
+
+      dispatch(portfolioActions.init(params ? `?${params}` : ''));
+    }, 300);
+
+    return () => clearTimeout(timerId);
+  }, [page]);
+
+  useEffect(() => {
+    const params = getSearchWith({ query }, searchParams);
 
     dispatch(portfolioActions.init(params ? `?${params}` : ''));
-    scrollToTop();
-  }, [page, query]);
+  }, [query]);
+
+  const sectionRef = useScrollToRef([page]);
 
   return (
-    <section className={`${relPage}__portfolio portfolio`}>
+    <section className={`${relPage}__portfolio portfolio`} ref={sectionRef}>
       <h1 className="portfolio__title">Реалізовані проекти</h1>
-
-      {isLoadingPortfolio && (
-        <Loader className="portfolio__loader" element={LoaderElement.Block} />
-      )}
 
       {errorsLoadingPortfolio && (
         <Errors className="portfolio__errors" errors={errorsLoadingPortfolio} />
+      )}
+
+      {isLoadingPortfolio && (
+        <Loader className="portfolio__loader" element={LoaderElement.Block} />
       )}
 
       {!!projects.length && !errorsLoadingPortfolio && (

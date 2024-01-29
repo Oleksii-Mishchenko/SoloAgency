@@ -2,6 +2,8 @@ import React, { InputHTMLAttributes, useRef } from 'react';
 import { FieldError } from 'react-hook-form';
 import './attach-file.scss';
 import classNames from 'classnames';
+import { ControlButton } from '../ControlButton';
+import { ControlButtonType } from '../../types/ControlButtonType';
 
 type Props = InputHTMLAttributes<HTMLInputElement> & {
   label: string;
@@ -41,18 +43,20 @@ export const AttachFile: React.FC<Props> = ({
       <p className="attach-file__label">{label}</p>
 
       <div className="attach-file__inputs">
-        <button
-          className="attach-file__input-button"
+        <ControlButton
           type="button"
+          title="Прикріпити зображення"
+          buttonType={ControlButtonType.Attach}
           onClick={() => {
             inputRef.current?.click();
           }}
         />
 
         {value && (
-          <button
+          <ControlButton
             type="button"
-            className="attach-file__remove-button"
+            title="Відмінити вибір"
+            buttonType={ControlButtonType.Remove}
             onClick={handleRemoveFile}
           />
         )}

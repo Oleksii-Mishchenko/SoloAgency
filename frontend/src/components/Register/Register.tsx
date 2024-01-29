@@ -10,6 +10,8 @@ import './register.scss';
 import { handleNameBlur } from '../../helpers/textManipulator';
 import { AuthLink } from '../AuthLink';
 import { AuthLinkType } from '../../types/AuthLinkType';
+import { ControlButton } from '../ControlButton';
+import { ControlButtonType } from '../../types/ControlButtonType';
 
 export const Register = () => {
   type RegisterFormData = RegisterData & { repeatPassword: string };
@@ -48,9 +50,11 @@ export const Register = () => {
       <div className="register__content">
         <h3 className="register__title">Реєстрація</h3>
 
-        <button
+        <ControlButton
           type="button"
+          title="Закрити"
           className="register__close-button"
+          buttonType={ControlButtonType.Cross}
           onClick={onClose}
         />
 
