@@ -1,13 +1,12 @@
 @import '../../styles/main.scss';
 
-.add-project {
+.add-event-type {
   position: relative;
 
   &__title {
     @extend %h2;
 
     margin-bottom: 20px;
-    text-align: center;
   }
 
   &__form {

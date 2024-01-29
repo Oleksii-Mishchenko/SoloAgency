@@ -36,4 +36,8 @@
       @extend %body;
     }
   }
+
+  &__add-event-type {
+    @extend .services-page__info;
+  }
 }

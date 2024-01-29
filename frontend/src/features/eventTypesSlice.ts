@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { loadEventTypes } from '../api/eventTypes';
+import { addEventType, loadEventTypes } from '../api/eventTypes';
 import { EventTypes } from '../types/EventType';
 import { ServerErrorResponse } from '../types/ServerErrorResponse';
 import { parseErrors } from '../helpers/parseErrors';
@@ -8,6 +8,9 @@ export type EventTypesState = {
   eventTypes: EventTypes;
   isLoadingEventTypes: boolean;
   errors: ServerErrorResponse | null;
+  isAdding: boolean;
+  isAddSuccess: boolean;
+  errorsAdding: ServerErrorResponse | null;
 };
 
 const initialState: EventTypesState = {
@@ -20,6 +23,9 @@ const initialState: EventTypesState = {
   },
   isLoadingEventTypes: false,
   errors: null,
+  isAdding: false,
+  isAddSuccess: false,
+  errorsAdding: null,
 };
 
 export const init = createAsyncThunk(
@@ -31,10 +37,22 @@ export const init = createAsyncThunk(
   },
 );
 
+export const add = createAsyncThunk('add/service', async (data: FormData) => {
+  const response = await addEventType(data);
+
+  return response;
+});
+
 export const eventTypesSlice = createSlice({
   name: 'eventTypes',
   initialState,
-  reducers: {},
+  reducers: {
+    clearAddData: state => {
+      state.errorsAdding = null;
+      state.isAddSuccess = false;
+    },
+  },
+
   extraReducers: builder => {
     builder.addCase(init.pending, state => {
       state.isLoadingEventTypes = true;
@@ -50,7 +68,23 @@ export const eventTypesSlice = createSlice({
       state.isLoadingEventTypes = false;
       state.errors = parseErrors(action.error.message);
     });
+
+    builder.addCase(add.pending, state => {
+      state.isAdding = true;
+      state.errorsAdding = null;
+    });
+
+    builder.addCase(add.fulfilled, state => {
+      state.isAdding = false;
+      state.isAddSuccess = true;
+    });
+
+    builder.addCase(add.rejected, (state, action) => {
+      state.isAdding = false;
+      state.errorsAdding = parseErrors(action.error.message);
+    });
   },
 });
 
+export const { clearAddData } = eventTypesSlice.actions;
 export default eventTypesSlice.reducer;

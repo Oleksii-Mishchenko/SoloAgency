@@ -1,3 +1,4 @@
+import { AddEventType } from '../../components/AddEventType';
 import { EventTypes } from '../../components/EventTypes';
 import { Services } from '../../components/Services';
 import './services-page.scss';
@@ -8,6 +9,8 @@ export const ServicesPage = () => {
       <Services relPage="services-page" />
 
       <EventTypes relPage="services-page" />
+
+      <AddEventType relPage="services-page" />
 
       <section className="services-page__info">
         <h2 className="services-page__info-title">Додаткова інформація</h2>
