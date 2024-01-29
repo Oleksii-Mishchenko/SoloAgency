@@ -1,7 +1,7 @@
 from django.db.models.functions import Random
 from drf_spectacular.utils import extend_schema, OpenApiParameter
-from rest_framework import viewsets, serializers, status
-from rest_framework.decorators import action
+from rest_framework import viewsets, serializers
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAdminUser, IsAuthenticated, AllowAny
 from rest_framework.response import Response
 
 from agency.models import (
@@ -17,6 +17,7 @@ from agency.models import (
     Portfolio,
 )
 from agency.pagination import LargeResultsSetPagination
+from agency.permissions import IsAdminOrReadOnly
 from agency.serializers import (
     ServiceSerializer,
     AgencySerializer,
@@ -27,7 +28,6 @@ from agency.serializers import (
     ReviewSerializer,
     CallRequestSerializer,
     ArticleSerializer,
-    # ReviewListSerializer,
     OrganizerListSerializer,
     EventListSerializer,
     PortfolioSerializer,
@@ -55,11 +55,17 @@ class PaginationMixin:
 class ServiceViewSet(viewsets.ModelViewSet):
     queryset = Service.objects.all()
     serializer_class = ServiceSerializer
+    permission_classes = [
+        IsAdminOrReadOnly,
+    ]
 
 
 class AgencyViewSet(viewsets.ModelViewSet):
     queryset = Agency.objects.all()
     serializer_class = AgencySerializer
+    permission_classes = [
+        IsAdminOrReadOnly,
+    ]
 
 
 class EventTypeViewSet(
@@ -68,6 +74,9 @@ class EventTypeViewSet(
 ):
     queryset = EventType.objects.all()
     serializer_class = EventTypeSerializer
+    permission_classes = [
+        IsAdminOrReadOnly,
+    ]
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
@@ -77,6 +86,9 @@ class EventTypeViewSet(
 class OrganizerViewSet(viewsets.ModelViewSet):
     queryset = Organizer.objects.all()
     serializer_class = OrganizerSerializer
+    permission_classes = [
+        IsAdminOrReadOnly,
+    ]
 
     def get_serializer_class(self):
         if self.action == "list":
@@ -86,6 +98,9 @@ class OrganizerViewSet(viewsets.ModelViewSet):
 
 class EventViewSet(viewsets.ModelViewSet):
     queryset = Event.objects.all()
+    permission_classes = [
+        IsAuthenticatedOrReadOnly,
+    ]
 
     def get_queryset(self):
         user = self.request.user
@@ -116,6 +131,9 @@ class AdviceViewSet(
 ):
     queryset = Advice.objects.all()
     serializer_class = AdviceSerializer
+    permission_classes = [
+        IsAdminOrReadOnly,
+    ]
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
@@ -146,13 +164,6 @@ class ReviewViewSet(viewsets.ModelViewSet):
 
         return queryset
 
-    @action(detail=True, methods=["POST"])
-    def approve(self, request, pk=None):
-        review = self.get_object()
-        review.is_approved = True
-        review.save()
-        return Response({"status": "Comment approved"}, status=status.HTTP_200_OK)
-
     @extend_schema(
         parameters=[
             OpenApiParameter(
@@ -175,6 +186,9 @@ class CallRequestViewSet(viewsets.ModelViewSet):
 class ArticleViewSet(viewsets.ModelViewSet):
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
+    permission_classes = [
+        IsAdminOrReadOnly,
+    ]
 
 
 class PortfolioViewSet(
@@ -183,6 +197,9 @@ class PortfolioViewSet(
 ):
     serializer_class = PortfolioSerializer
     queryset = Portfolio.objects.all()
+    permission_classes = [
+        IsAdminOrReadOnly,
+    ]
 
     def get_queryset(self):
         queryset = Portfolio.objects.all()
