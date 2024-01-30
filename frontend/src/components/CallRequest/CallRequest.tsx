@@ -1,8 +1,7 @@
-import { SubmitHandler, useForm } from 'react-hook-form';
-import './call-request.scss';
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { CallRequestData } from '../../types/CallRequestData';
 import { MainButton } from '../MainButton';
-import { Input, Textarea } from '../Input';
+import { Input, InputPhoneNumber, Textarea } from '../Input';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import * as callRequestActions from '../../features/callRequestSlice';
 import {
@@ -11,6 +10,7 @@ import {
   trimString,
 } from '../../helpers/textManipulator';
 import { Notification } from '../Notification';
+import './call-request.scss';
 
 type Props = {
   relPage: string;
@@ -22,6 +22,7 @@ export const CallRequest: React.FC<Props> = ({ relPage }) => {
     state => state.callRequest,
   );
 
+  const methods = useForm<CallRequestData>({ mode: 'onTouched' });
   const {
     register,
     formState: { errors },
@@ -29,22 +30,26 @@ export const CallRequest: React.FC<Props> = ({ relPage }) => {
     reset,
     setValue,
     trigger,
-  } = useForm<CallRequestData>({
-    mode: 'onTouched',
-  });
+  } = methods;
+
+  // const {
+  //   register,
+  //   formState: { errors },
+  //   handleSubmit,
+  //   reset,
+  //   setValue,
+  //   trigger,
+  //   control,
+  // } = useForm<CallRequestData>({
+  //   mode: 'onTouched',
+  // });
 
   const onSubmit: SubmitHandler<CallRequestData> = async (
     data: CallRequestData,
   ) => {
-    await dispatch(callRequestActions.add(data));
-    reset();
-  };
-
-  const handlePhoneInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const formattedValue = event.target.value.slice(0, 13);
-    const sanitizedValue = formattedValue.replace(/[^\d+]/g, '');
-
-    event.target.value = sanitizedValue;
+    console.log(data);
+    // await dispatch(callRequestActions.add(data));
+    // reset();
   };
 
   return (
@@ -58,75 +63,76 @@ export const CallRequest: React.FC<Props> = ({ relPage }) => {
         </p>
       </div>
 
-      <form className="call-request__form" onSubmit={handleSubmit(onSubmit)}>
-        <fieldset className="call-request__form-fieldset">
-          <Input
-            className="call-request__input"
-            type="text"
-            label="Ваше ім’я"
-            placeholder="Ім'я"
-            errors={errors}
-            register={{
-              ...register('name', {
-                required: `Вкажіть ваше ім'я`,
-                minLength: {
-                  value: 2,
-                  message: 'Не менше 2 символів',
-                },
-                maxLength: {
-                  value: 30,
-                  message: `Не більше 30 символів`,
-                },
-                pattern: {
-                  value: /^[A-Za-zА-Яа-я ]+$/,
-                  message: 'Тільки українські та латинські літери',
-                },
-                onBlur: (event: React.ChangeEvent<HTMLInputElement>) => {
-                  setValue('name', handleNameBlur(event.target.value));
-                  trigger('name');
-                },
-              }),
-            }}
-          />
+      <FormProvider {...methods}>
+        <form className="call-request__form" onSubmit={handleSubmit(onSubmit)}>
+          <fieldset className="call-request__form-fieldset">
+            <Input
+              className="call-request__input"
+              type="text"
+              label="Ваше ім’я"
+              placeholder="Ім'я"
+              errors={errors}
+              register={{
+                ...register('name', {
+                  required: `Вкажіть ваше ім'я`,
+                  minLength: {
+                    value: 2,
+                    message: 'Не менше 2 символів',
+                  },
+                  maxLength: {
+                    value: 30,
+                    message: `Не більше 30 символів`,
+                  },
+                  pattern: {
+                    value: /^[A-Za-zА-Яа-я ]+$/,
+                    message: 'Тільки українські та латинські літери',
+                  },
+                  onBlur: (event: React.ChangeEvent<HTMLInputElement>) => {
+                    setValue('name', handleNameBlur(event.target.value));
+                    trigger('name');
+                  },
+                }),
+              }}
+            />
 
-          <Input
-            className="call-request__input"
-            type="text"
-            label="З якого Ви міста?"
-            placeholder="Місто"
-            errors={errors}
-            register={{
-              ...register('city', {
-                required: 'Вкажіть з якого ви міста',
-                minLength: {
-                  value: 2,
-                  message: 'Не менше 2 символів',
-                },
-                maxLength: {
-                  value: 30,
-                  message: 'Не більше 30 символів',
-                },
-                pattern: {
-                  value: /^[A-Za-zА-Яа-я ]+$/,
-                  message: 'Тільки українські та латинські літери',
-                },
+            <Input
+              className="call-request__input"
+              type="text"
+              label="З якого Ви міста?"
+              placeholder="Місто"
+              errors={errors}
+              register={{
+                ...register('city', {
+                  required: 'Вкажіть з якого ви міста',
+                  minLength: {
+                    value: 2,
+                    message: 'Не менше 2 символів',
+                  },
+                  maxLength: {
+                    value: 30,
+                    message: 'Не більше 30 символів',
+                  },
+                  pattern: {
+                    value: /^[A-Za-zА-Яа-я ]+$/,
+                    message: 'Тільки українські та латинські літери',
+                  },
 
-                onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
-                  const handledValue = handleCityChange(event.target.value);
+                  onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
+                    const handledValue = handleCityChange(event.target.value);
 
-                  setValue('city', handledValue);
-                },
+                    setValue('city', handledValue);
+                  },
 
-                onBlur: (event: React.ChangeEvent<HTMLInputElement>) => {
-                  const trimmedValue = trimString(event.target.value);
+                  onBlur: (event: React.ChangeEvent<HTMLInputElement>) => {
+                    const trimmedValue = trimString(event.target.value);
 
-                  setValue('city', trimmedValue);
-                },
-              }),
-            }}
-          />
+                    setValue('city', trimmedValue);
+                  },
+                }),
+              }}
+            />
 
-          <Input
+            {/* <Input
             className="call-request__input"
             type="tel"
             label="Залиште свій номер телефону"
@@ -143,30 +149,37 @@ export const CallRequest: React.FC<Props> = ({ relPage }) => {
                 onChange: event => handlePhoneInput(event),
               }),
             }}
-          />
+          /> */}
 
-          <Textarea
-            className="call-request__input"
-            label="Опишіть тему звернення"
-            rows={5}
-            placeholder="Деталі"
-            errors={errors}
-            register={{
-              ...register('description', {
-                maxLength: { value: 200, message: 'Не більше 200 символів' },
-              }),
-            }}
-          />
-        </fieldset>
+            <InputPhoneNumber
+              name="phone"
+              errors={errors}
+              label="Залиште свій номер телефону"
+            />
 
-        <MainButton
-          isLoading={isUploading}
-          disabled={isUploading}
-          type="submit"
-          text="Замовити"
-          className="call-request__button"
-        />
-      </form>
+            <Textarea
+              className="call-request__input"
+              label="Опишіть тему звернення"
+              rows={5}
+              placeholder="Деталі"
+              errors={errors}
+              register={{
+                ...register('description', {
+                  maxLength: { value: 200, message: 'Не більше 200 символів' },
+                }),
+              }}
+            />
+          </fieldset>
+
+          <MainButton
+            isLoading={isUploading}
+            disabled={isUploading}
+            type="submit"
+            text="Замовити"
+            className="call-request__button"
+          />
+        </form>
+      </FormProvider>
 
       {callRequestErrors && (
         <Notification
