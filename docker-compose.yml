@@ -25,6 +25,7 @@ services:
     build:
       context: .
       dockerfile: frontend/Dockerfile
+
     volumes:
       - ./frontend:/app
     ports:
