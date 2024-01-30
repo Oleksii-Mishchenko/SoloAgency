@@ -4,7 +4,13 @@ import React, {
   TextareaHTMLAttributes,
   useState,
 } from 'react';
-import { FieldErrors, FieldValues } from 'react-hook-form';
+import {
+  Controller,
+  FieldErrors,
+  FieldValues,
+  useFormContext,
+} from 'react-hook-form';
+import InputMask from 'react-input-mask';
 import classNames from 'classnames';
 import './input.scss';
 
@@ -143,6 +149,58 @@ export const InputPassword: FC<InputPasswordProps> = ({
           {error || 'Помилка при валідації даних.'}
         </p>
       )}
+    </label>
+  );
+};
+
+interface InputPhoneNumberProps {
+  errors: FieldErrors;
+  name: string;
+  label: string;
+}
+
+export const InputPhoneNumber: React.FC<InputPhoneNumberProps> = ({
+  name,
+  errors,
+  label,
+}) => {
+  const { control, register } = useFormContext();
+  const error = errors[name]?.message as string;
+
+  const phoneNumberValidation = {
+    required: "Поле є обов'язковим",
+    pattern: {
+      value: /^\+38 \(\d{3}\) \d{3}-\d{2}-\d{2}$/,
+      message: 'Введіть правильний номер телефону',
+    },
+  };
+
+  return (
+    <label className="input">
+      <p className="input__label">{label}</p>
+      <Controller
+        {...register}
+        name={name}
+        control={control}
+        rules={phoneNumberValidation}
+        render={({ field }) => (
+          <>
+            <InputMask
+              {...field}
+              mask="+38 (099) 999-99-99"
+              maskChar={null}
+              placeholder="+38 (0__ ) ___-__-__"
+              type="tel"
+            />
+
+            {errors[name] && (
+              <p className="input__error">
+                {error || 'Помилка при валідації даних.'}
+              </p>
+            )}
+          </>
+        )}
+      />
     </label>
   );
 };
