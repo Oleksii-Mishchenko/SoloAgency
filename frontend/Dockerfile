@@ -4,7 +4,6 @@ WORKDIR /app
 COPY frontend/package*.json ./
 RUN npm install
 
-COPY . .
+COPY frontend/. .
 
 CMD ["npm", "run", "dev"]
-#CMD ["sleep", "80000"]
