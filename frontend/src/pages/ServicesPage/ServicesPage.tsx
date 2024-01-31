@@ -1,4 +1,5 @@
 import { AddEventType } from '../../components/AddEventType';
+import { EventRequest } from '../../components/EventRequest';
 import { EventTypes } from '../../components/EventTypes';
 import { Services } from '../../components/Services';
 import './services-page.scss';
@@ -32,6 +33,8 @@ export const ServicesPage = () => {
           неперевершеного досвіду наших клієнтів.
         </p>
       </section>
+
+      <EventRequest relPage="services-page" />
     </div>
   );
 };
