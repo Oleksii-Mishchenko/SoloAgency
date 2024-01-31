@@ -31,6 +31,9 @@
     }
 
     &-fieldset {
+      display: flex;
+      flex-direction: column;
+      row-gap: 10px;
       margin: 0 0 16px;
       padding: 0;
       border: none;
@@ -38,14 +41,6 @@
       @include on-tablet {
         margin-bottom: 20px;
       }
-    }
-  }
-
-  &__input {
-    margin-bottom: 10px;
-
-    &:last-child {
-      margin-bottom: 0;
     }
   }
 
