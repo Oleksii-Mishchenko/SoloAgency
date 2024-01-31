@@ -28,6 +28,8 @@
 
   &:disabled {
     background-color: $color-green-disabled;
+    box-shadow: none;
+    transform: none;
     cursor: auto;
   }
 

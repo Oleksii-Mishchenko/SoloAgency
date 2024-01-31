@@ -11,6 +11,7 @@
   background-color: transparent;
   outline: none;
   transition: all 0.3s;
+  color: $color-grey-text;
 
   @extend %secondary-body;
 
@@ -41,7 +42,8 @@
   }
 
   &::placeholder {
-    @extend %secondary-body-grey;
+    @extend %secondary-body;
+    color: $color-grey-elements;
   }
 
   &__error {

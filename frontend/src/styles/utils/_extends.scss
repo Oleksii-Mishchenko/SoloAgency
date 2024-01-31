@@ -41,13 +41,6 @@
   font-weight: 500;
   font-size: 16px;
   line-height: 19px;
-  color: $color-grey-text;
-
-  &-grey {
-    @extend %secondary-body;
-
-    color: $color-grey-elements;
-  }
 }
 
 %body-bold-button {

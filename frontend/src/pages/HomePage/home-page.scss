@@ -93,4 +93,14 @@
   &__call-request {
     grid-column: 1 / 2;
   }
+
+  &__reviews {
+    grid-column: 2 / 12;
+
+    &-title {
+      @extend %h1;
+      margin-bottom: 50px;
+      text-align: center;
+    }
+  }
 }
