@@ -1,0 +1,58 @@
+@import '../../styles/main.scss';
+
+.event-request {
+  &__header {
+    margin-bottom: 20px;
+
+    @include on-wide-screen {
+      margin-bottom: 30px;
+    }
+  }
+
+  &__title {
+    @extend %h2;
+
+    margin-bottom: 20px;
+    line-height: 26px;
+    text-align: center;
+
+    @include on-tablet {
+      text-align: left;
+    }
+
+    @include on-wide-screen {
+      line-height: 22px;
+    }
+  }
+
+  &__info {
+    @extend %secondary-body;
+  }
+
+  &__form {
+    @include grid-container(2, 24px);
+    padding: 20px;
+    border: 1px solid $color-green-element;
+    border-radius: 5px;
+
+    @include on-wide-screen {
+      row-gap: 24px;
+      padding: 48px;
+    }
+  }
+
+  &__fieldset {
+    grid-column: span 2;
+    display: flex;
+    flex-direction: column;
+    row-gap: 24px;
+    margin: 0;
+    padding: 0;
+    max-width: 305px;
+    border: none;
+
+    @include on-wide-screen {
+      grid-column: span 1;
+    }
+  }
+}

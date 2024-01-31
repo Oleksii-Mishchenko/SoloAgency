@@ -40,4 +40,16 @@
   &__add-event-type {
     @extend .services-page__info;
   }
+
+  &__event-request {
+    grid-column: 1 / -1;
+
+    @include on-tablet {
+      grid-column: 2 / -2;
+    }
+
+    @include on-wide-screen {
+      grid-column: span 7;
+    }
+  }
 }
