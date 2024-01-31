@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { handleErrorFromServer } from '../helpers/handleErrorFromServer';
 
 const instance = axios.create({
-  baseURL: 'http://localhost:8080/api',
+  baseURL: 'http://0.0.0.0:8080/api',
 });
 
 export const client = {

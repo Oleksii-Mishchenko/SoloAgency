@@ -1,5 +1,14 @@
-from rest_framework import viewsets
-from agency.models import Service, Agency, EventType, Organizer, Event, Advice, Review, CallRequest
+from rest_framework import viewsets, serializers
+from agency.models import (
+    Service,
+    Agency,
+    EventType,
+    Organizer,
+    Event,
+    Advice,
+    Review,
+    CallRequest, Article,
+)
 from agency.serializers import (
     ServiceSerializer,
     AgencySerializer,
@@ -7,7 +16,8 @@ from agency.serializers import (
     OrganizerSerializer,
     EventSerializer,
     AdviceSerializer,
-    ReviewSerializer, CallRequestSerializer,
+    ReviewSerializer,
+    CallRequestSerializer, ArticleSerializer, ReviewListSerializer,
 )
 
 
@@ -43,9 +53,33 @@ class AdviceViewSet(viewsets.ModelViewSet):
 
 class ReviewViewSet(viewsets.ModelViewSet):
     queryset = Review.objects.all()
-    serializer_class = ReviewSerializer
+
+    def get_serializer_class(self):
+        if self.action == "list":
+            return ReviewListSerializer
+        return ReviewSerializer
+
+    def get_queryset(self):
+        queryset = Review.objects.all()
+
+        is_approved_param = self.request.query_params.get("is_approved")
+
+        if is_approved_param is not None:
+            if is_approved_param.lower() == "true":
+                queryset = queryset.filter(is_approved=True)
+            elif is_approved_param.lower() == "false":
+                queryset = queryset.filter(is_approved=False)
+            else:
+                raise serializers.ValidationError({"is_approved":  "Incorrect input use 'true' or 'false'."})
+
+        return queryset
 
 
 class CallRequestViewSet(viewsets.ModelViewSet):
     queryset = CallRequest.objects.all()
     serializer_class = CallRequestSerializer
+
+
+class ArticleViewSet(viewsets.ModelViewSet):
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer

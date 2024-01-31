@@ -1,7 +1,13 @@
-import './_loader.scss';
+import classNames from 'classnames';
+import './loader.scss';
+import React from 'react';
+import { LoaderElement } from '../../types/LoaderElement';
 
-export const Loader = () => (
-  <div className="loader">
-    <div className="loader__content" />
-  </div>
+type Props = {
+  element: LoaderElement;
+  className?: string;
+};
+
+export const Loader: React.FC<Props> = ({ element, className }) => (
+  <div className={classNames(className, 'loader', `loader--${element}`)} />
 );

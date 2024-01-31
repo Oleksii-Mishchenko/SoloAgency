@@ -121,8 +121,8 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 
+MEDIA_ROOT = BASE_DIR / "media"
 MEDIA_URL = "/media/"
-MEDIA_ROOT = "/vol/web/media"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -138,4 +138,16 @@ REST_FRAMEWORK = {
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
+    "http://0.0.0.0:8080",
+    "http://127.0.0.1:8080",
 ]
+
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.elasticemail.com'
+EMAIL_PORT = 2525
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'savik1992@gmail.com'
+EMAIL_HOST_PASSWORD = '39B43833949A16369A5158F47063F3243D5E187A63894507232EC60CAF26923B7BF68BD3B6890D0EF3911FB0C68D5F9E'
+DEFAULT_FROM_EMAIL = 'savik1992@gmail.com'

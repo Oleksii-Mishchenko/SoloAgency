@@ -24,6 +24,7 @@ module.exports = {
         arrowParens: 'avoid',
       },
     ],
+    "no-console": "error",
     'arrow-parens': ['error', 'as-needed', { requireForBlockBody: false }],
     'max-len': ['error', { 'code': 80, 'ignoreComments': true, 'ignoreTemplateLiterals': true }],
     '@typescript-eslint/indent': ['error', 2],

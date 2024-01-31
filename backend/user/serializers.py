@@ -2,10 +2,24 @@ from django.contrib.auth import get_user_model, authenticate
 from rest_framework import serializers
 from django.utils.translation import gettext as _
 
+from agency.serializers import EventSerializer
+
+
 class UserSerializer(serializers.ModelSerializer):
+    user_events = EventSerializer(many=True, read_only=True)
+
     class Meta:
         model = get_user_model()
-        fields = ("id", "email", "password", "first_name", "last_name", "phone", "is_staff")
+        fields = (
+            "id",
+            "email",
+            "password",
+            "first_name",
+            "last_name",
+            "phone",
+            "is_staff",
+            "user_events",
+        )
         read_only_fields = ("is_staff",)
         extra_kwargs = {"password": {"write_only": True, "min_length": 5}}
 
@@ -23,6 +37,7 @@ class UserSerializer(serializers.ModelSerializer):
 
         return user
 
+
 class AuthTokenSerializer(serializers.Serializer):
     email = serializers.CharField(label=_("Email"))
     password = serializers.CharField(
@@ -39,10 +54,7 @@ class AuthTokenSerializer(serializers.Serializer):
             if user:
                 if not user.is_active:
                     msg = _("User account is disabled.")
-                    raise serializers.ValidationError(
-                        msg,
-                        code="authorization"
-                    )
+                    raise serializers.ValidationError(msg, code="authorization")
             else:
                 msg = _("Unable to log in with provided credentials.")
                 raise serializers.ValidationError(msg, code="authorization")

@@ -2,37 +2,60 @@ import os
 import uuid
 
 from django.contrib.auth import get_user_model
+from django.core.mail import send_mail
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.utils.text import slugify
 
+from solo_agency import settings
+
 User = get_user_model()
+
 
 def organizer_photo_file_path(instance, filename):
     _, extension = os.path.splitext(filename)
     filename = f"{slugify(instance.full_name)}-{uuid.uuid4()}{extension}"
 
-    return os.path.join("uploads", "organizers", filename)
+    return os.path.join("uploads/organizers", filename)
+
+def event_type_photo_file_path(instance, filename):
+    _, extension = os.path.splitext(filename)
+    filename = f"{slugify(instance.name)}-{uuid.uuid4()}{extension}"
+
+    return os.path.join("uploads/event-types", filename)
+
+
+class Article(models.Model):
+    title = models.CharField(max_length=255)
+    content = models.TextField()
+
+    def __str__(self):
+        return self.title
 
 
 class Service(models.Model):
     name = models.CharField(max_length=63)
     description = models.TextField()
 
+    def __str__(self):
+        return self.name
+
 
 class Agency(models.Model):
     name = models.CharField(max_length=63)
-    description = models.TextField()
-    agency_values = models.TextField()
+    articles = models.ManyToManyField(Article)
     services = models.ManyToManyField(Service)
 
-    @classmethod
-    def get_or_create_agency(cls):
-        return cls.objects.get_or_create(pk=1)
-
     def save(self, *args, **kwargs):
-        if not self.pk and Agency.objects.filter(pk=1).exists():
-            raise ValueError("Only one instance of Agency is allowed.")
+        self.id = 1
+        if Agency.objects.exclude(id=1).exists():
+            raise ValueError("Only one instance of Agency with id=1 is allowed.")
+
         super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
 
     class Meta:
         verbose_name_plural = "Agency"
@@ -41,6 +64,9 @@ class Agency(models.Model):
 class EventType(models.Model):
     name = models.CharField(max_length=255, unique=True)
     description = models.TextField()
+    photo = models.ImageField(
+        upload_to=event_type_photo_file_path,
+    )
 
     def __str__(self):
         return self.name
@@ -55,10 +81,7 @@ class Organizer(models.Model):
     email = models.EmailField()
     photo = models.ImageField(
         upload_to=organizer_photo_file_path,
-        null=True,
-        blank=True
     )
-
 
     @property
     def full_name(self):
@@ -69,7 +92,9 @@ class Organizer(models.Model):
 
 
 class Event(models.Model):
-    organizers = models.ManyToManyField(Organizer)
+    organizers = models.ManyToManyField(
+        Organizer,
+    )
     description = models.TextField()
     name = models.CharField(max_length=63)
     number_of_guests = models.IntegerField()
@@ -78,7 +103,7 @@ class Event(models.Model):
     style = models.CharField(
         max_length=63,
     )
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_events")
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -100,7 +125,6 @@ class Review(models.Model):
         default=5, choices=[(i, i) for i in range(1, 6)]
     )
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
     is_approved = models.BooleanField(default=False)
 
     def __str__(self):
@@ -116,3 +140,11 @@ class CallRequest(models.Model):
     description = models.TextField(null=True, blank=True)
     city = models.CharField(max_length=63, null=True, blank=True)
     phone = models.CharField(max_length=15)
+
+@receiver(post_save, sender=CallRequest)
+def send_email_on_model_creation(sender, instance, **kwargs):
+    subject = 'Нова модель була створена!'
+    message = f'Модель {instance} була успішно створена.'
+    from_email = settings.DEFAULT_FROM_EMAIL
+    recipient_list = ['savik1992@gmail.com']
+    send_mail(subject, message, from_email, recipient_list)

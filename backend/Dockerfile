@@ -1,4 +1,3 @@
-# Use the official Python image as a base image
 FROM --platform=linux/amd64 python:3.10.9-slim-buster
 
 # Set metadata for the image
@@ -17,7 +16,7 @@ COPY backend/requirements.txt backend/requirements.txt
 RUN pip install -r backend/requirements.txt
 
 # Create necessary directories
-RUN mkdir -p /vol/web/media/uploads/
+RUN mkdir -p /app/media/uploads/
 
 # Add a non-root user and set file permissions
 RUN adduser \
@@ -26,10 +25,8 @@ RUN adduser \
     --gecos '' \
     django-user
 
-RUN chown -R django-user:django-user /vol/
-RUN chown -R django-user:django-user /vol/web/media/uploads/
-RUN chmod -R 775 /vol/web/media/uploads/
-RUN chmod -R 755 /vol/web/
+# Change the owner of the /app directory
+RUN chown -R django-user:django-user /app
 
 # Switch to the non-root user
 USER django-user

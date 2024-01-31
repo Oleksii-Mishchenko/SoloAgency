@@ -1,1 +1,74 @@
+%h1 {
+  //styleName: H1;
+  font-family: Gilroy, sans-serif;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 35px;
+  letter-spacing: -0.02em;
+  color: $color-black;
+}
 
+%h2 {
+  //styleName: H2;
+  font-family: Gilroy, sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 22px;
+  color: $color-black;
+}
+
+%h3 {
+  //styleName: H3;
+  font-family: Gilroy, sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 20px;
+  color: $color-black;
+}
+
+%body {
+  //styleName: Body;
+  font-family: Gilroy, sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 25px;
+  color: $color-grey-text;
+}
+
+%secondary-body {
+  //styleName: Secondary body;
+  font-family: Gilroy, sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  color: $color-grey-text;
+
+  &-grey {
+    @extend %secondary-body;
+
+    color: $color-grey-elements;
+  }
+}
+
+%body-bold-button {
+  //styleName: Body bold, button;
+  font-family: Inter, sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 14px;
+  color: $color-black;
+
+  &-white {
+    @extend %body-bold-button;
+
+    color: $color-white;
+  }
+}
+
+%body-error {
+  font-family: Gilroy, sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 14px;
+  color: $color-red-error;
+}

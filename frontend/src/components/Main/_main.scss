@@ -1,9 +1,0 @@
-@import '../../styles/utils/mixins';
-
-.main {
-  flex-grow: 1;
-
-  &__container {
-    @include page-container;
-  }
-}

@@ -1,5 +1,21 @@
 from rest_framework import serializers
-from agency.models import Service, Agency, EventType, Organizer, Event, Advice, Review, CallRequest
+from agency.models import (
+    Service,
+    Agency,
+    EventType,
+    Organizer,
+    Event,
+    Advice,
+    Review,
+    CallRequest,
+    Article,
+)
+
+
+class ArticleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Article
+        fields = ("id", "title", "content")
 
 
 class ServiceSerializer(serializers.ModelSerializer):
@@ -13,13 +29,13 @@ class AgencySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Agency
-        fields = ("id", "name", "description", "agency_values", "services")
+        fields = ("id", "name", "services")
 
 
 class EventTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = EventType
-        fields = ("id", "name", "description")
+        fields = ("id", "name", "description", "photo")
 
 
 class OrganizerSerializer(serializers.ModelSerializer):
@@ -63,18 +79,8 @@ class AdviceSerializer(serializers.ModelSerializer):
         fields = ("id", "question", "answer")
 
 
-class ReviewSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Review
-        fields = (
-            "id",
-            "user",
-            "text",
-            "rating",
-            "created_at",
-            "updated_at",
-            "is_approved",
-        )
+
+
 
 class CallRequestSerializer(serializers.ModelSerializer):
     class Meta:
@@ -84,5 +90,36 @@ class CallRequestSerializer(serializers.ModelSerializer):
             "name",
             "description",
             "phone",
-            "city"
+            "city",
+            "created_at",
+        )
+
+
+class ReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Review
+        fields = (
+            "id",
+            "user",
+            "text",
+            "rating",
+            "created_at",
+            "is_approved",
+        )
+
+
+
+class ReviewListSerializer(serializers.ModelSerializer):
+    user_name = serializers.CharField(
+        source="user.first_name", read_only=True
+    )
+    class Meta:
+        model = Review
+        fields = (
+            "id",
+            "user_name",
+            "text",
+            "rating",
+            "created_at",
+            "is_approved",
         )

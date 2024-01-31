@@ -1,0 +1,54 @@
+@import '../../styles/main.scss';
+
+.call-request {
+  &__info {
+    margin-bottom: 20px;
+  }
+
+  &__title {
+    @extend %h2;
+    margin-bottom: 20px;
+  }
+
+  &__description {
+    @extend %secondary-body;
+  }
+
+  &__form {
+    width: 80%;
+  }
+
+  &__button {
+    display: block;
+    width: 100%;
+  }
+
+  &__response {
+    padding-block: 50px;
+
+    &-title {
+      @extend %h2;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    &-name {
+      text-transform: capitalize;
+    }
+
+    &-message {
+      @extend %secondary-body;
+      margin-bottom: 20px;
+      text-align: justify;
+    }
+
+    &-tel {
+      color: $color-green-dark;
+    }
+  }
+
+  &__go-back-button {
+    display: block;
+    margin: 0 auto;
+  }
+}
