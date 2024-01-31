@@ -1,4 +1,3 @@
-# Use the official Python image as a base image
 FROM --platform=linux/amd64 python:3.10.9-slim-buster
 
 # Set metadata for the image
