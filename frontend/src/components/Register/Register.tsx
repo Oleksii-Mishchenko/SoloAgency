@@ -1,5 +1,5 @@
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { Input, InputPassword } from '../Input';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { Input, InputPassword, InputPhoneNumber } from '../Input';
 import { MainButton } from '../MainButton';
 import { useRef } from 'react';
 import { useOuterClick } from '../../customHooks/useOuterClick';
@@ -29,20 +29,23 @@ export const Register = () => {
     handleSubmit,
     setValue,
     trigger,
+    control,
     getValues,
   } = useForm<RegisterFormData>({
     mode: 'onTouched',
   });
 
-  const onSubmit: SubmitHandler<RegisterData> = async (data: RegisterData) => {
-    await dispatch(authActions.register(data));
+  const cleanValue = (value: string) => {
+    const cleanedValue = value.replace(/[() -]/g, '');
+    return cleanedValue;
   };
 
-  const handlePhoneInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const formattedValue = event.target.value.slice(0, 13);
-    const sanitizedValue = formattedValue.replace(/[^\d+]/g, '');
+  const onSubmit: SubmitHandler<RegisterData> = async (data: RegisterData) => {
+    if (data.phone) {
+      data.phone = cleanValue(data.phone);
+    }
 
-    event.target.value = sanitizedValue;
+    await dispatch(authActions.register(data));
   };
 
   return (
@@ -127,20 +130,24 @@ export const Register = () => {
               }}
             />
 
-            <Input
-              type="tel"
-              label="Ваш номер телефону"
-              placeholder="+380 XX XXX XX XX"
-              errors={errors}
-              register={{
-                ...register('phone', {
-                  pattern: {
-                    value: /^\+380\d{9}$/,
-                    message: 'Формат номеру телефону +380123456789',
-                  },
-                  onChange: event => handlePhoneInput(event),
-                }),
+            <Controller
+              control={control}
+              name="phone"
+              rules={{
+                pattern: {
+                  value: /^\+38 \(\d{3}\) \d{3}-\d{2}-\d{2}$/,
+                  message: 'Введіть правильний номер телефону',
+                },
               }}
+              render={({ field }) => (
+                <InputPhoneNumber
+                  value={field.value || ''}
+                  onChange={(value: string) => field.onChange(value)}
+                  onBlur={field.onBlur}
+                  error={errors.phone?.message}
+                  label="Залиште свій номер телефону"
+                />
+              )}
             />
 
             <InputPassword

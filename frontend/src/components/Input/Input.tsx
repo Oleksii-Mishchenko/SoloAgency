@@ -4,13 +4,8 @@ import React, {
   TextareaHTMLAttributes,
   useState,
 } from 'react';
-import {
-  Controller,
-  FieldErrors,
-  FieldValues,
-  useFormContext,
-} from 'react-hook-form';
-import InputMask from 'react-input-mask';
+import { FieldErrors, FieldValues, Noop } from 'react-hook-form';
+import MaskedInput from 'react-text-mask';
 import classNames from 'classnames';
 import './input.scss';
 
@@ -154,53 +149,59 @@ export const InputPassword: FC<InputPasswordProps> = ({
 };
 
 interface InputPhoneNumberProps {
-  errors: FieldErrors;
-  name: string;
+  error: string | undefined;
   label: string;
+  value: string;
+  onChange: (value: string) => void;
+  onBlur: Noop;
 }
 
 export const InputPhoneNumber: React.FC<InputPhoneNumberProps> = ({
-  name,
-  errors,
+  error,
   label,
+  value,
+  onChange,
+  onBlur,
 }) => {
-  const { control, register } = useFormContext();
-  const error = errors[name]?.message as string;
-
-  const phoneNumberValidation = {
-    required: "Поле є обов'язковим",
-    pattern: {
-      value: /^\+38 \(\d{3}\) \d{3}-\d{2}-\d{2}$/,
-      message: 'Введіть правильний номер телефону',
-    },
-  };
-
   return (
     <label className="input">
       <p className="input__label">{label}</p>
-      <Controller
-        {...register}
-        name={name}
-        control={control}
-        rules={phoneNumberValidation}
-        render={({ field }) => (
-          <>
-            <InputMask
-              {...field}
-              mask="+38 (099) 999-99-99"
-              maskChar={null}
-              placeholder="+38 (0__ ) ___-__-__"
-              type="tel"
-            />
-
-            {errors[name] && (
-              <p className="input__error">
-                {error || 'Помилка при валідації даних.'}
-              </p>
-            )}
-          </>
-        )}
+      <MaskedInput
+        mask={[
+          '+',
+          '3',
+          '8',
+          ' ',
+          '(',
+          '0',
+          /\d/,
+          /\d/,
+          ')',
+          ' ',
+          /\d/,
+          /\d/,
+          /\d/,
+          '-',
+          /\d/,
+          /\d/,
+          '-',
+          /\d/,
+          /\d/,
+        ]}
+        placeholder="+38 (0__ ) ___-__-__"
+        value={value}
+        className={classNames('input__field', { 'input__field--error': error })}
+        onFocus={() => onChange('+38 (0')}
+        onChange={e => onChange(e.target.value)}
+        onBlur={onBlur}
+        type="tel"
       />
+
+      {error && (
+        <p className="input__error">
+          {error || 'Помилка при валідації даних.'}
+        </p>
+      )}
     </label>
   );
 };
