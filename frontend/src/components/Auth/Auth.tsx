@@ -24,7 +24,15 @@ export const Auth: React.FC<Props> = ({ menu: { isMenuOpen, toggleMenu } }) => {
   return (
     <div className="auth">
       {authData.token && authData.user ? (
-        <p>Authorized</p>
+        <MainButton
+          className="auth__button"
+          text="Вийти"
+          onClick={event => {
+            event.stopPropagation();
+            handleMenuClosure();
+            dispatch(authActions.logOut());
+          }}
+        />
       ) : (
         <>
           <MainButton

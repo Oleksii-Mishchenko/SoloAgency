@@ -78,6 +78,10 @@ export const authState = createSlice({
     closeRegisterForm: state => {
       state.isRegisterFormOpen = false;
     },
+
+    logOut: state => {
+      state.authData = initialState.authData;
+    },
   },
   extraReducers: builder => {
     // login
@@ -139,5 +143,6 @@ export const {
   clearErrors,
   openRegisterForm,
   closeRegisterForm,
+  logOut,
 } = authState.actions;
 export default authState.reducer;

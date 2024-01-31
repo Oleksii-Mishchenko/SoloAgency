@@ -1,8 +1,7 @@
-import { SubmitHandler, useForm } from 'react-hook-form';
-import './call-request.scss';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { CallRequestData } from '../../types/CallRequestData';
 import { MainButton } from '../MainButton';
-import { Input, Textarea } from '../Input';
+import { Input, InputPhoneNumber, Textarea } from '../Input';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import * as callRequestActions from '../../features/callRequestSlice';
 import {
@@ -11,6 +10,7 @@ import {
   trimString,
 } from '../../helpers/textManipulator';
 import { Notification } from '../Notification';
+import './call-request.scss';
 
 type Props = {
   relPage: string;
@@ -29,22 +29,22 @@ export const CallRequest: React.FC<Props> = ({ relPage }) => {
     reset,
     setValue,
     trigger,
+    control,
   } = useForm<CallRequestData>({
     mode: 'onTouched',
   });
 
+  const cleanValue = (value: string) => {
+    const cleanedValue = value.replace(/[() -]/g, '');
+    return cleanedValue;
+  };
+
   const onSubmit: SubmitHandler<CallRequestData> = async (
     data: CallRequestData,
   ) => {
+    data.phone = cleanValue(data.phone);
     await dispatch(callRequestActions.add(data));
-    reset();
-  };
-
-  const handlePhoneInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const formattedValue = event.target.value.slice(0, 13);
-    const sanitizedValue = formattedValue.replace(/[^\d+]/g, '');
-
-    event.target.value = sanitizedValue;
+    reset({ phone: '', city: '', name: '', description: '' });
   };
 
   return (
@@ -126,23 +126,25 @@ export const CallRequest: React.FC<Props> = ({ relPage }) => {
             }}
           />
 
-          <Input
-            className="call-request__input"
-            type="tel"
-            label="Залиште свій номер телефону"
-            placeholder="+380000000000"
-            errors={errors}
-            register={{
-              ...register('phone', {
-                required: 'Вкажіть ваш номер телефону',
-                value: '+380',
-                pattern: {
-                  value: /^\+380\d{9}$/,
-                  message: 'Формат номеру телефону +380123456789',
-                },
-                onChange: event => handlePhoneInput(event),
-              }),
+          <Controller
+            control={control}
+            name="phone"
+            rules={{
+              required: "Поле є обов'язковим",
+              pattern: {
+                value: /^\+38 \(\d{3}\) \d{3}-\d{2}-\d{2}$/,
+                message: 'Введіть правильний номер телефону',
+              },
             }}
+            render={({ field }) => (
+              <InputPhoneNumber
+                value={field.value}
+                onChange={(value: string) => field.onChange(value)}
+                onBlur={field.onBlur}
+                error={errors.phone?.message}
+                label="Залиште свій номер телефону"
+              />
+            )}
           />
 
           <Textarea
