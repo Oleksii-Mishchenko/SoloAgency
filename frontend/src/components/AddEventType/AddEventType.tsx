@@ -2,7 +2,7 @@ import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { NewEventType } from '../../types/EventType';
 import * as eventTypesActions from '../../features/eventTypesSlice';
-import { Input, Textarea } from '../Input';
+import { TextInput, Textarea } from '../Inputs';
 import {
   handleMessageBlur,
   handleNameBlur,
@@ -56,11 +56,11 @@ export const AddEventType: React.FC<Props> = ({ relPage }) => {
         onSubmit={handleSubmit(onSubmit)}
         encType="multipart/form-data"
       >
-        <Input
+        <TextInput
           type="text"
           label="Дайте назву послузі"
           placeholder="Назва"
-          errors={errors}
+          error={errors.name?.message}
           register={{
             ...register('name', {
               required: `Назва не може бути порожньою`,
@@ -80,7 +80,7 @@ export const AddEventType: React.FC<Props> = ({ relPage }) => {
           label="Опис нашої послуги"
           rows={5}
           placeholder="Опис"
-          errors={errors}
+          error={errors.description?.message}
           register={{
             ...register('description', {
               required: `Опис не може бути порожнім`,

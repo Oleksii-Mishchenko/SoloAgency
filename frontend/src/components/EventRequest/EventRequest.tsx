@@ -1,4 +1,5 @@
-// import { Input } from '../Input';
+import { useForm } from 'react-hook-form';
+import { TextInput } from '../Inputs';
 import './event-request.scss';
 
 type Props = {
@@ -6,6 +7,8 @@ type Props = {
 };
 
 export const EventRequest: React.FC<Props> = ({ relPage }) => {
+  const {} = useForm();
+
   return (
     <section className={`${relPage}__event-request event-request`}>
       <div className="event-request__header">
@@ -20,7 +23,7 @@ export const EventRequest: React.FC<Props> = ({ relPage }) => {
 
       <form className="event-request__form">
         <fieldset className="event-request__fieldset">
-          {/* <Input label="Місто проведення" /> */}
+          <TextInput label="Місто проведення" />
         </fieldset>
 
         <fieldset className="event-request__fieldset">2</fieldset>

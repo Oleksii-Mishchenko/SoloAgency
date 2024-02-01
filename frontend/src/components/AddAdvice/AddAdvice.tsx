@@ -3,7 +3,7 @@ import * as advicesActions from '../../features/advicesSlice';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { handleMessageBlur } from '../../helpers/textManipulator';
-import { Input, Textarea } from '../Input';
+import { TextInput, Textarea } from '../Inputs';
 import { RatingType } from '../../types/Rating';
 import { Rating } from '../Rating';
 import { MainButton } from '../MainButton';
@@ -59,11 +59,11 @@ export const AddAdvice: React.FC<Props> = ({ relPage }) => {
       <h3 className="add-advice__title">Бажаєте додати питання?</h3>
 
       <form className="add-advice__form" onSubmit={handleSubmit(onSubmit)}>
-        <Input
+        <TextInput
           type="text"
           label="Напишіть питання"
           placeholder="Питання"
-          errors={errors}
+          error={errors.question?.message}
           register={{
             ...register('question', {
               required: `Питання не вказано`,
@@ -78,7 +78,7 @@ export const AddAdvice: React.FC<Props> = ({ relPage }) => {
           label="Напишіть відповідь на питання"
           rows={5}
           placeholder="Відповідь"
-          errors={errors}
+          error={errors.answer?.message}
           register={{
             ...register('answer', {
               required: `Відповідь не вказано`,

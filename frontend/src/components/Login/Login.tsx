@@ -1,5 +1,5 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { Input, InputPassword } from '../Input';
+import { TextInput, InputPassword } from '../Inputs';
 import { LoginData } from '../../types/LoginData';
 import { MainButton } from '../MainButton';
 import { useRef } from 'react';
@@ -51,11 +51,11 @@ export const Login = () => {
 
         <form className="login__form" onSubmit={handleSubmit(onSubmit)}>
           <div className="login__inputs">
-            <Input
+            <TextInput
               label="Електрона пошта"
               type="email"
               placeholder="Email"
-              errors={errors}
+              error={errors.email?.message}
               register={{
                 ...register('email', {
                   required: 'Вкажіть вашу електронну пошту',
@@ -66,7 +66,7 @@ export const Login = () => {
             <InputPassword
               label="Пароль"
               placeholder="Пароль"
-              errors={errors}
+              error={errors.password?.message}
               register={{
                 ...register('password', {
                   required: 'Вкажіть ваш пароль',

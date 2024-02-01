@@ -1,5 +1,5 @@
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { Input, InputPassword, InputPhoneNumber } from '../Input';
+import { TextInput, InputPassword, InputPhoneNumber } from '../Inputs';
 import { MainButton } from '../MainButton';
 import { useRef } from 'react';
 import { useOuterClick } from '../../customHooks/useOuterClick';
@@ -63,11 +63,11 @@ export const Register = () => {
 
         <form className="register__form" onSubmit={handleSubmit(onSubmit)}>
           <div className="register__inputs">
-            <Input
+            <TextInput
               type="text"
               label="Ваше ім’я"
               placeholder="Ім'я"
-              errors={errors}
+              error={errors.first_name?.message}
               register={{
                 ...register('first_name', {
                   required: `Вкажіть ваше ім'я`,
@@ -91,11 +91,11 @@ export const Register = () => {
               }}
             />
 
-            <Input
+            <TextInput
               type="text"
               label="Ваше прізвище"
               placeholder="Прізвище"
-              errors={errors}
+              error={errors.last_name?.message}
               register={{
                 ...register('last_name', {
                   minLength: {
@@ -118,11 +118,11 @@ export const Register = () => {
               }}
             />
 
-            <Input
+            <TextInput
               label="Електрона пошта"
               type="email"
               placeholder="Email"
-              errors={errors}
+              error={errors.email?.message}
               register={{
                 ...register('email', {
                   required: 'Вкажіть вашу електронну пошту',
@@ -153,7 +153,7 @@ export const Register = () => {
             <InputPassword
               label="Пароль"
               placeholder="Пароль"
-              errors={errors}
+              error={errors.password?.message}
               register={{
                 ...register('password', {
                   required: 'Вкажіть ваш пароль',
@@ -168,7 +168,7 @@ export const Register = () => {
             <InputPassword
               label="Повторіть пароль"
               placeholder="Пароль"
-              errors={errors}
+              error={errors.repeatPassword?.message}
               register={{
                 ...register('repeatPassword', {
                   required: 'Повторіть пароль',

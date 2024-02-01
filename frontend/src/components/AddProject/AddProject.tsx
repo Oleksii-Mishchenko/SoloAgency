@@ -1,7 +1,7 @@
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import * as portfolioActions from '../../features/portfolioSlice';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { Input, Textarea } from '../Input';
+import { TextInput, Textarea } from '../Inputs';
 import { MainButton } from '../MainButton';
 import { Notification } from '../Notification';
 import { NewProject } from '../../types/Project';
@@ -56,11 +56,11 @@ export const AddProject: React.FC<Props> = ({ relPage }) => {
         onSubmit={handleSubmit(onSubmit)}
         encType="multipart/form-data"
       >
-        <Input
+        <TextInput
           type="text"
           label="Дайте назву події"
           placeholder="Назва"
-          errors={errors}
+          error={errors.title?.message}
           register={{
             ...register('title', {
               required: `Назва не може бути порожньою`,
@@ -80,7 +80,7 @@ export const AddProject: React.FC<Props> = ({ relPage }) => {
           label="Опис нашої події"
           rows={5}
           placeholder="Опис"
-          errors={errors}
+          error={errors.description?.message}
           register={{
             ...register('description', {
               required: `Опис не може бути порожнім`,
