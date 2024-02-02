@@ -17,7 +17,7 @@ export const ContactUs: React.FC<Props> = ({ relPage }) => {
       <div className="contact-us__contact">
         <p className="contact-us__contact-name">Електронна адреса</p>
 
-        <p className="contact-us__contact-value">soloagency@gmail.com</p>
+        <p className="contact-us__contact-value">soloagency2000@gmail.com</p>
       </div>
 
       <div className="contact-us__contact">

@@ -62,7 +62,6 @@ export const CallRequest: React.FC<Props> = ({ relPage }) => {
         <fieldset className="call-request__form-fieldset">
           <TextInput
             className="call-request__input"
-            type="text"
             label="Ваше ім’я"
             placeholder="Ім'я"
             error={errors.name?.message}
@@ -91,7 +90,6 @@ export const CallRequest: React.FC<Props> = ({ relPage }) => {
 
           <TextInput
             className="call-request__input"
-            type="text"
             label="З якого Ви міста?"
             placeholder="Місто"
             error={errors.city?.message}

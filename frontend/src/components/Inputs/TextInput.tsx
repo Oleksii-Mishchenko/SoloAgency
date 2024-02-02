@@ -29,6 +29,7 @@ export const TextInput: React.FC<TextInputProps> = ({
         className={classNames('input__field', {
           'input__field--error': !!error,
         })}
+        type="text"
         {...register}
         {...props}
       />

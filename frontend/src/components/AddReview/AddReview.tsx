@@ -18,9 +18,7 @@ type Props = {
 
 export const AddReview: React.FC<Props> = ({ relPage }) => {
   const dispatch = useAppDispatch();
-  const {
-    authData: { token, user },
-  } = useAppSelector(state => state.auth);
+  const { token, user } = useAppSelector(state => state.auth.authData);
   const { addErrors, isAddingReview, isAddSuccess } = useAppSelector(
     state => state.reviews,
   );

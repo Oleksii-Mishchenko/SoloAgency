@@ -29,30 +29,64 @@
     @extend %secondary-body;
   }
 
+  &__sign-up-warn {
+    @extend %secondary-body;
+    margin-bottom: 10px;
+    text-align: center;
+
+    @include on-tablet {
+      text-align: left;
+    }
+  }
+
+  &__sign-up-offer {
+    @extend %body;
+    text-align: center;
+
+    @include on-tablet {
+      text-align: left;
+    }
+  }
+
   &__form {
-    @include grid-container(2, 24px);
     padding: 20px;
     border: 1px solid $color-green-element;
     border-radius: 5px;
 
     @include on-wide-screen {
-      row-gap: 24px;
       padding: 48px;
     }
   }
 
+  &__inputs {
+    width: max-content;
+    margin: 0 auto 24px;
+  }
+
+  &__form-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-bottom: 24px;
+
+    @include on-wide-screen {
+      flex-direction: row;
+    }
+  }
+
   &__fieldset {
-    grid-column: span 2;
     display: flex;
     flex-direction: column;
     row-gap: 24px;
     margin: 0;
     padding: 0;
-    max-width: 305px;
+    width: 305px;
     border: none;
+  }
 
-    @include on-wide-screen {
-      grid-column: span 1;
-    }
+  &__button {
+    display: block;
+    width: 305px;
+    margin: 0 auto;
   }
 }
