@@ -3,7 +3,7 @@ import { Advice } from '../../types/Advice';
 import * as advicesActions from '../../features/advicesSlice';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import './edit-advice.scss';
-import { Input, Textarea } from '../Input';
+import { TextInput, Textarea } from '../Inputs';
 import { handleMessageBlur } from '../../helpers/textManipulator';
 import { Rating } from '../Rating';
 import { RatingType } from '../../types/Rating';
@@ -49,11 +49,11 @@ export const EditAdvice: React.FC<Props> = ({
       <h3 className="edit-advice__title">Будь ласка внесіть зміни</h3>
 
       <form className="edit-advice__form" onSubmit={handleSubmit(onSubmit)}>
-        <Input
+        <TextInput
           type="text"
           label="Змініть питання"
           placeholder="Питання"
-          errors={errors}
+          error={errors.question?.message}
           register={{
             ...register('question', {
               required: `Питання не вказано`,
@@ -68,7 +68,7 @@ export const EditAdvice: React.FC<Props> = ({
           label="Змініть відповідь на питання"
           rows={4}
           placeholder="Відповідь"
-          errors={errors}
+          error={errors.answer?.message}
           register={{
             ...register('answer', {
               required: `Відповідь не вказано`,

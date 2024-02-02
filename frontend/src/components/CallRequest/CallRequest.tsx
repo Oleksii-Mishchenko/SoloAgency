@@ -1,7 +1,7 @@
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { CallRequestData } from '../../types/CallRequestData';
 import { MainButton } from '../MainButton';
-import { Input, InputPhoneNumber, Textarea } from '../Input';
+import { InputPhoneNumber, TextInput, Textarea } from '../Inputs';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import * as callRequestActions from '../../features/callRequestSlice';
 import {
@@ -60,12 +60,11 @@ export const CallRequest: React.FC<Props> = ({ relPage }) => {
 
       <form className="call-request__form" onSubmit={handleSubmit(onSubmit)}>
         <fieldset className="call-request__form-fieldset">
-          <Input
+          <TextInput
             className="call-request__input"
-            type="text"
             label="Ваше ім’я"
             placeholder="Ім'я"
-            errors={errors}
+            error={errors.name?.message}
             register={{
               ...register('name', {
                 required: `Вкажіть ваше ім'я`,
@@ -89,12 +88,11 @@ export const CallRequest: React.FC<Props> = ({ relPage }) => {
             }}
           />
 
-          <Input
+          <TextInput
             className="call-request__input"
-            type="text"
             label="З якого Ви міста?"
             placeholder="Місто"
-            errors={errors}
+            error={errors.city?.message}
             register={{
               ...register('city', {
                 required: 'Вкажіть з якого ви міста',
@@ -152,7 +150,7 @@ export const CallRequest: React.FC<Props> = ({ relPage }) => {
             label="Опишіть тему звернення"
             rows={5}
             placeholder="Деталі"
-            errors={errors}
+            error={errors.description?.message}
             register={{
               ...register('description', {
                 maxLength: { value: 200, message: 'Не більше 200 символів' },

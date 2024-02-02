@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { Rating } from '../Rating';
 import { RatingType } from '../../types/Rating';
 import { NewReview } from '../../types/Review';
-import { Textarea } from '../Input';
+import { Textarea } from '../Inputs';
 import { handleMessageBlur } from '../../helpers/textManipulator';
 import { MainButton } from '../MainButton';
 import { Notification } from '../Notification';
@@ -18,9 +18,7 @@ type Props = {
 
 export const AddReview: React.FC<Props> = ({ relPage }) => {
   const dispatch = useAppDispatch();
-  const {
-    authData: { token, user },
-  } = useAppSelector(state => state.auth);
+  const { token, user } = useAppSelector(state => state.auth.authData);
   const { addErrors, isAddingReview, isAddSuccess } = useAppSelector(
     state => state.reviews,
   );
@@ -70,7 +68,7 @@ export const AddReview: React.FC<Props> = ({ relPage }) => {
               label="Напишіть про свій досвід взаємодії з нашим сервісом"
               rows={5}
               placeholder="Ваш відгук"
-              errors={errors}
+              error={errors.text?.message}
               register={{
                 ...register('text', {
                   required: `Відгук не може бути порожнім`,
