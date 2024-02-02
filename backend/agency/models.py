@@ -212,3 +212,6 @@ class Portfolio(models.Model):
     )
     description = models.TextField(max_length=1023)
     title = models.CharField(max_length=120)
+
+    def __str__(self):
+        return self.title
