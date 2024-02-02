@@ -114,6 +114,8 @@ class Event(models.Model):
     date = models.DateField()
     style = models.CharField(
         max_length=63,
+        blank=True,
+        null=True
     )
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_events")
 

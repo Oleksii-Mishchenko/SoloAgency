@@ -38,6 +38,11 @@ INSTALLED_APPS = [
     "corsheaders",
     "rest_framework",
     "rest_framework.authtoken",
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+
     "user",
     "agency",
     "drf_spectacular",
@@ -52,6 +57,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = "solo_agency.urls"
@@ -135,6 +142,12 @@ MEDIA_URL = "/media/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.TokenAuthentication"
@@ -177,3 +190,12 @@ CORS_ALLOW_HEADERS = [
     'x-csrftoken',
     'x-requested-with',
 ]
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.elasticemail.com'
+EMAIL_PORT = 2525
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'support@soloagency.com'  # Ваше ім'я користувача Elastic Email
+EMAIL_HOST_PASSWORD = '15B45A4C9E8AFCB62E4D7C00F682937E1284'  # Ваш пароль Elastic Email
+DEFAULT_FROM_EMAIL = 'support@soloagency.com'  # Ваша електронна адреса, від якої будуть відправлятися листи
+
