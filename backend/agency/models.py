@@ -2,7 +2,7 @@ import os
 import uuid
 
 from django.contrib.auth import get_user_model
-from django.core.validators import RegexValidator
+from django.core.validators import RegexValidator, MinValueValidator, MaxValueValidator
 from django.db import models
 
 from django.utils.text import slugify
@@ -109,11 +109,18 @@ class Event(models.Model):
     )
     city = models.CharField(max_length=63, validators=[string_validator])
     venue = models.CharField(max_length=63)
-    number_of_guests = models.IntegerField()
+    number_of_guests = models.IntegerField(
+        validators=[
+            MinValueValidator(1),
+            MaxValueValidator(999999)
+        ]
+    )
     event_type = models.ForeignKey(EventType, on_delete=models.CASCADE)
     date = models.DateField()
     style = models.CharField(
         max_length=63,
+        blank=True,
+        null=True
     )
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_events")
 
