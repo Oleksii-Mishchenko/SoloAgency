@@ -44,7 +44,7 @@ export const CallRequest: React.FC<Props> = ({ relPage }) => {
   ) => {
     data.phone = cleanValue(data.phone);
     await dispatch(callRequestActions.add(data));
-    reset({ phone: '', city: '', name: '', description: '' });
+    reset();
   };
 
   return (
@@ -65,6 +65,7 @@ export const CallRequest: React.FC<Props> = ({ relPage }) => {
             label="Ваше ім’я"
             placeholder="Ім'я"
             error={errors.name?.message}
+            defaultValue={undefined}
             register={{
               ...register('name', {
                 required: `Вкажіть ваше ім'я`,
@@ -95,7 +96,6 @@ export const CallRequest: React.FC<Props> = ({ relPage }) => {
             error={errors.city?.message}
             register={{
               ...register('city', {
-                required: 'Вкажіть з якого ви міста',
                 minLength: {
                   value: 2,
                   message: 'Не менше 2 символів',
