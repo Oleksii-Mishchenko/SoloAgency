@@ -25,7 +25,7 @@ class ArticleSerializer(serializers.ModelSerializer):
 class ServiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Service
-        fields = ("id", "name", "description")
+        fields = ("id", "name", "description", "presentation")
 
 
 class AgencySerializer(serializers.ModelSerializer):
@@ -64,7 +64,6 @@ class OrganizerSerializer(serializers.ModelSerializer):
             "position",
             "phone",
             "email",
-            "photo",
         )
 
 
@@ -80,7 +79,6 @@ class OrganizerListSerializer(serializers.ModelSerializer):
             "phone",
             "email",
             "full_name",
-            "photo",
         )
 
 
