@@ -1,4 +1,4 @@
-import { PaginationConfig } from './PaginationConfig';
+import { PaginationResult } from './PaginationConfig';
 import { RatingType } from './Rating';
 
 export interface Advice {
@@ -10,6 +10,4 @@ export interface Advice {
 
 export interface NewAdvice extends Omit<Advice, 'id'> {}
 
-export interface Advices extends PaginationConfig {
-  results: Advice[];
-}
+export type Advices = PaginationResult<Advice>;

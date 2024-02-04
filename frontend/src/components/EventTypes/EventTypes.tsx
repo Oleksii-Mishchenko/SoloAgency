@@ -18,11 +18,10 @@ export const EventTypes: React.FC<Props> = ({ relPage }) => {
   const [searchParams] = useSearchParams();
   const page = searchParams.get('page') || null;
   const dispatch = useAppDispatch();
-  const {
-    eventTypes: { num_pages, current_page, next_page, previous_page, results },
-    isLoadingEventTypes,
-    errors,
-  } = useAppSelector(state => state.eventTypes);
+  const { eventTypes, isLoadingEventTypes, errors } = useAppSelector(
+    state => state.eventTypes,
+  );
+  const { num_pages, results } = eventTypes;
 
   useEffect(() => {
     const timerId = setTimeout(() => {
@@ -65,11 +64,7 @@ export const EventTypes: React.FC<Props> = ({ relPage }) => {
             ))}
           </div>
 
-          {num_pages > 1 && (
-            <Pagination
-              config={{ num_pages, current_page, next_page, previous_page }}
-            />
-          )}
+          {num_pages > 1 && <Pagination config={eventTypes} />}
         </>
       )}
 

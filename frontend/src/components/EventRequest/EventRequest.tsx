@@ -7,6 +7,7 @@ import { AuthLink } from '../AuthLink';
 import { AuthLinkType } from '../../types/AuthLinkType';
 import { EventRequestType } from '../../types/EventRequestType';
 import './event-request.scss';
+import { SelectType } from '../../types/SelectType';
 
 type Props = {
   relPage: string;
@@ -93,11 +94,45 @@ export const EventRequest: React.FC<Props> = ({ relPage }) => {
                     />
                   )}
                 />
+
+                <Controller
+                  control={control}
+                  name="event_type"
+                  rules={{
+                    required: "Поле є обов'язковим",
+                  }}
+                  render={({ field }) => (
+                    <Dropdown
+                      value={field.value}
+                      onChange={(value: number) => field.onChange(value)}
+                      placeholder="Оберіть вид події"
+                      label="Вид події"
+                      error={errors.event_type?.message}
+                      isSearchable
+                      selectType={SelectType.EventTypes}
+                    />
+                  )}
+                />
               </fieldset>
 
               <fieldset className="event-request__fieldset">
-                <Dropdown label="Оберіть послугу" error={undefined} />
-                <Dropdown label="Оберіть кількість" error={undefined} />
+                <Controller
+                  control={control}
+                  name="service"
+                  rules={{
+                    required: "Поле є обов'язковим",
+                  }}
+                  render={({ field }) => (
+                    <Dropdown
+                      value={field.value}
+                      onChange={(value: number) => field.onChange(value)}
+                      placeholder="Оберіть послугу"
+                      label="Послуга"
+                      error={errors.service?.message}
+                      selectType={SelectType.Services}
+                    />
+                  )}
+                />
 
                 <TextInput
                   label="Кількість гостей"

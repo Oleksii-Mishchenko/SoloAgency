@@ -1,8 +1,7 @@
-import { PaginationConfig } from './PaginationConfig';
+import { DropdownObject } from './DropdownObject';
+import { PaginationResult } from './PaginationConfig';
 
-export interface EventType {
-  id: number;
-  name: string;
+export interface EventType extends DropdownObject {
   description: string;
   photo: string;
 }
@@ -13,6 +12,4 @@ export interface NewEventType {
   photo: File | null;
 }
 
-export interface EventTypes extends PaginationConfig {
-  results: EventType[];
-}
+export type EventTypes = PaginationResult<EventType>;

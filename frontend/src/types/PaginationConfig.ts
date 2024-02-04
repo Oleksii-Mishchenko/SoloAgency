@@ -4,3 +4,7 @@ export interface PaginationConfig {
   next_page: number | null;
   previous_page: number | null;
 }
+
+export interface PaginationResult<T> extends PaginationConfig {
+  results: T[];
+}

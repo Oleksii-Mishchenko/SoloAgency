@@ -17,18 +17,9 @@ type Props = {
 
 export const Portfolio: React.FC<Props> = ({ relPage }) => {
   const dispatch = useAppDispatch();
-  const {
-    portfolio: {
-      results: projects,
-      num_pages,
-      current_page,
-      next_page,
-      previous_page,
-    },
-    hasLoaded,
-    isLoadingPortfolio,
-    errorsLoadingPortfolio,
-  } = useAppSelector(state => state.portfolio);
+  const { portfolio, hasLoaded, isLoadingPortfolio, errorsLoadingPortfolio } =
+    useAppSelector(state => state.portfolio);
+  const { results: projects, num_pages } = portfolio;
   const [searchParams] = useSearchParams();
   const page = searchParams.get('page') || null;
   const query = searchParams.get('title') || null;
@@ -75,11 +66,7 @@ export const Portfolio: React.FC<Props> = ({ relPage }) => {
         <p className="portfolio__no-results">Нічого не знайдено</p>
       )}
 
-      {num_pages > 1 && (
-        <Pagination
-          config={{ num_pages, current_page, next_page, previous_page }}
-        />
-      )}
+      {num_pages > 1 && <Pagination config={portfolio} />}
     </section>
   );
 };
