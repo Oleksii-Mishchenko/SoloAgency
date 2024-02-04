@@ -105,7 +105,7 @@ class Migration(migrations.Migration):
                     models.ImageField(
                         blank=True,
                         null=True,
-                        upload_to=agency.models.organizer_photo_file_path,
+                        upload_to=agency.models.service_presentation_pdf_file_path,
                     ),
                 ),
             ],

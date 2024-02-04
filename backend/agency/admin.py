@@ -23,12 +23,6 @@ class EventTypeAdmin(admin.ModelAdmin):
     list_display = ("name", "description", "photo")
 
 
-@admin.register(Organizer)
-class OrganizerAdmin(admin.ModelAdmin):
-    list_display = ("full_name", "position", "phone", "email", "photo")
-    search_fields = ("first_name", "last_name", "position", "phone", "email")
-
-
 @admin.register(Advice)
 class AdviceAdmin(admin.ModelAdmin):
     list_display = ("question", "answer", "priority")
@@ -41,6 +35,7 @@ class ReviewAdmin(admin.ModelAdmin):
     search_fields = ("user__username", "text")
 
 
+admin.site.register(Organizer)
 admin.site.register(CallRequest)
 admin.site.register(Event)
 admin.site.register(Article)
