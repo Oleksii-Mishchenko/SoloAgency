@@ -1,5 +1,8 @@
 import Select, { OnChangeValue } from 'react-select';
 import { useState } from 'react';
+import { SelectOption } from '../../types/SelectOption';
+import { SelectType } from '../../types/SelectType';
+import { useLoadOptions } from '../../customHooks/useLoadOptions';
 import './dropdown.scss';
 
 type DropdownProps = {
@@ -9,18 +12,8 @@ type DropdownProps = {
   onChange: (value: number) => void;
   error: string | undefined;
   isSearchable?: boolean;
+  selectType: SelectType;
 };
-
-interface Option {
-  value: number;
-  label: string;
-}
-
-const options: Option[] = [
-  { value: 1, label: 'Option 1' },
-  { value: 2, label: 'Option 2' },
-  { value: 3, label: 'Option 3' },
-];
 
 export const Dropdown: React.FC<DropdownProps> = ({
   label,
@@ -29,20 +22,22 @@ export const Dropdown: React.FC<DropdownProps> = ({
   onChange,
   error,
   isSearchable = false,
+  selectType,
 }) => {
+  const { isLoadingOptions, options } = useLoadOptions(selectType);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const onMenuOpen = () => setIsMenuOpen(true);
   const onMenuClose = () => setIsMenuOpen(false);
 
-  const handleChange = (selectedOption: OnChangeValue<Option, false>) => {
+  const handleChange = (selectedOption: OnChangeValue<SelectOption, false>) => {
     if (selectedOption) {
-      const selectedValue = (selectedOption as Option).value;
+      const selectedValue = (selectedOption as SelectOption).value;
       onChange(selectedValue);
     }
   };
 
   const getValue = (newValue: number) => {
-    return options.find(v => v.value === newValue);
+    return options?.find(option => option.value === newValue);
   };
 
   const noOptionsMessage = ({ inputValue }: { inputValue: string }) =>
@@ -57,6 +52,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
       <Select
         inputId={label}
         isSearchable={isSearchable}
+        isLoading={isLoadingOptions}
         options={options}
         noOptionsMessage={noOptionsMessage}
         value={getValue(value)}
@@ -66,6 +62,8 @@ export const Dropdown: React.FC<DropdownProps> = ({
         onMenuOpen={onMenuOpen}
         onMenuClose={onMenuClose}
         onFocus={onMenuOpen}
+        classNamePrefix="dropdown"
+        blurInputOnSelect
       />
 
       {error && (
@@ -76,50 +74,3 @@ export const Dropdown: React.FC<DropdownProps> = ({
     </div>
   );
 };
-
-// export const Dropdown: React.FC<DropdownProps> = ({ label, error }) => {
-//   const [isOpen, setIsOpen] = useState(false);
-//   const listRef = useRef<HTMLUListElement>(null);
-//   useOuterClick(listRef, () => setIsOpen(false));
-
-//   return (
-//     <div className="dropdown">
-//       <label htmlFor={label} className="dropdown__label">
-//         {label}
-//       </label>
-
-//       <button
-//         type="button"
-//         id={label}
-//         className={classNames('dropdown__field', {
-//           'dropdown__field--error': error,
-//           'dropdown__field--is-open': isOpen,
-//         })}
-//         onClick={e => {
-//           setIsOpen(!isOpen);
-//           e.stopPropagation();
-//         }}
-//       >
-//         Press me
-//       </button>
-
-//       {isOpen && (
-//         <ul className="dropdown__list" ref={listRef}>
-//           <li className="dropdown__list-item">
-//             <button className="dropdown__list-button">1234</button>
-//           </li>
-
-//           <li className="dropdown__list-item">
-//             <button className="dropdown__list-button">5678</button>
-//           </li>
-//         </ul>
-//       )}
-
-//       {error && (
-//         <p className="dropdown__error">
-//           {error || 'Помилка при валідації даних.'}
-//         </p>
-//       )}
-//     </div>
-//   );
-// };

@@ -7,6 +7,7 @@ import { AuthLink } from '../AuthLink';
 import { AuthLinkType } from '../../types/AuthLinkType';
 import { EventRequestType } from '../../types/EventRequestType';
 import './event-request.scss';
+import { SelectType } from '../../types/SelectType';
 
 type Props = {
   relPage: string;
@@ -108,6 +109,7 @@ export const EventRequest: React.FC<Props> = ({ relPage }) => {
                       label="Вид події"
                       error={errors.event_type?.message}
                       isSearchable
+                      selectType={SelectType.EventTypes}
                     />
                   )}
                 />
@@ -127,6 +129,7 @@ export const EventRequest: React.FC<Props> = ({ relPage }) => {
                       placeholder="Оберіть послугу"
                       label="Послуга"
                       error={errors.service?.message}
+                      selectType={SelectType.Services}
                     />
                   )}
                 />

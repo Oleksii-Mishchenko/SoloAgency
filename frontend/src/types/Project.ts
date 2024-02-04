@@ -1,4 +1,4 @@
-import { PaginationConfig } from './PaginationConfig';
+import { PaginationResult } from './PaginationConfig';
 
 export interface Project {
   id: number;
@@ -13,6 +13,4 @@ export interface NewProject {
   photo: File | null;
 }
 
-export interface Portfolio extends PaginationConfig {
-  results: Project[];
-}
+export type Portfolio = PaginationResult<Project>;

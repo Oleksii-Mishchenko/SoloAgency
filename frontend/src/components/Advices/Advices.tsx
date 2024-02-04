@@ -21,7 +21,7 @@ export const Advices: React.FC<Props> = ({ relPage }) => {
   const page = searchParams.get('page') || null;
   const dispatch = useAppDispatch();
   const {
-    advices: { num_pages, current_page, next_page, previous_page, results },
+    advices,
     isLoadingAdvices,
     errorsLoading,
     isPatchedAdvice,
@@ -30,6 +30,7 @@ export const Advices: React.FC<Props> = ({ relPage }) => {
     errorsDelete,
     errorsPatch,
   } = useAppSelector(state => state.advices);
+  const { num_pages, results } = advices;
 
   const [expandedId, setExpandedId] = useState<number | null>(null);
 
@@ -88,11 +89,7 @@ export const Advices: React.FC<Props> = ({ relPage }) => {
           })}
       </div>
 
-      {num_pages > 1 && (
-        <Pagination
-          config={{ num_pages, current_page, next_page, previous_page }}
-        />
-      )}
+      {num_pages > 1 && <Pagination config={advices} />}
 
       {deletedAdviceId && (
         <Notification
