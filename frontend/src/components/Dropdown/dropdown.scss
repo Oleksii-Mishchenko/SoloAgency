@@ -13,6 +13,25 @@
     @extend %secondary-body;
   }
 
+  &__container {
+    &--has-error {
+
+      .dropdown__control {
+        border-color: $color-red-error !important;
+
+        &:hover {
+          border-color: $color-red-error !important;
+          box-shadow: 0 0 5px rgba($color-red-error, 0.3) !important;
+        }
+
+        &--is-focused {
+          border-color: $color-red-error !important;
+          box-shadow: 0 0 5px rgba($color-red-error, 0.4) !important;
+        }
+      }
+    }
+  }
+
   &__control {
     padding: 7px 16px !important;
     background-color: transparent !important;

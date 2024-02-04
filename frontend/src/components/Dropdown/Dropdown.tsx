@@ -4,6 +4,7 @@ import { SelectOption } from '../../types/SelectOption';
 import { SelectType } from '../../types/SelectType';
 import { useLoadOptions } from '../../customHooks/useLoadOptions';
 import './dropdown.scss';
+import classNames from 'classnames';
 
 type DropdownProps = {
   label: string;
@@ -62,6 +63,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
         onMenuOpen={onMenuOpen}
         onMenuClose={onMenuClose}
         onFocus={onMenuOpen}
+        className={classNames({ 'dropdown__container--has-error': !!error })}
         classNamePrefix="dropdown"
         blurInputOnSelect
       />
