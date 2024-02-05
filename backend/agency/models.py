@@ -44,7 +44,9 @@ class Service(models.Model):
     name = models.CharField(max_length=63)
     description = models.TextField(max_length=255)
 
-    presentation = models.FileField(upload_to=service_presentation_pdf_file_path, null=True, blank=True)
+    presentation = models.FileField(
+        upload_to=service_presentation_pdf_file_path, null=True, blank=True
+    )
 
     def __str__(self):
         return self.name
@@ -92,7 +94,6 @@ class Organizer(models.Model):
     phone = models.CharField(max_length=13, validators=[phone_validator])
     email = models.EmailField()
 
-
     @property
     def full_name(self):
         return f"{self.first_name} {self.last_name}"
@@ -110,18 +111,11 @@ class Event(models.Model):
     city = models.CharField(max_length=63, validators=[string_validator])
     venue = models.CharField(max_length=63)
     number_of_guests = models.IntegerField(
-        validators=[
-            MinValueValidator(1),
-            MaxValueValidator(999999)
-        ]
+        validators=[MinValueValidator(1), MaxValueValidator(999999)]
     )
     event_type = models.ForeignKey(EventType, on_delete=models.CASCADE)
     date = models.DateField()
-    style = models.CharField(
-        max_length=63,
-        blank=True,
-        null=True
-    )
+    style = models.CharField(max_length=63, blank=True, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_events")
 
     phone_validator = RegexValidator(

@@ -1,7 +1,12 @@
 from django.db.models.functions import Random
 from drf_spectacular.utils import extend_schema, OpenApiParameter
 from rest_framework import viewsets, serializers
-from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAdminUser, IsAuthenticated, AllowAny
+from rest_framework.permissions import (
+    IsAuthenticatedOrReadOnly,
+    IsAdminUser,
+    IsAuthenticated,
+    AllowAny,
+)
 from rest_framework.response import Response
 
 from agency.models import (
@@ -74,7 +79,6 @@ class EventTypeViewSet(
 ):
     queryset = EventType.objects.all()
     serializer_class = EventTypeSerializer
-
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
