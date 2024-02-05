@@ -1,5 +1,6 @@
 import React, { FC, InputHTMLAttributes, useState } from 'react';
 import classNames from 'classnames';
+import { InputError } from '../InputError';
 
 type InputPasswordProps = InputHTMLAttributes<HTMLInputElement> & {
   className?: string;
@@ -43,11 +44,7 @@ export const InputPassword: FC<InputPasswordProps> = ({
         onClick={() => setIsPasswordVisible(!isPasswordVisible)}
       />
 
-      {error && (
-        <p className="input__error">
-          {error || 'Помилка при валідації даних.'}
-        </p>
-      )}
+      {error && <InputError errorMessage={error} />}
     </label>
   );
 };

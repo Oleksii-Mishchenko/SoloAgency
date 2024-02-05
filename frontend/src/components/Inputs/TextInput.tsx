@@ -1,6 +1,7 @@
 import { InputHTMLAttributes } from 'react';
 import classNames from 'classnames';
 import './input.scss';
+import { InputError } from '../InputError';
 
 type TextInputProps = InputHTMLAttributes<HTMLInputElement> & {
   className?: string;
@@ -34,11 +35,7 @@ export const TextInput: React.FC<TextInputProps> = ({
         {...props}
       />
 
-      {error && (
-        <p className="input__error">
-          {error || 'Помилка при валідації даних.'}
-        </p>
-      )}
+      {error && <InputError errorMessage={error} />}
     </label>
   );
 };

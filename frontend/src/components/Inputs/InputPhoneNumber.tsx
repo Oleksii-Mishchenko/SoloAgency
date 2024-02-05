@@ -2,6 +2,7 @@ import React from 'react';
 import { Noop } from 'react-hook-form';
 import MaskedInput from 'react-text-mask';
 import classNames from 'classnames';
+import { InputError } from '../InputError';
 
 interface InputPhoneNumberProps {
   error: string | undefined;
@@ -52,11 +53,7 @@ export const InputPhoneNumber: React.FC<InputPhoneNumberProps> = ({
         type="tel"
       />
 
-      {error && (
-        <p className="input__error">
-          {error || 'Помилка при валідації даних.'}
-        </p>
-      )}
+      {error && <InputError errorMessage={error} />}
     </label>
   );
 };

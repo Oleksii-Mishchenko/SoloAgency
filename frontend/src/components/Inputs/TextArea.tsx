@@ -1,5 +1,6 @@
 import React, { FC, TextareaHTMLAttributes } from 'react';
 import classNames from 'classnames';
+import { InputError } from '../InputError';
 
 type TextAreaProps = TextareaHTMLAttributes<HTMLTextAreaElement> & {
   className?: string;
@@ -32,11 +33,7 @@ export const Textarea: FC<TextAreaProps> = ({
         {...props}
       />
 
-      {error && (
-        <p className="input__error">
-          {error || 'Помилка при валідації даних.'}
-        </p>
-      )}
+      {error && <InputError errorMessage={error} />}
     </label>
   );
 };
