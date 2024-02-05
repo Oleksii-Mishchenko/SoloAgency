@@ -19,6 +19,8 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="organizer",
             name="photo",
-            field=models.ImageField(upload_to=agency.models.service_presentation_pdf_file_path),
+            field=models.ImageField(
+                upload_to=agency.models.service_presentation_pdf_file_path
+            ),
         ),
     ]
