@@ -45,7 +45,7 @@ def send_telegram_message_call_request(sender, instance, **kwargs):
     )
 
     if instance.description:
-        text += f"💬 Додатковий опис: {instance.description}\n"
+        text += f"Додатковий опис: {instance.description}\n"
 
     token = os.getenv("TELEGRAM_BOT_TOKEN")
     channel_id = os.getenv("TELEGRAM_CHAT_ID")
