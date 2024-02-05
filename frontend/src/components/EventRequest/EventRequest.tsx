@@ -8,6 +8,7 @@ import { AuthLinkType } from '../../types/AuthLinkType';
 import { EventRequestType } from '../../types/EventRequestType';
 import './event-request.scss';
 import { SelectType } from '../../types/SelectType';
+import { DatePicker } from '../DatePicker';
 
 type Props = {
   relPage: string;
@@ -91,6 +92,22 @@ export const EventRequest: React.FC<Props> = ({ relPage }) => {
                       onBlur={field.onBlur}
                       error={errors.phone?.message}
                       label="Номер телефону"
+                    />
+                  )}
+                />
+
+                <Controller
+                  control={control}
+                  name="date"
+                  rules={{
+                    required: "Поле є обов'язковим",
+                  }}
+                  render={({ field }) => (
+                    <DatePicker
+                      label="Дата"
+                      error={errors.date?.message}
+                      value={field.value}
+                      onChange={value => field.onChange(value)}
                     />
                   )}
                 />
