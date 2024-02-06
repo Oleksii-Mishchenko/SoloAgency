@@ -13,6 +13,24 @@
     @extend %secondary-body;
   }
 
+  &__container {
+    &--has-error {
+      .dropdown__control {
+        border-color: $color-red-error !important;
+
+        &:hover {
+          border-color: $color-red-error !important;
+          box-shadow: 0 0 5px rgba($color-red-error, 0.3) !important;
+        }
+
+        &--is-focused {
+          border-color: $color-red-error !important;
+          box-shadow: 0 0 5px rgba($color-red-error, 0.4) !important;
+        }
+      }
+    }
+  }
+
   &__control {
     padding: 7px 16px !important;
     background-color: transparent !important;
@@ -114,23 +132,6 @@
 
     &--is-selected {
       background-color: $color-green-disabled !important;
-    }
-  }
-
-  &__error {
-    position: relative;
-    padding-left: 30px;
-    @extend %body-error;
-
-    &::before {
-      content: '';
-      position: absolute;
-      top: 1px;
-      left: 8px;
-      width: 14px;
-      height: 14px;
-      background-image: url(../../assets/img/error.svg);
-      background-size: contain;
     }
   }
 }

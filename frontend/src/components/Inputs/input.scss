@@ -4,10 +4,10 @@
   position: relative;
   display: flex;
   flex-direction: column;
+  row-gap: 8px;
   width: 100%;
 
   &__label {
-    margin-bottom: 8px;
     padding-inline: 8px;
     color: $color-grey-text;
 
@@ -65,25 +65,6 @@
 
     &--textarea {
       resize: none;
-    }
-  }
-
-  &__error {
-    position: relative;
-    margin-top: 8px;
-    padding-left: 30px;
-
-    @extend %body-error;
-
-    &::before {
-      content: '';
-      position: absolute;
-      top: 1px;
-      left: 8px;
-      width: 14px;
-      height: 14px;
-      background-image: url(../../assets/img/error.svg);
-      background-size: contain;
     }
   }
 

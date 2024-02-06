@@ -4,6 +4,7 @@ import articlesReducer from '../features/articlesSlice';
 import callRequestReducer from '../features/callRequestSlice';
 import reviewsReducer from '../features/reviewsSlice';
 import eventTypesSlice from '../features/eventTypesSlice';
+import eventsSlice from '../features/eventsSlice';
 import portfolioReducer from '../features/portfolioSlice';
 import servicesReducer from '../features/servicesSlice';
 
@@ -34,6 +35,7 @@ const rootReducer = combineReducers({
   eventTypes: eventTypesSlice,
   portfolio: portfolioReducer,
   services: servicesReducer,
+  events: eventsSlice,
 });
 
 const persistConfig = {

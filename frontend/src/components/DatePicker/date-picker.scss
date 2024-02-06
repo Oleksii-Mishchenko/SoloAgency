@@ -1,0 +1,183 @@
+@import '../../styles/main.scss';
+
+.date-picker {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+
+  &__label {
+    padding-inline: 8px;
+    color: $color-grey-text;
+
+    @extend %secondary-body;
+  }
+
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__input {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 7px 16px;
+    border: 1px solid $color-grey-blocks;
+    border-radius: 5px;
+    background-color: transparent;
+    outline: none;
+    transition: all 0.3s;
+    color: $color-black;
+  
+    @extend %body;
+
+    &:hover {
+      border-color: $color-black;
+      box-shadow: 0 0 5px rgba($color-grey-blocks, 0.3);
+    }
+
+    &:focus {
+      border-color: $color-black;
+      box-shadow: 0 0 5px rgba($color-black, 0.4);
+    }
+
+    &::placeholder {
+      @extend %body;
+      color: $color-grey-elements;
+    }
+
+    &--error {
+      border-color: $color-red-error;
+      color: $color-red-error;
+
+      &:hover {
+        border-color: $color-red-error;
+        box-shadow: 0 0 5px rgba($color-red-error, 0.3);
+      }
+
+      &:focus {
+        border-color: $color-red-error;
+        box-shadow: 0 0 5px rgba($color-red-error, 0.4);
+      }
+    }
+  }
+
+  &__popper {
+    width: 100%;
+  }
+
+  &__datepicker {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 30px 0;
+    font-family: Gilroy, sans-serif;
+    border: 0.5px solid $color-black;
+    border-radius: 5px;
+    background-color: $color-white;
+
+    .react-datepicker {
+      &__navigation {
+        top: 28px;
+        width: 24px;
+        height: 24px;
+  
+        &--previous {
+          left: 22px;
+        }
+  
+        &--next {
+          right: 22px;
+        }
+  
+        &-icon::before {
+          transition: all 0.3s;
+        }
+      }
+
+      &__month-container {
+        width: 100%;
+      }
+
+      &__header {
+        margin-bottom: 20px;
+        padding: 0 22px;
+        border-radius: 0;
+        border-bottom: none;
+        background-color: $color-white;
+      }
+
+      &__current-month {
+        @extend %secondary-body;
+
+        width: 250px;
+        margin: 0 auto 20px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #E4E5E7;
+
+        &::first-letter {
+          text-transform: uppercase;
+        }
+      }
+
+      &__day-names {
+        display: flex;
+        justify-content: center;
+        column-gap: 6px;
+        margin: 0;
+      }
+
+      &__day-name {
+        box-sizing: border-box;
+        width: 32px;
+        margin: 0;
+        padding: 4px;
+        font-size: 10px;
+        font-weight: 500;
+        line-height: 12px;
+        color: #7E818C;
+        text-transform: uppercase;
+      }
+
+      &__month {
+        display: flex;
+        flex-direction: column;
+        row-gap: 16px;
+        margin: 0;
+      }
+
+      &__week {
+        display: flex;
+        justify-content: center;
+        column-gap: 14px;
+      }
+
+      &__day {
+        width: 24px;
+        margin: 0;
+        border-radius: 50px;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 24px;
+        color: #0F2552;
+        transition: all 0.3s;
+
+        &--disabled,
+        &--outside-month {
+          color: #868E96;
+        }
+
+        &--today,
+        &--keyboard-selected {
+          background-color: $color-green-disabled;
+          outline: none;
+        }
+
+        &--selected {
+          background-color: #212529;
+          color: $color-white;
+          outline: none;
+        }
+      }
+    }
+  }
+}

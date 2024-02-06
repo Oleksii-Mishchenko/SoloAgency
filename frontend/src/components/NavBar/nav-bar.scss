@@ -17,7 +17,11 @@
       align-items: center;
       justify-content: center;
       flex-direction: row;
-      gap: 60px;
+      column-gap: 40px;
+    }
+
+    @include on-wide-screen {
+      column-gap: 60px;
     }
   }
 

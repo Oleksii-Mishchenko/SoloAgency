@@ -1,17 +1,18 @@
+import { useRef } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { TextInput, InputPassword, InputPhoneNumber } from '../Inputs';
 import { MainButton } from '../MainButton';
-import { useRef } from 'react';
 import { useOuterClick } from '../../customHooks/useOuterClick';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import * as authActions from '../../features/authSlice';
 import { RegisterData } from '../../types/RegisterData';
-import './register.scss';
 import { handleNameBlur } from '../../helpers/textManipulator';
 import { AuthLink } from '../AuthLink';
 import { AuthLinkType } from '../../types/AuthLinkType';
 import { ControlButton } from '../ControlButton';
 import { ControlButtonType } from '../../types/ControlButtonType';
+import { cleanPhoneNumber } from '../../helpers/cleanPhoneNumber';
+import './register.scss';
 
 export const Register = () => {
   type RegisterFormData = RegisterData & { repeatPassword: string };
@@ -35,14 +36,9 @@ export const Register = () => {
     mode: 'onTouched',
   });
 
-  const cleanValue = (value: string) => {
-    const cleanedValue = value.replace(/[() -]/g, '');
-    return cleanedValue;
-  };
-
   const onSubmit: SubmitHandler<RegisterData> = async (data: RegisterData) => {
     if (data.phone) {
-      data.phone = cleanValue(data.phone);
+      data.phone = cleanPhoneNumber(data.phone);
     }
 
     await dispatch(authActions.register(data));

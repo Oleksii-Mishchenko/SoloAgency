@@ -4,11 +4,13 @@ import { SelectOption } from '../../types/SelectOption';
 import { SelectType } from '../../types/SelectType';
 import { useLoadOptions } from '../../customHooks/useLoadOptions';
 import './dropdown.scss';
+import classNames from 'classnames';
+import { InputError } from '../InputError';
 
 type DropdownProps = {
   label: string;
   placeholder: string;
-  value: number;
+  value: number | undefined;
   onChange: (value: number) => void;
   error: string | undefined;
   isSearchable?: boolean;
@@ -36,8 +38,8 @@ export const Dropdown: React.FC<DropdownProps> = ({
     }
   };
 
-  const getValue = (newValue: number) => {
-    return options?.find(option => option.value === newValue);
+  const getValue = (newValue: number | undefined) => {
+    return options?.find(option => option.value === newValue) || null;
   };
 
   const noOptionsMessage = ({ inputValue }: { inputValue: string }) =>
@@ -55,6 +57,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
         isLoading={isLoadingOptions}
         options={options}
         noOptionsMessage={noOptionsMessage}
+        defaultInputValue={undefined}
         value={getValue(value)}
         onChange={handleChange}
         placeholder={placeholder}
@@ -62,15 +65,12 @@ export const Dropdown: React.FC<DropdownProps> = ({
         onMenuOpen={onMenuOpen}
         onMenuClose={onMenuClose}
         onFocus={onMenuOpen}
+        className={classNames({ 'dropdown__container--has-error': !!error })}
         classNamePrefix="dropdown"
         blurInputOnSelect
       />
 
-      {error && (
-        <p className="dropdown__error">
-          {error || 'Помилка при валідації даних.'}
-        </p>
-      )}
+      {error && <InputError errorMessage={error} />}
     </div>
   );
 };
