@@ -10,7 +10,7 @@ import { InputError } from '../InputError';
 type DropdownProps = {
   label: string;
   placeholder: string;
-  value: number;
+  value: number | undefined;
   onChange: (value: number) => void;
   error: string | undefined;
   isSearchable?: boolean;
@@ -38,8 +38,8 @@ export const Dropdown: React.FC<DropdownProps> = ({
     }
   };
 
-  const getValue = (newValue: number) => {
-    return options?.find(option => option.value === newValue);
+  const getValue = (newValue: number | undefined) => {
+    return options?.find(option => option.value === newValue) || null;
   };
 
   const noOptionsMessage = ({ inputValue }: { inputValue: string }) =>
@@ -57,6 +57,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
         isLoading={isLoadingOptions}
         options={options}
         noOptionsMessage={noOptionsMessage}
+        defaultInputValue={undefined}
         value={getValue(value)}
         onChange={handleChange}
         placeholder={placeholder}

@@ -1,6 +1,8 @@
 @import '../../styles/main.scss';
 
 .event-request {
+  position: relative;
+
   &__header {
     margin-bottom: 20px;
 
@@ -88,5 +90,14 @@
     display: block;
     width: 305px;
     margin: 0 auto;
+  }
+
+  &__notification {
+    position: absolute;
+    margin: 0 auto;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
   }
 }

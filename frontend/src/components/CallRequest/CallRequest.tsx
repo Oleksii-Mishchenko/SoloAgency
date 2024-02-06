@@ -10,6 +10,7 @@ import {
   trimString,
 } from '../../helpers/textManipulator';
 import { Notification } from '../Notification';
+import { cleanPhoneNumber } from '../../helpers/cleanPhoneNumber';
 import './call-request.scss';
 
 type Props = {
@@ -34,15 +35,10 @@ export const CallRequest: React.FC<Props> = ({ relPage }) => {
     mode: 'onTouched',
   });
 
-  const cleanValue = (value: string) => {
-    const cleanedValue = value.replace(/[() -]/g, '');
-    return cleanedValue;
-  };
-
   const onSubmit: SubmitHandler<CallRequestData> = async (
     data: CallRequestData,
   ) => {
-    data.phone = cleanValue(data.phone);
+    data.phone = cleanPhoneNumber(data.phone);
     await dispatch(callRequestActions.add(data));
     reset();
   };

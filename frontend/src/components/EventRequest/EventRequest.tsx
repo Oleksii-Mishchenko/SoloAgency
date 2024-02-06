@@ -1,20 +1,27 @@
 import { Controller, useForm } from 'react-hook-form';
-import { useAppSelector } from '../../app/hooks';
+import { format } from 'date-fns';
+import { useAppSelector, useAppDispatch } from '../../app/hooks';
+import * as eventsActions from '../../features/eventsSlice';
 import { InputPhoneNumber, TextInput, Textarea } from '../Inputs';
 import { Dropdown } from '../Dropdown';
 import { MainButton } from '../MainButton';
 import { AuthLink } from '../AuthLink';
 import { AuthLinkType } from '../../types/AuthLinkType';
-import { EventRequestType } from '../../types/EventRequestType';
-import './event-request.scss';
+import { EventRequestData, PreparedEventRequestData } from '../../types/Event';
 import { SelectType } from '../../types/SelectType';
 import { DatePicker } from '../DatePicker';
+import { Notification } from '../Notification';
+import { cleanPhoneNumber } from '../../helpers/cleanPhoneNumber';
+import './event-request.scss';
 
 type Props = {
   relPage: string;
 };
 
 export const EventRequest: React.FC<Props> = ({ relPage }) => {
+  const dispatch = useAppDispatch();
+  const { event, eventRequestErrors, isEventRequestInProgress } =
+    useAppSelector(state => state.events);
   const { token, user } = useAppSelector(state => state.auth.authData);
   const {
     register,
@@ -22,11 +29,24 @@ export const EventRequest: React.FC<Props> = ({ relPage }) => {
     reset,
     handleSubmit,
     formState: { errors },
-  } = useForm<EventRequestType>({ mode: 'onTouched' });
+  } = useForm<EventRequestData>({ mode: 'onTouched' });
 
-  const onSubmit = (data: EventRequestType) => {
-    console.log(data);
+  const onSubmit = async (data: EventRequestData) => {
+    const preparedData: PreparedEventRequestData = {
+      ...data,
+      date: format(data.date, 'yyyy-MM-dd'),
+      phone: cleanPhoneNumber(data.phone),
+    };
+
+    if (token) {
+      await dispatch(eventsActions.add({ preparedData, token }));
+    }
+
     reset();
+  };
+
+  const handleNotificationClose = () => {
+    dispatch(eventsActions.clearEventRequestData());
   };
 
   return (
@@ -115,6 +135,7 @@ export const EventRequest: React.FC<Props> = ({ relPage }) => {
                 <Controller
                   control={control}
                   name="event_type"
+                  defaultValue={undefined}
                   rules={{
                     required: "Поле є обов'язковим",
                   }}
@@ -135,6 +156,7 @@ export const EventRequest: React.FC<Props> = ({ relPage }) => {
               <fieldset className="event-request__fieldset">
                 <Controller
                   control={control}
+                  defaultValue={undefined}
                   name="service"
                   rules={{
                     required: "Поле є обов'язковим",
@@ -193,8 +215,26 @@ export const EventRequest: React.FC<Props> = ({ relPage }) => {
             className="event-request__button"
             type="submit"
             text="Надіслати"
+            isLoading={isEventRequestInProgress}
           />
         </form>
+      )}
+
+      {event && (
+        <Notification
+          className="event-request__notification"
+          message="Ваше замовлення прийнято. Дякуємо за звернення."
+          onClose={handleNotificationClose}
+        />
+      )}
+
+      {eventRequestErrors && (
+        <Notification
+          className="event-request__notification"
+          message="Замовлення не прийнято!"
+          errors={eventRequestErrors}
+          onClose={handleNotificationClose}
+        />
       )}
     </section>
   );
