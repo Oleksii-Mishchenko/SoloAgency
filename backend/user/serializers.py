@@ -6,8 +6,6 @@ from agency.serializers import EventSerializer
 
 
 class UserSerializer(serializers.ModelSerializer):
-    user_events = EventSerializer(many=True, read_only=True)
-
     class Meta:
         model = get_user_model()
         fields = (
