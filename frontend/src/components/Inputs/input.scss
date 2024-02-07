@@ -12,6 +12,11 @@
     color: $color-grey-text;
 
     @extend %secondary-body;
+
+    &--is-required::after {
+      content: " *";
+      color: $color-red-error;
+    }
   }
 
   &__field {

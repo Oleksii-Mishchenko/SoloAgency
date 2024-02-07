@@ -25,7 +25,7 @@ export const InputPassword: FC<InputPasswordProps> = ({
 
   return (
     <label className={classNames('input', className)}>
-      <p className="input__label">{label}</p>
+      <p className="input__label input__label--is-required">{label}</p>
 
       <input
         className={classNames('input__field', {

@@ -63,6 +63,7 @@ export const Register = () => {
               type="text"
               label="Ваше ім’я"
               placeholder="Ім'я"
+              isRequired
               error={errors.first_name?.message}
               register={{
                 ...register('first_name', {
@@ -117,6 +118,7 @@ export const Register = () => {
             <TextInput
               label="Електрона пошта"
               type="email"
+              isRequired
               placeholder="Email"
               error={errors.email?.message}
               register={{

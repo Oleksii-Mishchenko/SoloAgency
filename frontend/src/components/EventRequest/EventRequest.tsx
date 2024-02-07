@@ -34,7 +34,7 @@ export const EventRequest: React.FC<Props> = ({ relPage }) => {
   const onSubmit = async (data: EventRequestData) => {
     const preparedData: PreparedEventRequestData = {
       ...data,
-      date: format(data.date, 'yyyy-MM-dd'),
+      date: data.date ? format(data.date, 'yyyy-MM-dd') : '',
       phone: cleanPhoneNumber(data.phone),
     };
 
@@ -89,6 +89,7 @@ export const EventRequest: React.FC<Props> = ({ relPage }) => {
                 <TextInput
                   label="Місто проведення"
                   placeholder="Місто"
+                  isRequired
                   error={errors.city?.message}
                   register={{
                     ...register('city', { required: 'Вкажіть місто' }),
@@ -99,7 +100,7 @@ export const EventRequest: React.FC<Props> = ({ relPage }) => {
                   control={control}
                   name="phone"
                   rules={{
-                    required: "Поле є обов'язковим",
+                    required: 'Введіть номер телефону',
                     pattern: {
                       value: /^\+38 \(\d{3}\) \d{3}-\d{2}-\d{2}$/,
                       message: 'Введіть правильний номер телефону',
@@ -108,6 +109,7 @@ export const EventRequest: React.FC<Props> = ({ relPage }) => {
                   render={({ field }) => (
                     <InputPhoneNumber
                       value={field.value}
+                      isRequired
                       onChange={(value: string) => field.onChange(value)}
                       onBlur={field.onBlur}
                       error={errors.phone?.message}
@@ -119,9 +121,6 @@ export const EventRequest: React.FC<Props> = ({ relPage }) => {
                 <Controller
                   control={control}
                   name="date"
-                  rules={{
-                    required: "Поле є обов'язковим",
-                  }}
                   render={({ field }) => (
                     <DatePicker
                       label="Дата"
@@ -135,9 +134,8 @@ export const EventRequest: React.FC<Props> = ({ relPage }) => {
                 <Controller
                   control={control}
                   name="event_type"
-                  defaultValue={undefined}
                   rules={{
-                    required: "Поле є обов'язковим",
+                    required: 'Вкажіть вид події',
                   }}
                   render={({ field }) => (
                     <Dropdown
@@ -159,7 +157,7 @@ export const EventRequest: React.FC<Props> = ({ relPage }) => {
                   defaultValue={undefined}
                   name="service"
                   rules={{
-                    required: "Поле є обов'язковим",
+                    required: 'Вкажіть послугу',
                   }}
                   render={({ field }) => (
                     <Dropdown
@@ -174,7 +172,7 @@ export const EventRequest: React.FC<Props> = ({ relPage }) => {
                 />
 
                 <TextInput
-                  label="Кількість гостей"
+                  label="Орієнтовна кількість гостей"
                   placeholder="Кількість"
                   error={errors.number_of_guests?.message}
                   register={{
@@ -185,7 +183,7 @@ export const EventRequest: React.FC<Props> = ({ relPage }) => {
                 />
 
                 <TextInput
-                  label="Місце проведення"
+                  label="Локація святкування"
                   placeholder="Місце"
                   error={errors.venue?.message}
                   register={{

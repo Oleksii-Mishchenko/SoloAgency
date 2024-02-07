@@ -59,6 +59,7 @@ export const CallRequest: React.FC<Props> = ({ relPage }) => {
           <TextInput
             className="call-request__input"
             label="Ваше ім’я"
+            isRequired
             placeholder="Ім'я"
             error={errors.name?.message}
             defaultValue={undefined}
@@ -133,6 +134,7 @@ export const CallRequest: React.FC<Props> = ({ relPage }) => {
             render={({ field }) => (
               <InputPhoneNumber
                 value={field.value}
+                isRequired
                 onChange={(value: string) => field.onChange(value)}
                 onBlur={field.onBlur}
                 error={errors.phone?.message}

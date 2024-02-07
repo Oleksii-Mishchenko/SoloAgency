@@ -38,7 +38,7 @@ export const Services: React.FC<Props> = ({ relPage }) => {
               <p className="services__service-description">{description}</p>
 
               <FileLink
-                title="Деталі"
+                title="Детальніше про послугу"
                 filePath={presentation}
                 className="services__service-file-link"
               />
