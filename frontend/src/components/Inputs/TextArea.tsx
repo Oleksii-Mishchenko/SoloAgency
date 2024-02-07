@@ -6,6 +6,7 @@ type TextAreaProps = TextareaHTMLAttributes<HTMLTextAreaElement> & {
   className?: string;
   label: string;
   error: string | undefined;
+  isRequired?: boolean;
   register: {
     onChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
     onBlur: (event: React.FocusEvent<HTMLTextAreaElement>) => void;
@@ -19,11 +20,18 @@ export const Textarea: FC<TextAreaProps> = ({
   label,
   register,
   error,
+  isRequired,
   ...props
 }) => {
   return (
     <label className={classNames('input', className)}>
-      <p className="input__label">{label}</p>
+      <p
+        className={classNames('input__label', {
+          'input__label--is-required': isRequired,
+        })}
+      >
+        {label}
+      </p>
 
       <textarea
         className={classNames('input__field', 'input__field--textarea', {

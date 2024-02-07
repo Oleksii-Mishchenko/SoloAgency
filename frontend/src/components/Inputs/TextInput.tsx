@@ -7,6 +7,7 @@ type TextInputProps = InputHTMLAttributes<HTMLInputElement> & {
   className?: string;
   label: string;
   error: string | undefined;
+  isRequired?: boolean;
   register: {
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     onBlur: (event: React.FocusEvent<HTMLInputElement>) => void;
@@ -20,11 +21,18 @@ export const TextInput: React.FC<TextInputProps> = ({
   label,
   register,
   error,
+  isRequired,
   ...props
 }) => {
   return (
     <label className={classNames('input', className)}>
-      <p className="input__label">{label}</p>
+      <p
+        className={classNames('input__label', {
+          'input__label--is-required': isRequired,
+        })}
+      >
+        {label}
+      </p>
 
       <input
         className={classNames('input__field', {

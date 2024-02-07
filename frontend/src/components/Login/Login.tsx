@@ -54,6 +54,7 @@ export const Login = () => {
             <TextInput
               label="Електрона пошта"
               type="email"
+              isRequired
               placeholder="Email"
               error={errors.email?.message}
               register={{

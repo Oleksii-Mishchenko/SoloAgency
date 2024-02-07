@@ -7,6 +7,7 @@ import { InputError } from '../InputError';
 interface InputPhoneNumberProps {
   error: string | undefined;
   label: string;
+  isRequired?: boolean;
   value: string;
   onChange: (value: string) => void;
   onBlur: Noop;
@@ -15,13 +16,20 @@ interface InputPhoneNumberProps {
 export const InputPhoneNumber: React.FC<InputPhoneNumberProps> = ({
   error,
   label,
+  isRequired,
   value,
   onChange,
   onBlur,
 }) => {
   return (
     <label className="input">
-      <p className="input__label">{label}</p>
+      <p
+        className={classNames('input__label', {
+          'input__label--is-required': isRequired,
+        })}
+      >
+        {label}
+      </p>
       <MaskedInput
         mask={[
           '+',
