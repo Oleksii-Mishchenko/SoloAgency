@@ -109,7 +109,7 @@ class Event(models.Model):
         regex=r"^[a-zA-Zа-яА-Я]+$", message="Word must contain only letters."
     )
     city = models.CharField(max_length=63, validators=[string_validator])
-    venue = (models.CharField(max_length=63, blank=True, null=True),)
+    venue = models.CharField(max_length=63, blank=True, null=True)
     number_of_guests = models.IntegerField(
         validators=[MinValueValidator(1), MaxValueValidator(999999)],
         blank=True,
