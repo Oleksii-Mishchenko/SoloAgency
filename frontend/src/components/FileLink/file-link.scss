@@ -1,0 +1,11 @@
+@import '../../styles/main.scss';
+
+.file-link {
+  @extend %body-bold-button-green;
+
+  transition: all 0.3s;
+
+  &:hover {
+    color: $color-green-hover;
+  }
+}
