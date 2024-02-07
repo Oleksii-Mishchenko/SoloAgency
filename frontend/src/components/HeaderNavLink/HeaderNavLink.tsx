@@ -2,10 +2,11 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import classNames from 'classnames';
 import './header-nav-link.scss';
+import { HeaderNavLink as HeaderNavLinkType } from '../../types/HeaderNavLink';
+import { Link } from 'react-router-dom';
 
 type Props = {
-  path: string;
-  text: string;
+  link: HeaderNavLinkType;
   menu: {
     isMenuOpen: boolean;
     toggleMenu: () => void;
@@ -13,8 +14,7 @@ type Props = {
 };
 
 export const HeaderNavLink: React.FC<Props> = ({
-  path,
-  text,
+  link: { path, text, state },
   menu: { isMenuOpen, toggleMenu },
 }) => {
   const handleMenuClosure = () => {
@@ -23,7 +23,16 @@ export const HeaderNavLink: React.FC<Props> = ({
     }
   };
 
-  return (
+  return state ? (
+    <Link
+      to={path}
+      className="header-nav-link"
+      onClick={handleMenuClosure}
+      state={state}
+    >
+      {text}
+    </Link>
+  ) : (
     <NavLink
       to={path}
       className={({ isActive }) =>

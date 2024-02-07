@@ -11,7 +11,6 @@ import { PortfolioPage } from './src/pages/PortfolioPage';
 import { PageNotFound } from './src/pages/PageNotFound';
 import { AdvicesPage } from './src/pages/AdvicesPage';
 import { ServicesPage } from './src/pages/ServicesPage';
-import { ContactsPage } from './src/pages/ContactsPage';
 
 export const Root = () => (
   <Router>
@@ -22,7 +21,6 @@ export const Root = () => (
         <Route path="portfolio" element={<PortfolioPage />} />
         <Route path="advices" element={<AdvicesPage />} />
         <Route path="services" element={<ServicesPage />} />
-        <Route path="contacts" element={<ContactsPage />} />
         <Route path="*" element={<PageNotFound />} />
       </Route>
     </Routes>

@@ -16,6 +16,8 @@ export const ServicesPage = () => {
 
       {token && user?.is_staff && <AddEventType relPage="services-page" />}
 
+      {!user?.is_staff && <EventRequest relPage="services-page" />}
+
       <section className="services-page__info">
         <h2 className="services-page__info-title">Додаткова інформація</h2>
 
@@ -36,8 +38,6 @@ export const ServicesPage = () => {
           неперевершеного досвіду наших клієнтів.
         </p>
       </section>
-
-      {!user?.is_staff && <EventRequest relPage="services-page" />}
     </div>
   );
 };

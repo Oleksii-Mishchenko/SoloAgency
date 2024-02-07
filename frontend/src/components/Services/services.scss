@@ -24,6 +24,9 @@
 
   &__service {
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
     padding: 20px;
     border: 0.5px solid $color-green-element;
     border-radius: 5px;
@@ -37,8 +40,6 @@
     }
 
     &-title {
-      margin-bottom: 10px;
-
       @extend %h2;
     }
 
@@ -48,6 +49,10 @@
       line-height: 27px;
       color: $color-black;
       white-space: pre-line;
+    }
+
+    &-file-link {
+      align-self: end;
     }
   }
 
