@@ -104,17 +104,19 @@ class Organizer(models.Model):
 
 class Event(models.Model):
     service = models.ForeignKey("Service", on_delete=models.CASCADE)
-    description = models.TextField()
+    description = models.TextField(blank=True, null=True)
     string_validator = RegexValidator(
         regex=r"^[a-zA-Zа-яА-Я]+$", message="Word must contain only letters."
     )
     city = models.CharField(max_length=63, validators=[string_validator])
-    venue = models.CharField(max_length=63)
+    venue = (models.CharField(max_length=63, blank=True, null=True),)
     number_of_guests = models.IntegerField(
-        validators=[MinValueValidator(1), MaxValueValidator(999999)]
+        validators=[MinValueValidator(1), MaxValueValidator(999999)],
+        blank=True,
+        null=True,
     )
     event_type = models.ForeignKey(EventType, on_delete=models.CASCADE)
-    date = models.DateField()
+    date = models.DateField(blank=True, null=True)
     style = models.CharField(max_length=63, blank=True, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_events")
 
