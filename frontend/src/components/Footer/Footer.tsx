@@ -13,9 +13,9 @@ export const Footer = () => {
         <div className="footer__content">
           <nav className="footer__nav-bar">
             <ul className="footer__nav-list">
-              {navLinks.map(({ id, path, text }) => (
+              {navLinks.map(({ id, path, text, state }) => (
                 <li className="footer__nav-item" key={id}>
-                  <Link to={path} className="footer__nav-link">
+                  <Link to={path} className="footer__nav-link" state={state}>
                     {text}
                   </Link>
                 </li>
