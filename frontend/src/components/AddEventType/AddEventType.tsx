@@ -2,13 +2,12 @@ import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { NewEventType } from '../../types/EventType';
 import * as eventTypesActions from '../../features/eventTypesSlice';
-import { TextInput, Textarea } from '../Inputs';
 import {
   handleMessageBlur,
   handleNameBlur,
 } from '../../helpers/textManipulator';
-import { AttachFile } from '../AttachFile';
-import { MainButton } from '../MainButton';
+import { AttachFile, TextArea, TextInput } from '../UI/inputs/fields';
+import { MainButton } from '../UI/buttons/MainButton';
 import { Notification } from '../Notification';
 import './add-event-type.scss';
 
@@ -60,6 +59,7 @@ export const AddEventType: React.FC<Props> = ({ relPage }) => {
           type="text"
           label="Дайте назву послузі"
           placeholder="Назва"
+          isRequired
           error={errors.name?.message}
           register={{
             ...register('name', {
@@ -76,10 +76,11 @@ export const AddEventType: React.FC<Props> = ({ relPage }) => {
           }}
         />
 
-        <Textarea
+        <TextArea
           label="Опис нашої послуги"
           rows={5}
           placeholder="Опис"
+          isRequired
           error={errors.description?.message}
           register={{
             ...register('description', {
@@ -99,10 +100,10 @@ export const AddEventType: React.FC<Props> = ({ relPage }) => {
             return (
               <AttachFile
                 label="Оберіть фото послуги"
-                error={errors?.photo}
+                error={errors.photo?.message}
                 defaultValue={value?.name || ''}
                 value={value?.name}
-                readOnly
+                isRequired
                 onAttach={value => {
                   onChange(value);
                   trigger('photo');

@@ -2,7 +2,7 @@ import React, { useCallback, useMemo, useState } from 'react';
 import { avatarColors } from '../../assets/libs/avatarColors';
 import { getRandomElement } from '../../helpers/getRandomElement';
 import { Review as ReviewType } from '../../types/Review';
-import { ControlButton } from '../ControlButton';
+import { ControlButton } from '../UI/buttons/ControlButton';
 import { ControlButtonType } from '../../types/ControlButtonType';
 import { Confirmation } from '../Confirmation';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';

@@ -1,11 +1,10 @@
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import * as portfolioActions from '../../features/portfolioSlice';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { TextInput, Textarea } from '../Inputs';
-import { MainButton } from '../MainButton';
+import { MainButton } from '../UI/buttons/MainButton';
 import { Notification } from '../Notification';
 import { NewProject } from '../../types/Project';
-import { AttachFile } from '../AttachFile';
+import { AttachFile, TextArea, TextInput } from '../UI/inputs/fields';
 import {
   handleMessageBlur,
   handleNameBlur,
@@ -60,6 +59,7 @@ export const AddProject: React.FC<Props> = ({ relPage }) => {
           type="text"
           label="Дайте назву події"
           placeholder="Назва"
+          isRequired
           error={errors.title?.message}
           register={{
             ...register('title', {
@@ -76,10 +76,11 @@ export const AddProject: React.FC<Props> = ({ relPage }) => {
           }}
         />
 
-        <Textarea
+        <TextArea
           label="Опис нашої події"
           rows={5}
           placeholder="Опис"
+          isRequired
           error={errors.description?.message}
           register={{
             ...register('description', {
@@ -99,7 +100,8 @@ export const AddProject: React.FC<Props> = ({ relPage }) => {
             return (
               <AttachFile
                 label="Оберіть фото події"
-                error={errors?.photo}
+                isRequired
+                error={errors.photo?.message}
                 defaultValue={value?.name || ''}
                 value={value?.name}
                 readOnly

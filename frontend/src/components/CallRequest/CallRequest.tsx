@@ -1,7 +1,7 @@
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { CallRequestData } from '../../types/CallRequestData';
-import { MainButton } from '../MainButton';
-import { InputPhoneNumber, TextInput, Textarea } from '../Inputs';
+import { MainButton } from '../UI/buttons/MainButton';
+import { InputPhoneNumber, TextArea, TextInput } from '../UI/inputs/fields';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import * as callRequestActions from '../../features/callRequestSlice';
 import {
@@ -57,7 +57,6 @@ export const CallRequest: React.FC<Props> = ({ relPage }) => {
       <form className="call-request__form" onSubmit={handleSubmit(onSubmit)}>
         <fieldset className="call-request__form-fieldset">
           <TextInput
-            className="call-request__input"
             label="Ваше ім’я"
             isRequired
             placeholder="Ім'я"
@@ -87,7 +86,6 @@ export const CallRequest: React.FC<Props> = ({ relPage }) => {
           />
 
           <TextInput
-            className="call-request__input"
             label="З якого Ви міста?"
             placeholder="Місто"
             error={errors.city?.message}
@@ -143,8 +141,7 @@ export const CallRequest: React.FC<Props> = ({ relPage }) => {
             )}
           />
 
-          <Textarea
-            className="call-request__input"
+          <TextArea
             label="Опишіть тему звернення"
             rows={5}
             placeholder="Деталі"

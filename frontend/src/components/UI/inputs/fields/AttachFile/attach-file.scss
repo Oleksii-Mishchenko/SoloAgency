@@ -1,0 +1,27 @@
+@import '../../../../../styles/main.scss';
+
+.attach-file {
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+
+  &__inputs {
+    display: flex;
+    align-items: center;
+    column-gap: 20px;
+  }
+
+  &__input {
+    opacity: 0;
+    height: 0;
+    width: 0;
+    padding: 0;
+    margin: 0;
+    line-height: 0;
+    overflow: hidden;
+  }
+
+  &__file-name {
+    @extend %secondary-body;
+  }
+}

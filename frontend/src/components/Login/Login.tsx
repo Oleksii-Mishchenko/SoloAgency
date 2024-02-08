@@ -1,17 +1,17 @@
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { TextInput, InputPassword } from '../Inputs';
-import { LoginData } from '../../types/LoginData';
-import { MainButton } from '../MainButton';
 import { useRef } from 'react';
-import { useOuterClick } from '../../customHooks/useOuterClick';
+import { unwrapResult } from '@reduxjs/toolkit';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import * as authActions from '../../features/authSlice';
-import { unwrapResult } from '@reduxjs/toolkit';
-import './login.scss';
-import { AuthLink } from '../AuthLink';
-import { AuthLinkType } from '../../types/AuthLinkType';
-import { ControlButton } from '../ControlButton';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { InputPassword, TextInput } from '../UI/inputs/fields';
+import { MainButton } from '../UI/buttons/MainButton';
+import { ControlButton } from '../UI/buttons/ControlButton';
 import { ControlButtonType } from '../../types/ControlButtonType';
+import { LoginData } from '../../types/LoginData';
+import { useOuterClick } from '../../customHooks/useOuterClick';
+import { AuthLink } from '../UI/buttons/AuthLink';
+import { AuthLinkType } from '../../types/AuthLinkType';
+import './login.scss';
 
 export const Login = () => {
   const loginRef = useRef(null);

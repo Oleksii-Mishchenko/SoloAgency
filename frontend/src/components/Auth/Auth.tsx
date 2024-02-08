@@ -1,5 +1,5 @@
 import React from 'react';
-import { MainButton } from '../MainButton';
+import { MainButton } from '../UI/buttons/MainButton';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import * as authActions from '../../features/authSlice';
 import './auth.scss';

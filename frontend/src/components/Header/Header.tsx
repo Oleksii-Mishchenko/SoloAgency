@@ -4,7 +4,7 @@ import { Logo } from '../Logo';
 import { NavBar } from '../NavBar';
 import './header.scss';
 import classNames from 'classnames';
-import { ControlButton } from '../ControlButton';
+import { ControlButton } from '../UI/buttons/ControlButton';
 import { ControlButtonType } from '../../types/ControlButtonType';
 
 export const Header = () => {

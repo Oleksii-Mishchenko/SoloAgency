@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { MainButton } from '../MainButton';
+import { MainButton } from '../UI/buttons/MainButton';
 import { useOuterClick } from '../../customHooks/useOuterClick';
 import './confirmation.scss';
 

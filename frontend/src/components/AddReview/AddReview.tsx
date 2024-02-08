@@ -1,16 +1,15 @@
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import * as reviewsActions from '../../features/reviewsSlice';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { Rating } from '../Rating';
+import { Rating, TextArea } from '../UI/inputs/fields';
 import { RatingType } from '../../types/Rating';
 import { NewReview } from '../../types/Review';
-import { Textarea } from '../Inputs';
 import { handleMessageBlur } from '../../helpers/textManipulator';
-import { MainButton } from '../MainButton';
+import { MainButton } from '../UI/buttons/MainButton';
 import { Notification } from '../Notification';
-import './add-review.scss';
-import { AuthLink } from '../AuthLink';
+import { AuthLink } from '../UI/buttons/AuthLink';
 import { AuthLinkType } from '../../types/AuthLinkType';
+import './add-review.scss';
 
 type Props = {
   relPage: string;
@@ -64,9 +63,10 @@ export const AddReview: React.FC<Props> = ({ relPage }) => {
               )}
             />
 
-            <Textarea
+            <TextArea
               label="Напишіть про свій досвід взаємодії з нашим сервісом"
               rows={5}
+              isRequired
               placeholder="Ваш відгук"
               error={errors.text?.message}
               register={{

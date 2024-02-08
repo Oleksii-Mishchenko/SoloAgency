@@ -81,3 +81,52 @@
   box-shadow: 0 0 7px rgba($color-black, 0.5);
   z-index: 1;
 }
+
+%input-field {
+  padding: 7px 16px;
+  border: 1px solid $color-grey-blocks;
+  border-radius: 5px;
+  background-color: transparent;
+  color: $color-black;
+  outline: none;
+  transition: all 0.3s;
+
+  @extend %body;
+
+  &:-webkit-autofill:focus {
+    -webkit-text-fill-color: $color-black;
+    -webkit-box-shadow: 0 100px 0 0 $color-white inset;
+    -webkit-box-shadow: 0 0 5px 2px rgba($color-grey-blocks, 0.3);
+    transition: background-color 5000s ease-in-out 0s;
+  }
+
+  &:hover {
+    border-color: $color-black;
+    box-shadow: 0 0 5px rgba($color-grey-blocks, 0.3);
+  }
+
+  &:focus {
+    border-color: $color-black;
+    box-shadow: 0 0 5px rgba($color-black, 0.4);
+  }
+
+  &::placeholder {
+    @extend %body;
+    color: $color-grey-elements;
+  }
+
+  &--error {
+    border-color: $color-red-error;
+    color: $color-red-error;
+
+    &:hover {
+      border-color: $color-red-error;
+      box-shadow: 0 0 5px rgba($color-red-error, 0.3);
+    }
+
+    &:focus {
+      border-color: $color-red-error;
+      box-shadow: 0 0 5px rgba($color-red-error, 0.4);
+    }
+  }
+}

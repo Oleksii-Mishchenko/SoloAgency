@@ -1,15 +1,14 @@
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { Advice } from '../../types/Advice';
+import { useRef } from 'react';
 import * as advicesActions from '../../features/advicesSlice';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import './edit-advice.scss';
-import { TextInput, Textarea } from '../Inputs';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { Advice } from '../../types/Advice';
 import { handleMessageBlur } from '../../helpers/textManipulator';
-import { Rating } from '../Rating';
+import { Rating, TextArea, TextInput } from '../UI/inputs/fields';
 import { RatingType } from '../../types/Rating';
-import { MainButton } from '../MainButton';
-import { useRef } from 'react';
+import { MainButton } from '../UI/buttons/MainButton';
 import { useOuterClick } from '../../customHooks/useOuterClick';
+import './edit-advice.scss';
 
 type Props = {
   className: string;
@@ -53,6 +52,7 @@ export const EditAdvice: React.FC<Props> = ({
           type="text"
           label="Змініть питання"
           placeholder="Питання"
+          isRequired
           error={errors.question?.message}
           register={{
             ...register('question', {
@@ -64,10 +64,11 @@ export const EditAdvice: React.FC<Props> = ({
           }}
         />
 
-        <Textarea
+        <TextArea
           label="Змініть відповідь на питання"
           rows={4}
           placeholder="Відповідь"
+          isRequired
           error={errors.answer?.message}
           register={{
             ...register('answer', {

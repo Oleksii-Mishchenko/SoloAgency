@@ -1,4 +1,4 @@
-import { MainButton } from '../MainButton';
+import { MainButton } from '../UI/buttons/MainButton';
 import './hero.scss';
 
 type Props = {

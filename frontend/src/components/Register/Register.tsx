@@ -1,15 +1,19 @@
 import { useRef } from 'react';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { TextInput, InputPassword, InputPhoneNumber } from '../Inputs';
-import { MainButton } from '../MainButton';
-import { useOuterClick } from '../../customHooks/useOuterClick';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import * as authActions from '../../features/authSlice';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import {
+  InputPassword,
+  InputPhoneNumber,
+  TextInput,
+} from '../UI/inputs/fields';
+import { MainButton } from '../UI/buttons/MainButton';
+import { useOuterClick } from '../../customHooks/useOuterClick';
 import { RegisterData } from '../../types/RegisterData';
 import { handleNameBlur } from '../../helpers/textManipulator';
-import { AuthLink } from '../AuthLink';
+import { AuthLink } from '../UI/buttons/AuthLink';
 import { AuthLinkType } from '../../types/AuthLinkType';
-import { ControlButton } from '../ControlButton';
+import { ControlButton } from '../UI/buttons/ControlButton';
 import { ControlButtonType } from '../../types/ControlButtonType';
 import { cleanPhoneNumber } from '../../helpers/cleanPhoneNumber';
 import './register.scss';
@@ -61,7 +65,7 @@ export const Register = () => {
           <div className="register__inputs">
             <TextInput
               type="text"
-              label="Ваше ім’я"
+              label="Введіть ваше ім’я"
               placeholder="Ім'я"
               isRequired
               error={errors.first_name?.message}
@@ -143,7 +147,7 @@ export const Register = () => {
                   onChange={(value: string) => field.onChange(value)}
                   onBlur={field.onBlur}
                   error={errors.phone?.message}
-                  label="Залиште свій номер телефону"
+                  label="Ваш номер телефону"
                 />
               )}
             />

@@ -5,7 +5,7 @@ import { SelectType } from '../../types/SelectType';
 import { useLoadOptions } from '../../customHooks/useLoadOptions';
 import './dropdown.scss';
 import classNames from 'classnames';
-import { InputError } from '../InputError';
+import { InputError } from '../UI/inputs/elements/InputError';
 
 type DropdownProps = {
   label: string;

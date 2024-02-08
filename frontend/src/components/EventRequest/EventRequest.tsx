@@ -2,10 +2,10 @@ import { Controller, useForm } from 'react-hook-form';
 import { format } from 'date-fns';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import * as eventsActions from '../../features/eventsSlice';
-import { InputPhoneNumber, TextInput, Textarea } from '../Inputs';
+import { InputPhoneNumber, TextArea, TextInput } from '../UI/inputs/fields';
 import { Dropdown } from '../Dropdown';
-import { MainButton } from '../MainButton';
-import { AuthLink } from '../AuthLink';
+import { MainButton } from '../UI/buttons/MainButton';
+import { AuthLink } from '../UI/buttons/AuthLink';
 import { AuthLinkType } from '../../types/AuthLinkType';
 import { EventRequestData, PreparedEventRequestData } from '../../types/Event';
 import { SelectType } from '../../types/SelectType';
@@ -202,7 +202,7 @@ export const EventRequest: React.FC<Props> = ({ relPage }) => {
               </fieldset>
             </div>
 
-            <Textarea
+            <TextArea
               label="Особливі побажання"
               error={errors.description?.message}
               register={{ ...register('description') }}

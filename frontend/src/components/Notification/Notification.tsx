@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { ServerErrorResponse } from '../../types/ServerErrorResponse';
 import { Errors } from '../Errors';
-import { MainButton } from '../MainButton';
+import { MainButton } from '../UI/buttons/MainButton';
 import { useRef } from 'react';
 import { useOuterClick } from '../../customHooks/useOuterClick';
 import './notification.scss';

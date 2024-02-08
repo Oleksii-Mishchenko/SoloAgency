@@ -3,7 +3,7 @@ import { Advice } from '../../types/Advice';
 import classNames from 'classnames';
 import { Confirmation } from '../Confirmation';
 import { EditAdvice } from '../EditAdvice';
-import { ControlButton } from '../ControlButton';
+import { ControlButton } from '../UI/buttons/ControlButton';
 import { ControlButtonType } from '../../types/ControlButtonType';
 import './advice.scss';
 import { useAppSelector } from '../../app/hooks';

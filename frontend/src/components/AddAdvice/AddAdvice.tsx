@@ -1,17 +1,15 @@
-import { NewAdvice } from '../../types/Advice';
-import * as advicesActions from '../../features/advicesSlice';
+import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import * as advicesActions from '../../features/advicesSlice';
+import { NewAdvice } from '../../types/Advice';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { handleMessageBlur } from '../../helpers/textManipulator';
-import { TextInput, Textarea } from '../Inputs';
 import { RatingType } from '../../types/Rating';
-import { Rating } from '../Rating';
-import { MainButton } from '../MainButton';
+import { Rating, TextArea, TextInput } from '../UI/inputs/fields';
+import { MainButton } from '../UI/buttons/MainButton';
 import { Notification } from '../Notification';
-import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { getSearchWith } from '../../helpers/getSearchWith';
-
 import './add-advice.scss';
 
 type Props = {
@@ -63,6 +61,7 @@ export const AddAdvice: React.FC<Props> = ({ relPage }) => {
           type="text"
           label="Напишіть питання"
           placeholder="Питання"
+          isRequired
           error={errors.question?.message}
           register={{
             ...register('question', {
@@ -74,10 +73,11 @@ export const AddAdvice: React.FC<Props> = ({ relPage }) => {
           }}
         />
 
-        <Textarea
+        <TextArea
           label="Напишіть відповідь на питання"
           rows={5}
           placeholder="Відповідь"
+          isRequired
           error={errors.answer?.message}
           register={{
             ...register('answer', {

@@ -1,4 +1,4 @@
-import { InputError } from '../InputError';
+import { InputError } from '../UI/inputs/elements/InputError';
 import MaskedInput from 'react-text-mask';
 import classNames from 'classnames';
 import ReactDatePicker, { registerLocale } from 'react-datepicker';
