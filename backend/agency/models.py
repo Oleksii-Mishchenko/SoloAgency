@@ -197,6 +197,18 @@ class CallRequest(models.Model):
     )
     phone = models.CharField(max_length=13, validators=[phone_validator])
 
+    status = models.CharField(
+        max_length=64,
+        choices=[
+            ("created", "created"),
+            ("done", "done"),
+            ("in_progress", "in_progress"),
+            ("rejected", "rejected"),
+        ],
+        default="created",
+    )
+
+
     def __str__(self):
         return f"CallRequest: {self.name} {self.phone}"
 
