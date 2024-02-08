@@ -1,12 +1,9 @@
-import { Header } from './components/Header';
-import { Main } from './components/Main';
-import { Footer } from './components/Footer';
-import { Login } from './components/Login';
 import { useAppDispatch, useAppSelector } from './app/hooks';
 import * as authActions from './features/authSlice';
-import { Notification } from './components/Notification';
+import { Header, Main, Footer } from './components/common';
+import { Register, Login } from './components/UI/forms';
+import { Notification } from './components/UX';
 import './App.scss';
-import { Register } from './components/Register';
 
 export const App = () => {
   const { isLoginFormOpen, isRegisterFormOpen, errors } = useAppSelector(

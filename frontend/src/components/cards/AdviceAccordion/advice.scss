@@ -1,0 +1,76 @@
+@import '../../../styles/main.scss';
+
+.advice {
+  position: relative;
+  padding-inline: 20px;
+  padding-block: 0;
+  border: 1px solid $color-green-element;
+  border-radius: 5px;
+  transition: all 0.3s ease-in;
+
+  &--open {
+    padding-block: 20px;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    column-gap: 8px;
+  }
+
+  &__question {
+    @extend %body;
+
+    flex-grow: 1;
+    font-weight: 600;
+    color: $color-black;
+  }
+
+  &__drawer {
+    height: 0;
+    overflow: hidden;
+    transition: all 0.3s ease-in;
+
+    &-wrapper {
+      padding: 20px;
+    }
+  }
+
+  &__answer {
+    @extend %body;
+    margin-bottom: 8px;
+    color: $color-black;
+
+    @include on-desktop {
+      margin-bottom: 20px;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__controls {
+    display: flex;
+    column-gap: 10px;
+  }
+
+  &__confirmation {
+    position: absolute;
+    margin: 0 auto;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+  }
+
+  &__edit-advice {
+    position: absolute;
+    margin: 0 auto;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+}

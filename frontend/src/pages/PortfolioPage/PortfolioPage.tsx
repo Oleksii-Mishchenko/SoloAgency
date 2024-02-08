@@ -1,6 +1,6 @@
 import { useAppSelector } from '../../app/hooks';
-import { AddProject } from '../../components/AddProject';
-import { Portfolio } from '../../components/Portfolio';
+import { AddProject } from '../../components/sections/forms';
+import { Portfolio } from '../../components/sections/common';
 import { SearchField } from '../../components/UI/inputs/fields';
 import './portfolio-page.scss';
 

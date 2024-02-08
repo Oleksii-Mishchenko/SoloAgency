@@ -1,8 +1,7 @@
 import React, { FC, TextareaHTMLAttributes } from 'react';
 import classNames from 'classnames';
-import { InputError } from '../../elements/InputError';
+import { InputError, Label } from '../../elements';
 import './text-area.scss';
-import { Label } from '../../elements/Label';
 
 type TextAreaProps = TextareaHTMLAttributes<HTMLTextAreaElement> & {
   className?: string;

@@ -1,8 +1,8 @@
 import { FC, ButtonHTMLAttributes } from 'react';
-import './main-button.scss';
-import { Loader } from '../../../Loader';
 import { LoaderElement } from '../../../../types/LoaderElement';
 import classNames from 'classnames';
+import { Loader } from '../../../UX';
+import './main-button.scss';
 
 type Props = {
   text: string;

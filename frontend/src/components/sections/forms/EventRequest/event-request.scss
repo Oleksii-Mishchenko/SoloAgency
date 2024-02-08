@@ -1,0 +1,103 @@
+@import '../../../../styles/main.scss';
+
+.event-request {
+  position: relative;
+
+  &__header {
+    margin-bottom: 20px;
+
+    @include on-wide-screen {
+      margin-bottom: 30px;
+    }
+  }
+
+  &__title {
+    @extend %h2;
+
+    margin-bottom: 20px;
+    line-height: 26px;
+    text-align: center;
+
+    @include on-tablet {
+      text-align: left;
+    }
+
+    @include on-wide-screen {
+      line-height: 22px;
+    }
+  }
+
+  &__info {
+    @extend %secondary-body;
+  }
+
+  &__sign-up-warn {
+    @extend %secondary-body;
+    margin-bottom: 10px;
+    text-align: center;
+
+    @include on-tablet {
+      text-align: left;
+    }
+  }
+
+  &__sign-up-offer {
+    @extend %body;
+    text-align: center;
+
+    @include on-tablet {
+      text-align: left;
+    }
+  }
+
+  &__form {
+    padding: 20px;
+    border: 1px solid $color-green-element;
+    border-radius: 5px;
+
+    @include on-wide-screen {
+      padding: 48px;
+    }
+  }
+
+  &__inputs {
+    width: max-content;
+    margin: 0 auto 24px;
+  }
+
+  &__form-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-bottom: 24px;
+
+    @include on-wide-screen {
+      flex-direction: row;
+    }
+  }
+
+  &__fieldset {
+    display: flex;
+    flex-direction: column;
+    row-gap: 24px;
+    margin: 0;
+    padding: 0;
+    width: 305px;
+    border: none;
+  }
+
+  &__button {
+    display: block;
+    width: 305px;
+    margin: 0 auto;
+  }
+
+  &__notification {
+    position: absolute;
+    margin: 0 auto;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+  }
+}

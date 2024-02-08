@@ -2,8 +2,7 @@ import React from 'react';
 import { Noop } from 'react-hook-form';
 import MaskedInput from 'react-text-mask';
 import classNames from 'classnames';
-import { InputError } from '../../elements/InputError';
-import { Label } from '../../elements/Label';
+import { InputError, Label } from '../../elements';
 import './input-phone-number.scss';
 
 interface InputPhoneNumberProps {

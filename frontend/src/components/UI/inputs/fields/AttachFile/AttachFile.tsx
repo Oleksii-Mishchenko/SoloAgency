@@ -1,10 +1,9 @@
 import React, { InputHTMLAttributes, useRef } from 'react';
 import classNames from 'classnames';
-import { ControlButton } from '../../../buttons/ControlButton';
+import { ControlButton } from '../../../buttons';
 import { ControlButtonType } from '../../../../../types/ControlButtonType';
-import { Label } from '../../elements/Label';
+import { InputError, Label } from '../../elements';
 import './attach-file.scss';
-import { InputError } from '../../elements/InputError';
 
 type Props = InputHTMLAttributes<HTMLInputElement> & {
   label: string;

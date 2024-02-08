@@ -1,8 +1,7 @@
 import { InputHTMLAttributes } from 'react';
 import classNames from 'classnames';
-import { InputError } from '../../elements/InputError';
+import { InputError, Label } from '../../elements';
 import './text-input.scss';
-import { Label } from '../../elements/Label';
 
 type TextInputProps = InputHTMLAttributes<HTMLInputElement> & {
   className?: string;

@@ -5,3 +5,5 @@ export * from './TextArea/TextArea';
 export * from './TextInput/TextInput';
 export * from './InputPassword/InputPassword';
 export * from './InputPhoneNumber/InputPhoneNumber';
+export * from './Dropdown/Dropdown';
+export * from './DatePicker/DatePicker';

@@ -1,10 +1,9 @@
 import React, { FC, InputHTMLAttributes, useState } from 'react';
 import classNames from 'classnames';
-import { InputError } from '../../elements/InputError';
-import './input-password.scss';
-import { Label } from '../../elements/Label';
-import { ControlButton } from '../../../buttons/ControlButton';
+import { InputError, Label } from '../../elements';
 import { ControlButtonType } from '../../../../../types/ControlButtonType';
+import { ControlButton } from '../../../buttons';
+import './input-password.scss';
 
 type InputPasswordProps = InputHTMLAttributes<HTMLInputElement> & {
   label: string;

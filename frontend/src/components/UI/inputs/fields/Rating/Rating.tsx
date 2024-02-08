@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import classNames from 'classnames';
 import { RatingType } from '../../../../../types/Rating';
-import { Label } from '../../elements/Label';
+import { Label } from '../../elements';
 import './rating.scss';
 
 type Props = {

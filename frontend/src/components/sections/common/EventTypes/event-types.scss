@@ -1,0 +1,84 @@
+@import '../../../../styles/main.scss';
+
+.event-types {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+
+  @include on-desktop {
+    row-gap: 30px;
+  }
+
+  &__events {
+    --columns: 1;
+    row-gap: 20px;
+
+    @include on-tablet {
+      --columns: 2;
+    }
+
+    @include on-desktop {
+      --columns: 3;
+      row-gap: 50px;
+    }
+
+    @include grid-container(var(--columns), 20px);
+  }
+
+  &__title {
+    text-align: center;
+
+    @extend %h1;
+  }
+
+  &__event {
+    &-image-wrapper {
+      position: relative;
+      width: 100%;
+      height: 0;
+      padding-bottom: 67%;
+      margin-bottom: 16px;
+      overflow: hidden;
+
+      &:hover .event-types__event-description {
+        top: 0;
+      }
+    }
+
+    &-image {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    &-description {
+      @extend %body-bold-button-white;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-sizing: border-box;
+      position: absolute;
+      top: -100%;
+      width: 100%;
+      height: 100%;
+      padding: 40px;
+      background-color: rgba($color: $color-grey-text, $alpha: 0.7);
+      text-align: center;
+      transition: all 0.3s;
+    }
+
+    &-title {
+      @extend %h3;
+    }
+  }
+
+  &__loader {
+    margin: 0 auto;
+  }
+
+  &__errors {
+    margin: 0 auto;
+  }
+}
