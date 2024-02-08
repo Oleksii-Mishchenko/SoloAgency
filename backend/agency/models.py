@@ -174,7 +174,7 @@ class Review(models.Model):
     is_approved = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"Review by {self.user.username} - {self.created_at}"
+        return f"Review by {self.user.email} - {self.created_at}"
 
     class Meta:
         ordering = ["is_approved"]
@@ -196,6 +196,18 @@ class CallRequest(models.Model):
         message="Phone number must be entered in the format: '+380XXXXXXXXX'.",
     )
     phone = models.CharField(max_length=13, validators=[phone_validator])
+
+    status = models.CharField(
+        max_length=64,
+        choices=[
+            ("created", "created"),
+            ("done", "done"),
+            ("in_progress", "in_progress"),
+            ("rejected", "rejected"),
+        ],
+        default="created",
+    )
+
 
     def __str__(self):
         return f"CallRequest: {self.name} {self.phone}"
