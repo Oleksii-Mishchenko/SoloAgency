@@ -174,7 +174,7 @@ class Review(models.Model):
     is_approved = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"Review by {self.user.username} - {self.created_at}"
+        return f"Review by {self.user.email} - {self.created_at}"
 
     class Meta:
         ordering = ["is_approved"]
