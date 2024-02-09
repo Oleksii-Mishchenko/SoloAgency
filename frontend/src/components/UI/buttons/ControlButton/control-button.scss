@@ -1,0 +1,54 @@
+.control-button {
+  height: 24px;
+  width: 24px;
+  padding: 0;
+  background-color: transparent;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+
+  &--edit {
+    background-image: url(../../../../assets/img/pencil.svg);
+  }
+
+  &--remove {
+    background-image: url(../../../../assets/img/trash-bin.svg);
+  }
+
+  &--approve {
+    background-image: url(../../../../assets/img/approve.svg);
+  }
+
+  &--cross {
+    background-image: url(../../../../assets/img/close.svg);
+  }
+
+  &--cross-green {
+    background-image: url(../../../../assets/img/close-green.svg);
+  }
+
+  &--plus-green {
+    background-image: url(../../../../assets/img/plus-green.svg);
+  }
+
+  &--attach {
+    background-image: url(../../../../assets/img/paperclip.svg);
+  }
+
+  &--burger {
+    background-image: url(../../../../assets/img/burger-menu.svg);
+  }
+
+  &--search {
+    background-image: url(../../../../assets/img/magnify.svg);
+  }
+
+  &--eye {
+    background-image: url(../../../../assets/img/eye.svg);
+  }
+
+  &--eye-off {
+    background-image: url(../../../../assets/img/eye-off.svg);
+  }
+}

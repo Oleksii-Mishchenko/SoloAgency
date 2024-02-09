@@ -1,12 +1,13 @@
-import './home-page.scss';
-import { CallRequest } from '../../components/CallRequest';
-import { ReviewsSlider } from '../../components/ReviewsSlider';
-import { Hero } from '../../components/Hero';
-import { Articles } from '../../components/Articles';
-import { ContactUs } from '../../components/ContactUs';
-import { AddReview } from '../../components/AddReview';
 import { useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
+import { AddReview, CallRequest } from '../../components/sections/forms';
+import {
+  Articles,
+  ContactUs,
+  Hero,
+  ReviewsSlider,
+} from '../../components/sections/common';
+import './home-page.scss';
 
 export const HomePage = () => {
   const location = useLocation();

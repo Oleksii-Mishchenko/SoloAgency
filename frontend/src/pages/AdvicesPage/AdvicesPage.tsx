@@ -1,6 +1,6 @@
 import './advices-page.scss';
-import { Advices } from '../../components/Advices';
-import { AddAdvice } from '../../components/AddAdvice';
+import { Advices } from '../../components/sections/common';
+import { AddAdvice } from '../../components/sections/forms';
 import { useAppSelector } from '../../app/hooks';
 
 export const AdvicesPage = () => {

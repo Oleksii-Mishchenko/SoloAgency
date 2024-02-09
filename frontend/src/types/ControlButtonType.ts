@@ -8,4 +8,6 @@ export enum ControlButtonType {
   Attach = 'attach',
   Burger = 'burger',
   Search = 'search',
+  Eye = 'eye',
+  EyeOff = 'eye-off',
 }

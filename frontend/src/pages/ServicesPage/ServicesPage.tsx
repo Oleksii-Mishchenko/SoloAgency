@@ -1,8 +1,7 @@
 import { useAppSelector } from '../../app/hooks';
-import { AddEventType } from '../../components/AddEventType';
-import { EventRequest } from '../../components/EventRequest';
-import { EventTypes } from '../../components/EventTypes';
-import { Services } from '../../components/Services';
+import { AddEventType } from '../../components/sections/forms';
+import { EventRequest } from '../../components/sections/forms';
+import { EventTypes, Services } from '../../components/sections/common';
 import './services-page.scss';
 
 export const ServicesPage = () => {

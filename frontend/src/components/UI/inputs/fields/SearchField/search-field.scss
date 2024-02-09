@@ -1,0 +1,29 @@
+@import '../../../../../styles/main.scss';
+
+.search-field {
+  &__form {
+    position: relative;
+  }
+
+  &__input {
+    @extend %input-field;
+
+    box-sizing: border-box;
+    width: 100%;
+    padding: 11px 50px;
+  }
+
+  &__reset {
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    transform: translateY(-50%);
+  }
+
+  &__submit {
+    position: absolute;
+    top: 50%;
+    left: 16px;
+    transform: translateY(-50%);
+  }
+}

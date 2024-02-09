@@ -1,0 +1,37 @@
+@import '../../../styles/main.scss';
+
+.errors {
+  margin-bottom: 20px;
+  width: fit-content;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &__title {
+    @extend %body-bold-button;
+    margin-bottom: 10px;
+    color: $color-red-error;
+  }
+
+  &__error {
+    margin-bottom: 15px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__name {
+    @extend %body;
+    padding-left: 20px;
+    margin-bottom: 5px;
+    text-transform: capitalize;
+  }
+
+  &__message {
+    @extend %body-error;
+    padding-left: 40px;
+    text-transform: capitalize;
+  }
+}

@@ -1,7 +1,7 @@
 import { useAppSelector } from '../../app/hooks';
-import { AddProject } from '../../components/AddProject';
-import { Portfolio } from '../../components/Portfolio';
-import { SearchField } from '../../components/SearchField';
+import { AddProject } from '../../components/sections/forms';
+import { Portfolio } from '../../components/sections/common';
+import { SearchField } from '../../components/UI/inputs/fields';
 import './portfolio-page.scss';
 
 export const PortfolioPage = () => {
