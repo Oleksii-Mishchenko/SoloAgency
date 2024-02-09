@@ -110,8 +110,8 @@ export const Register = () => {
                     message: 'Тільки українські та латинські літери',
                   },
                   onBlur: (event: React.ChangeEvent<HTMLInputElement>) => {
-                    setValue('first_name', handleNameBlur(event.target.value));
-                    trigger('first_name');
+                    setValue('last_name', handleNameBlur(event.target.value));
+                    trigger('last_name');
                   },
                 }),
               }}

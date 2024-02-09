@@ -1,10 +1,10 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { handleErrorFromServer } from '../helpers/handleErrorFromServer';
 
-const instance = axios.create({
-  baseURL: 'http://127.0.0.1:8080/api',
-  // baseURL: 'http://0.0.0.0:8080/api',
-});
+export const hostName = 'http://127.0.0.1:8080';
+// export const hostName = 'http://0.0.0.0:8080',
+
+const instance = axios.create({ baseURL: `${hostName}/api` });
 
 export const client = {
   get: async <T>(url: string, config?: AxiosRequestConfig): Promise<T> => {

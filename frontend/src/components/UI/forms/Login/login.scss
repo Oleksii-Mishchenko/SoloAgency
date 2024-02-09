@@ -41,9 +41,15 @@
   &__forgot-password {
     @extend %h3;
 
+    display: block;
     margin-bottom: 20px;
     font-size: 16px;
     color: $color-grey-text;
+    transition: all 0.3s;
+
+    &:hover {
+      color: $color-green-dark;
+    }
   }
 
   &__enter-button {

@@ -10,6 +10,7 @@ import { ControlButtonType } from '../../../../types/ControlButtonType';
 import { AuthLinkType } from '../../../../types/AuthLinkType';
 import { AuthLink, ControlButton, MainButton } from '../../buttons';
 import './login.scss';
+import { hostName } from '../../../../utils/axiosClient';
 
 export const Login = () => {
   const loginRef = useRef(null);
@@ -74,7 +75,13 @@ export const Login = () => {
             />
           </div>
 
-          <p className="login__forgot-password">Забули пароль?</p>
+          <a
+            href={`${hostName}/accounts/password/reset/`}
+            className="login__forgot-password"
+            target="_blank"
+          >
+            Забули пароль?
+          </a>
 
           <MainButton
             className="login__enter-button"
