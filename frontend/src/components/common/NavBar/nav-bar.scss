@@ -8,6 +8,10 @@
   flex-shrink: 1;
   height: min-content;
 
+  @include on-desktop {
+    padding-right: 120px;
+  }
+
   &__list {
     display: flex;
     flex-direction: column;

@@ -2,6 +2,7 @@
 
 .header-nav-link {
   @extend %h3;
+  white-space: nowrap;
   transition: all 0.3s;
 
   &:hover {

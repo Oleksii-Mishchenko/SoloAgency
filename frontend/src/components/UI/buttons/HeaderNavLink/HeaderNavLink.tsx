@@ -2,11 +2,11 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import classNames from 'classnames';
 import './header-nav-link.scss';
-import { HeaderNavLink as HeaderNavLinkType } from '../../../../types/HeaderNavLink';
+import { HeaderNavLink as NavLinkType } from '../../../../types/HeaderNavLink';
 import { Link } from 'react-router-dom';
 
 type Props = {
-  link: HeaderNavLinkType;
+  link: NavLinkType;
   menu: {
     isMenuOpen: boolean;
     toggleMenu: () => void;
