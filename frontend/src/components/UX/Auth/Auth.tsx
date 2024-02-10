@@ -40,7 +40,7 @@ export const Auth: React.FC<Props> = ({ menu: { isMenuOpen, toggleMenu } }) => {
   return (
     <div className="auth">
       {token && user ? (
-        <div className="auth__person">
+        <div className="auth__person" title={user.email}>
           <div className="auth__account" ref={accountRef}>
             <button
               className={classNames('auth__account-button', {
@@ -66,7 +66,7 @@ export const Auth: React.FC<Props> = ({ menu: { isMenuOpen, toggleMenu } }) => {
                   }
                   onClick={handleMenuClosure}
                 >
-                  Мої замовлення
+                  {user.is_staff ? 'Замовлення' : 'Мої замовлення'}
                 </NavLink>
               </li>
 
@@ -85,7 +85,9 @@ export const Auth: React.FC<Props> = ({ menu: { isMenuOpen, toggleMenu } }) => {
             </ul>
           </div>
 
-          <div className="auth__avatar">{user.first_name[0]}</div>
+          <div className="auth__avatar" title={user.first_name}>
+            {user.first_name[0]}
+          </div>
         </div>
       ) : (
         <>
