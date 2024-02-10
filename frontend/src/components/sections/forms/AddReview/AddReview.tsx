@@ -16,7 +16,8 @@ type Props = {
 
 export const AddReview: React.FC<Props> = ({ relPage }) => {
   const dispatch = useAppDispatch();
-  const { token, user } = useAppSelector(state => state.auth.authData);
+  const { token } = useAppSelector(state => state.auth);
+  const { user } = useAppSelector(state => state.user);
   const { addErrors, isAddingReview, isAddSuccess } = useAppSelector(
     state => state.reviews,
   );
@@ -36,9 +37,7 @@ export const AddReview: React.FC<Props> = ({ relPage }) => {
   });
 
   const onSubmit: SubmitHandler<NewReview> = async (data: NewReview) => {
-    if (token) {
-      await dispatch(reviewsActions.add({ token, data }));
-    }
+    await dispatch(reviewsActions.add(data));
 
     reset();
   };

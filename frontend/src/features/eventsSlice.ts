@@ -18,11 +18,8 @@ const initialState: EventsState = {
 
 export const add = createAsyncThunk(
   'events/add',
-  async (eventRequest: {
-    preparedData: PreparedEventRequestData;
-    token: string;
-  }) => {
-    const response = await addEventRequest(eventRequest);
+  async (data: PreparedEventRequestData) => {
+    const response = await addEventRequest(data);
 
     return response;
   },

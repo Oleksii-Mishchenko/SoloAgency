@@ -12,7 +12,7 @@ export const ReviewsSlider: React.FC = () => {
   const dispatch = useAppDispatch();
   const { reviews, isLoading, errors, isDeleted, deleteErrors } =
     useAppSelector(state => state.reviews);
-  const { user } = useAppSelector(state => state.auth.authData);
+  const { user } = useAppSelector(state => state.user);
   const windowWidth = window.innerWidth;
   const shift = {
     wide: `translateX(calc(-${position * 50}% - ${position * 10}px))`,

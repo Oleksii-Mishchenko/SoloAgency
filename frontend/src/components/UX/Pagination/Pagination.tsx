@@ -1,7 +1,7 @@
-import classNames from 'classnames';
 import { useMemo } from 'react';
-import { PaginationConfig } from '../../../types/PaginationConfig';
 import { Link, useSearchParams } from 'react-router-dom';
+import classNames from 'classnames';
+import { PaginationConfig } from '../../../types/PaginationConfig';
 import { getSearchWith } from '../../../helpers/getSearchWith';
 import './pagination.scss';
 

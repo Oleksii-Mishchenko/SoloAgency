@@ -1,5 +1,5 @@
-import classNames from 'classnames';
 import { useRef } from 'react';
+import classNames from 'classnames';
 import { ServerErrorResponse } from '../../../types/ServerErrorResponse';
 import { MainButton } from '../../UI/buttons';
 import { useOuterClick } from '../../../customHooks/useOuterClick';

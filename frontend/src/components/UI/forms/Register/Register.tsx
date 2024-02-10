@@ -1,7 +1,7 @@
 import { useRef } from 'react';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
 import * as authActions from '../../../../features/authSlice';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import {
   InputPassword,
   InputPhoneNumber,

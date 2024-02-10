@@ -1,11 +1,11 @@
-import React, { useRef, useState } from 'react';
-import { MainButton } from '../../UI/buttons';
+import { useRef, useState } from 'react';
+import { NavLink } from 'react-router-dom';
+import classNames from 'classnames';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import * as authActions from '../../../features/authSlice';
-import './auth.scss';
-import classNames from 'classnames';
-import { NavLink } from 'react-router-dom';
 import { useOuterClick } from '../../../customHooks/useOuterClick';
+import { MainButton } from '../../UI/buttons';
+import './auth.scss';
 
 type Props = {
   menu: {
@@ -16,12 +16,11 @@ type Props = {
 
 export const Auth: React.FC<Props> = ({ menu: { isMenuOpen, toggleMenu } }) => {
   const dispatch = useAppDispatch();
-  const {
-    authData: { token, user },
-  } = useAppSelector(state => state.auth);
-
+  const { token } = useAppSelector(state => state.auth);
+  const { user } = useAppSelector(state => state.user);
   const [isAccountMenuOpen, setIsAccountMenuOpen] = useState(false);
   const accountRef = useRef<HTMLDivElement>(null);
+
   useOuterClick(accountRef, () => {
     if (isAccountMenuOpen) {
       setIsAccountMenuOpen(false);

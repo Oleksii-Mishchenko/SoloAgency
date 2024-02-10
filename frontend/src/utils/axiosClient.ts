@@ -17,17 +17,9 @@ export const client = {
     }
   },
 
-  post: async <T, D>(
-    url: string,
-    data: D,
-    config?: AxiosRequestConfig,
-  ): Promise<T> => {
+  post: async <T, D>(url: string, data: D): Promise<T> => {
     try {
-      const response: AxiosResponse<T> = await instance.post<T>(
-        url,
-        data,
-        config,
-      );
+      const response: AxiosResponse<T> = await instance.post<T>(url, data);
 
       return response.data;
     } catch (error) {
@@ -55,3 +47,19 @@ export const client = {
     }
   },
 };
+
+instance.interceptors.request.use(config => {
+  let token: string | null = null;
+
+  if (localStorage.getItem('persist:root') !== null) {
+    token = JSON.parse(
+      JSON.parse(localStorage.getItem('persist:root') || '').auth,
+    ).token;
+  }
+
+  if (token) {
+    config.headers.Authorization = `token ${token}`;
+  }
+
+  return config;
+});

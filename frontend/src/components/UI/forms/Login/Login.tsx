@@ -1,21 +1,20 @@
 import { useRef } from 'react';
-import { unwrapResult } from '@reduxjs/toolkit';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
 import * as authActions from '../../../../features/authSlice';
-import { SubmitHandler, useForm } from 'react-hook-form';
 import { InputPassword, TextInput } from '../../inputs/fields';
 import { LoginData } from '../../../../types/LoginData';
 import { useOuterClick } from '../../../../customHooks/useOuterClick';
 import { ControlButtonType } from '../../../../types/ControlButtonType';
 import { AuthLinkType } from '../../../../types/AuthLinkType';
 import { AuthLink, ControlButton, MainButton } from '../../buttons';
-import './login.scss';
 import { hostName } from '../../../../utils/axiosClient';
+import './login.scss';
 
 export const Login = () => {
   const loginRef = useRef(null);
   const dispatch = useAppDispatch();
-  const { isLoggingIn, isGettingUser } = useAppSelector(state => state.auth);
+  const { isLoggingIn } = useAppSelector(state => state.auth);
   const onClose = () => dispatch(authActions.closeLoginForm());
 
   useOuterClick(loginRef, onClose);
@@ -29,9 +28,8 @@ export const Login = () => {
   });
 
   const onSubmit: SubmitHandler<LoginData> = async (data: LoginData) => {
-    const response = await dispatch(authActions.login(data));
-    const { token } = unwrapResult(response);
-    await dispatch(authActions.getUserByToken(token));
+    await dispatch(authActions.login(data));
+
     onClose();
   };
 
@@ -87,7 +85,7 @@ export const Login = () => {
             className="login__enter-button"
             type="submit"
             text="Увійти"
-            isLoading={isLoggingIn || isGettingUser}
+            isLoading={isLoggingIn}
           />
         </form>
       </div>

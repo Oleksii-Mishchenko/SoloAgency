@@ -8,6 +8,7 @@ import {
   ReviewsSlider,
 } from '../../components/sections/common';
 import './home-page.scss';
+import { scrollToTop } from '../../helpers/scrollToTop';
 
 export const HomePage = () => {
   const location = useLocation();
@@ -18,9 +19,7 @@ export const HomePage = () => {
   };
 
   useEffect(() => {
-    if (location.state === 'contacts') {
-      scrollToContacts();
-    }
+    location.state === 'contacts' ? scrollToContacts() : scrollToTop();
   }, [location.key]);
 
   return (

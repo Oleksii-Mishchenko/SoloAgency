@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
 import * as advicesActions from '../../../../features/advicesSlice';
 import { Errors, Loader, Pagination, Notification } from '../../../UX';
 import { LoaderElement } from '../../../../types/LoaderElement';
 import { AdviceAccordion } from '../../../cards';
-import { useSearchParams } from 'react-router-dom';
 import { getSearchWith } from '../../../../helpers/getSearchWith';
 import { useScrollToRef } from '../../../../customHooks/useScrollToRef';
 import './advices.scss';

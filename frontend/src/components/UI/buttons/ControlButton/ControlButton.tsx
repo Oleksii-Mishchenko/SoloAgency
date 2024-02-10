@@ -1,6 +1,6 @@
+import classNames from 'classnames';
 import { ButtonHTMLAttributes } from 'react';
 import { ControlButtonType } from '../../../../types/ControlButtonType';
-import classNames from 'classnames';
 import './control-button.scss';
 
 type Props = ButtonHTMLAttributes<HTMLButtonElement> & {

@@ -6,12 +6,12 @@ import {
 } from 'react-router-dom';
 
 import { App } from './src/App';
-import { HomePage } from './src/pages/HomePage';
-import { PortfolioPage } from './src/pages/PortfolioPage';
-import { PageNotFound } from './src/pages/PageNotFound';
-import { AdvicesPage } from './src/pages/AdvicesPage';
-import { ServicesPage } from './src/pages/ServicesPage';
-import { CabinetPage } from './src/pages/CabinetPage';
+import { HomePage } from './src/pages';
+import { PortfolioPage } from './src/pages';
+import { PageNotFound } from './src/pages';
+import { AdvicesPage } from './src/pages';
+import { ServicesPage } from './src/pages';
+import { CabinetPage } from './src/pages';
 
 export const Root = () => (
   <Router>

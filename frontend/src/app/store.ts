@@ -3,10 +3,11 @@ import advicesReducer from '../features/advicesSlice';
 import articlesReducer from '../features/articlesSlice';
 import callRequestReducer from '../features/callRequestSlice';
 import reviewsReducer from '../features/reviewsSlice';
-import eventTypesSlice from '../features/eventTypesSlice';
-import eventsSlice from '../features/eventsSlice';
+import eventTypesReducer from '../features/eventTypesSlice';
+import eventsReducer from '../features/eventsSlice';
 import portfolioReducer from '../features/portfolioSlice';
 import servicesReducer from '../features/servicesSlice';
+import userReducer from '../features/userSlice';
 
 import {
   configureStore,
@@ -31,11 +32,12 @@ const rootReducer = combineReducers({
   advices: advicesReducer,
   articles: articlesReducer,
   callRequest: callRequestReducer,
-  reviews: reviewsReducer,
-  eventTypes: eventTypesSlice,
+  events: eventsReducer,
+  eventTypes: eventTypesReducer,
   portfolio: portfolioReducer,
+  reviews: reviewsReducer,
   services: servicesReducer,
-  events: eventsSlice,
+  user: userReducer,
 });
 
 const persistConfig = {

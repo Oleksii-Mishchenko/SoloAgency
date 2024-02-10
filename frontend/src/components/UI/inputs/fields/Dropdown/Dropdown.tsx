@@ -1,9 +1,9 @@
-import Select, { OnChangeValue } from 'react-select';
 import { useState } from 'react';
+import classNames from 'classnames';
+import Select, { OnChangeValue } from 'react-select';
 import { SelectOption } from '../../../../../types/SelectOption';
 import { SelectType } from '../../../../../types/SelectType';
 import { useLoadOptions } from '../../../../../customHooks/useLoadOptions';
-import classNames from 'classnames';
 import { InputError, Label } from '../../elements';
 import './dropdown.scss';
 

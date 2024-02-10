@@ -5,7 +5,8 @@ import { SearchField } from '../../components/UI/inputs/fields';
 import './portfolio-page.scss';
 
 export const PortfolioPage = () => {
-  const { user, token } = useAppSelector(state => state.auth.authData);
+  const { token } = useAppSelector(state => state.auth);
+  const { user } = useAppSelector(state => state.user);
 
   return (
     <div className="portfolio-page">

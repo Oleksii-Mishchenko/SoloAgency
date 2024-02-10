@@ -63,14 +63,11 @@ export const remove = createAsyncThunk('delete/review', async (id: number) => {
   return response;
 });
 
-export const add = createAsyncThunk(
-  'add/review',
-  async ({ token, data }: { token: string; data: NewReview }) => {
-    const response = await addReview(token, data);
+export const add = createAsyncThunk('add/review', async (data: NewReview) => {
+  const response = await addReview(data);
 
-    return response;
-  },
-);
+  return response;
+});
 
 export const reviewsSlice = createSlice({
   name: 'reviews',

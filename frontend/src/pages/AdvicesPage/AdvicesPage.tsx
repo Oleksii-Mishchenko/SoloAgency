@@ -4,7 +4,7 @@ import { AddAdvice } from '../../components/sections/forms';
 import { useAppSelector } from '../../app/hooks';
 
 export const AdvicesPage = () => {
-  const { user } = useAppSelector(state => state.auth.authData);
+  const { user } = useAppSelector(state => state.user);
 
   return (
     <div className="advices-page">

@@ -1,12 +1,12 @@
+import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Errors, Loader, Pagination } from '../../../UX';
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
 import * as eventTypesActions from '../../../../features/eventTypesSlice';
-import { useEffect } from 'react';
 import { getSearchWith } from '../../../../helpers/getSearchWith';
 import { LoaderElement } from '../../../../types/LoaderElement';
-import './event-types.scss';
 import { useScrollToRef } from '../../../../customHooks/useScrollToRef';
+import './event-types.scss';
 
 type Props = {
   relPage: string;
