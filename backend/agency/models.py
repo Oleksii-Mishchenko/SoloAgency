@@ -208,7 +208,6 @@ class CallRequest(models.Model):
         default="created",
     )
 
-
     def __str__(self):
         return f"CallRequest: {self.name} {self.phone}"
 
