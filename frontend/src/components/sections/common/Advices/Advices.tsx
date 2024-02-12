@@ -43,7 +43,7 @@ export const Advices: React.FC<Props> = ({ relPage }) => {
     }, 300);
 
     return () => clearTimeout(timerId);
-  }, [page, results.length]);
+  }, [page]);
 
   const sectionRef = useScrollToRef([page]);
 

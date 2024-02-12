@@ -9,18 +9,22 @@ import {
 } from '../../components/sections/common';
 import './home-page.scss';
 import { scrollToTop } from '../../helpers/scrollToTop';
+import { useAppSelector } from '../../app/hooks';
 
 export const HomePage = () => {
+  const { articles } = useAppSelector(state => state.articles);
   const location = useLocation();
   const contactsRef = useRef<HTMLElement>(null);
 
   const scrollToContacts = () => {
-    contactsRef.current?.scrollIntoView();
+    if (articles) {
+      contactsRef.current?.scrollIntoView();
+    }
   };
 
   useEffect(() => {
     location.state === 'contacts' ? scrollToContacts() : scrollToTop();
-  }, [location.key]);
+  }, [location.key, articles]);
 
   return (
     <div className="home-page">

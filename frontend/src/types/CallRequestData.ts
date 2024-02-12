@@ -4,3 +4,7 @@ export interface CallRequestData {
   city: string | null;
   phone: string;
 }
+
+export interface CallRequest extends CallRequestData {
+  id: number;
+}
