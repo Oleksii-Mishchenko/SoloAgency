@@ -1,14 +1,7 @@
 from django.db.models.functions import Random
 from drf_spectacular.utils import extend_schema, OpenApiParameter
 from rest_framework import viewsets, serializers
-from rest_framework.permissions import (
-    IsAuthenticatedOrReadOnly,
-    IsAdminUser,
-    IsAuthenticated,
-    AllowAny,
-)
 from rest_framework.response import Response
-
 from agency.models import (
     Service,
     Agency,
