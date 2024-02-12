@@ -26,6 +26,7 @@ from agency.permissions import (
     IsAdminOrReadOnly,
     IsAdminOrCreateOnly,
     IsAdminOrCreateReadOnly,
+    RegisteredUserCanCreateReadOnlyAdminCanModifyDelete,
 )
 from agency.serializers import (
     ServiceSerializer,
@@ -108,9 +109,9 @@ class OrganizerViewSet(viewsets.ModelViewSet):
 
 class EventViewSet(viewsets.ModelViewSet):
     queryset = Event.objects.all()
-    # permission_classes = [
-    #     IsAuthenticatedOrReadOnly,
-    # ]
+    permission_classes = [
+        RegisteredUserCanCreateReadOnlyAdminCanModifyDelete,
+    ]
 
     def get_queryset(self):
         user = self.request.user
