@@ -10,6 +10,17 @@ class IsAdminOrReadOnly(BasePermission):
 
 class IsAdminOrCreateOnly(BasePermission):
     def has_permission(self, request, view):
-        if request.method == 'POST':
+        if request.method == "POST":
             return True
         return request.user and request.user.is_staff
+
+
+class IsAdminOrCreateReadOnly(BasePermission):
+    def has_permission(self, request, view):
+        if request.method == "GET":
+            return True
+        elif request.method == "POST":
+            return request.user and request.user.is_authenticated
+        elif request.method in ["PUT", "PATCH", "DELETE"]:
+            return request.user and request.user.is_staff
+        return False

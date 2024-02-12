@@ -22,7 +22,11 @@ from agency.models import (
     Portfolio,
 )
 from agency.pagination import LargeResultsSetPagination
-from agency.permissions import IsAdminOrReadOnly, IsAdminOrCreateOnly
+from agency.permissions import (
+    IsAdminOrReadOnly,
+    IsAdminOrCreateOnly,
+    IsAdminOrCreateReadOnly,
+)
 from agency.serializers import (
     ServiceSerializer,
     AgencySerializer,
@@ -149,6 +153,9 @@ class AdviceViewSet(
 class ReviewViewSet(viewsets.ModelViewSet):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
+    permission_classes = [
+        IsAdminOrCreateReadOnly,
+    ]
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
@@ -187,13 +194,17 @@ class ReviewViewSet(viewsets.ModelViewSet):
 class CallRequestViewSet(viewsets.ModelViewSet):
     queryset = CallRequest.objects.all()
     serializer_class = CallRequestSerializer
-    permission_classes = [IsAdminOrCreateOnly,]
+    permission_classes = [
+        IsAdminOrCreateOnly,
+    ]
 
 
 class ArticleViewSet(viewsets.ModelViewSet):
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
-    permission_classes = [IsAdminOrReadOnly,]
+    permission_classes = [
+        IsAdminOrReadOnly,
+    ]
 
 
 class PortfolioViewSet(
