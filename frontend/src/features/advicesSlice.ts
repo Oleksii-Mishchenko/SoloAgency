@@ -95,6 +95,7 @@ export const advicesSlice = createSlice({
   extraReducers: builder => {
     builder.addCase(init.pending, state => {
       state.isLoadingAdvices = true;
+      state.advices = initialState.advices;
       state.errorsLoading = null;
     });
 

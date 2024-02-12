@@ -1,12 +1,12 @@
 import { memo, FC, useRef, useState } from 'react';
-import { Advice } from '../../../types/Advice';
 import classNames from 'classnames';
+import { Advice } from '../../../types/Advice';
 import { Confirmation } from '../../UX';
 import { EditAdvice } from '../../sections/forms';
 import { ControlButton } from '../../UI/buttons';
 import { ControlButtonType } from '../../../types/ControlButtonType';
-import './advice.scss';
 import { useAppSelector } from '../../../app/hooks';
+import './advice.scss';
 
 type Props = {
   className: string;
@@ -30,7 +30,7 @@ export const AdviceAccordion: FC<Props> = memo(
     const [hasDelConfirm, setHasDelConfirm] = useState<boolean>(false);
     const [isEditing, setIsEditing] = useState<boolean>(false);
     const drawerRef = useRef<HTMLDivElement>(null);
-    const { user } = useAppSelector(state => state.auth.authData);
+    const { user } = useAppSelector(state => state.user);
 
     return (
       <article

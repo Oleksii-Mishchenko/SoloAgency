@@ -1,14 +1,14 @@
 import { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
 import * as advicesActions from '../../../../features/advicesSlice';
 import { NewAdvice } from '../../../../types/Advice';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { handleMessageBlur } from '../../../../helpers/textManipulator';
 import { RatingType } from '../../../../types/Rating';
 import { Rating, TextArea, TextInput } from '../../../UI/inputs/fields';
 import { MainButton } from '../../../UI/buttons';
 import { Notification } from '../../../UX';
-import { useSearchParams } from 'react-router-dom';
 import { getSearchWith } from '../../../../helpers/getSearchWith';
 import './add-advice.scss';
 

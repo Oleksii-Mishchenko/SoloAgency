@@ -1,25 +1,14 @@
-import { AxiosRequestConfig } from 'axios';
 import { Event, PreparedEventRequestData } from '../types/Event';
 import { client } from '../utils/axiosClient';
 
 const eventsUrl = 'agency/events/';
 
-export const addEventRequest = ({
-  preparedData,
-  token,
-}: {
-  preparedData: PreparedEventRequestData;
-  token: string;
-}): Promise<Event> => {
-  const config: AxiosRequestConfig = {
-    headers: {
-      Authorization: `token ${token}`,
-    },
-  };
+export const addEventRequest = (
+  data: PreparedEventRequestData,
+): Promise<Event> => {
+  return client.post<Event, PreparedEventRequestData>(eventsUrl, data);
+};
 
-  return client.post<Event, PreparedEventRequestData>(
-    eventsUrl,
-    preparedData,
-    config,
-  );
+export const getEvents = (): Promise<Event[]> => {
+  return client.get<Event[]>(eventsUrl);
 };

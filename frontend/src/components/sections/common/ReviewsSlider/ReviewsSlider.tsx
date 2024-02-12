@@ -12,7 +12,7 @@ export const ReviewsSlider: React.FC = () => {
   const dispatch = useAppDispatch();
   const { reviews, isLoading, errors, isDeleted, deleteErrors } =
     useAppSelector(state => state.reviews);
-  const { user } = useAppSelector(state => state.auth.authData);
+  const { user } = useAppSelector(state => state.user);
   const windowWidth = window.innerWidth;
   const shift = {
     wide: `translateX(calc(-${position * 50}% - ${position * 10}px))`,
@@ -26,8 +26,10 @@ export const ReviewsSlider: React.FC = () => {
       : position === reviews.length - 1;
 
   useEffect(() => {
-    dispatch(reviewsActions.init(user?.is_staff));
-  }, [user?.is_staff]);
+    if (!reviews.length) {
+      dispatch(reviewsActions.init(user?.is_staff));
+    }
+  }, []);
 
   const handleDelete = useCallback(async (id: number) => {
     await dispatch(reviewsActions.remove(id));

@@ -28,7 +28,8 @@ export const EventRequest: React.FC<Props> = ({ relPage }) => {
   const dispatch = useAppDispatch();
   const { event, eventRequestErrors, isEventRequestInProgress } =
     useAppSelector(state => state.events);
-  const { token, user } = useAppSelector(state => state.auth.authData);
+  const { token } = useAppSelector(state => state.auth);
+  const { user } = useAppSelector(state => state.user);
   const {
     register,
     control,
@@ -44,9 +45,7 @@ export const EventRequest: React.FC<Props> = ({ relPage }) => {
       phone: cleanPhoneNumber(data.phone),
     };
 
-    if (token) {
-      await dispatch(eventsActions.add({ preparedData, token }));
-    }
+    await dispatch(eventsActions.add(preparedData));
 
     reset();
   };

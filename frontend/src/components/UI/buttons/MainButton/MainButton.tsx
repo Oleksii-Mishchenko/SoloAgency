@@ -1,6 +1,6 @@
-import { FC, ButtonHTMLAttributes } from 'react';
-import { LoaderElement } from '../../../../types/LoaderElement';
+import { ButtonHTMLAttributes } from 'react';
 import classNames from 'classnames';
+import { LoaderElement } from '../../../../types/LoaderElement';
 import { Loader } from '../../../UX';
 import './main-button.scss';
 
@@ -10,7 +10,7 @@ type Props = {
   white?: boolean;
 };
 
-type MainButton = FC<Props & ButtonHTMLAttributes<HTMLButtonElement>>;
+type MainButton = React.FC<Props & ButtonHTMLAttributes<HTMLButtonElement>>;
 
 export const MainButton: MainButton = ({
   text,

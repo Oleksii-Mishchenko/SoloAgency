@@ -22,7 +22,8 @@ export const Review: React.FC<Props> = React.memo(
     const dispatch = useAppDispatch();
     const { approvingId, approvedReview, approveErrors, deletingId } =
       useAppSelector(state => state.reviews);
-    const { user, token } = useAppSelector(state => state.auth.authData);
+    const { token } = useAppSelector(state => state.auth);
+    const { user } = useAppSelector(state => state.user);
     const initial = user_name[0].toUpperCase();
 
     const avaColor = useMemo(() => {

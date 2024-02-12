@@ -1,7 +1,6 @@
-import React from 'react';
+import classNames from 'classnames';
 import { Noop } from 'react-hook-form';
 import MaskedInput from 'react-text-mask';
-import classNames from 'classnames';
 import { InputError, Label } from '../../elements';
 import './input-phone-number.scss';
 

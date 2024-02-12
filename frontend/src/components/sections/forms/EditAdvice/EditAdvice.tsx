@@ -1,7 +1,7 @@
 import { useRef } from 'react';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import * as advicesActions from '../../../../features/advicesSlice';
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { Advice } from '../../../../types/Advice';
 import { handleMessageBlur } from '../../../../helpers/textManipulator';
 import { Rating, TextArea, TextInput } from '../../../UI/inputs/fields';

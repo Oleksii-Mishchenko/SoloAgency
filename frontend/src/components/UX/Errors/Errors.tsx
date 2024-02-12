@@ -1,4 +1,3 @@
-import React from 'react';
 import classNames from 'classnames';
 import { ServerErrorResponse } from '../../../types/ServerErrorResponse';
 import './errors.scss';

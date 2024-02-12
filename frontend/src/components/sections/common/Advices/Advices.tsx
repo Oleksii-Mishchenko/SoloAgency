@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
 import * as advicesActions from '../../../../features/advicesSlice';
 import { Errors, Loader, Pagination, Notification } from '../../../UX';
 import { LoaderElement } from '../../../../types/LoaderElement';
 import { AdviceAccordion } from '../../../cards';
-import { useSearchParams } from 'react-router-dom';
 import { getSearchWith } from '../../../../helpers/getSearchWith';
 import { useScrollToRef } from '../../../../customHooks/useScrollToRef';
 import './advices.scss';
@@ -43,7 +43,7 @@ export const Advices: React.FC<Props> = ({ relPage }) => {
     }, 300);
 
     return () => clearTimeout(timerId);
-  }, [page, results.length]);
+  }, [page]);
 
   const sectionRef = useScrollToRef([page]);
 

@@ -1,6 +1,6 @@
 import { useSearchParams } from 'react-router-dom';
-import { Project } from '../../../cards';
 import { useEffect } from 'react';
+import { Project } from '../../../cards';
 import { getSearchWith } from '../../../../helpers/getSearchWith';
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
 import * as portfolioActions from '../../../../features/portfolioSlice';

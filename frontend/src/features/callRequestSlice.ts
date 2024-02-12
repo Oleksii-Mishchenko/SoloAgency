@@ -1,19 +1,25 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { CallRequestData } from '../types/CallRequestData';
+import { CallRequest, CallRequestData } from '../types/CallRequestData';
 import { ServerErrorResponse } from '../types/ServerErrorResponse';
-import { addCallRequest } from '../api/callRequest';
+import { addCallRequest, getCallRequests } from '../api/callRequest';
 import { parseErrors } from '../helpers/parseErrors';
 
 export type CallRequestState = {
-  callRequest: CallRequestData | null;
+  callRequest: CallRequest | null;
   isUploading: boolean;
   callRequestErrors: ServerErrorResponse | null;
+  callRequests: CallRequest[] | null;
+  areLoading: boolean;
+  callRequestsErrors: ServerErrorResponse | null;
 };
 
 const initialState: CallRequestState = {
   callRequest: null,
   isUploading: false,
   callRequestErrors: null,
+  callRequests: null,
+  areLoading: false,
+  callRequestsErrors: null,
 };
 
 export const add = createAsyncThunk(
@@ -24,6 +30,12 @@ export const add = createAsyncThunk(
     return response;
   },
 );
+
+export const init = createAsyncThunk('fetch/callRequests', async () => {
+  const response = await getCallRequests();
+
+  return response;
+});
 
 export const callRequestSlice = createSlice({
   name: 'callRequest',
@@ -52,6 +64,22 @@ export const callRequestSlice = createSlice({
       state.isUploading = false;
       state.callRequest = null;
       state.callRequestErrors = parseErrors(action.error.message);
+    });
+
+    builder.addCase(init.pending, state => {
+      state.areLoading = true;
+      state.callRequests = null;
+      state.callRequestsErrors = null;
+    });
+
+    builder.addCase(init.fulfilled, (state, action) => {
+      state.areLoading = false;
+      state.callRequests = action.payload;
+    });
+
+    builder.addCase(init.rejected, (state, action) => {
+      state.areLoading = false;
+      state.callRequestsErrors = parseErrors(action.error.message);
     });
   },
 });

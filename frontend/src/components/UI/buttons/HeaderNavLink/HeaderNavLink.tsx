@@ -1,9 +1,7 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import classNames from 'classnames';
-import './header-nav-link.scss';
 import { HeaderNavLink as NavLinkType } from '../../../../types/HeaderNavLink';
-import { Link } from 'react-router-dom';
+import './header-nav-link.scss';
 
 type Props = {
   link: NavLinkType;

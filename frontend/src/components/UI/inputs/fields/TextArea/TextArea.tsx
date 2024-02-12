@@ -1,4 +1,4 @@
-import React, { FC, TextareaHTMLAttributes } from 'react';
+import { TextareaHTMLAttributes } from 'react';
 import classNames from 'classnames';
 import { InputError, Label } from '../../elements';
 import './text-area.scss';
@@ -16,7 +16,7 @@ type TextAreaProps = TextareaHTMLAttributes<HTMLTextAreaElement> & {
   };
 };
 
-export const TextArea: FC<TextAreaProps> = ({
+export const TextArea: React.FC<TextAreaProps> = ({
   className,
   label,
   register,

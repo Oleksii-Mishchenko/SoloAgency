@@ -1,4 +1,4 @@
-import React, { FC, InputHTMLAttributes, useState } from 'react';
+import { InputHTMLAttributes, useState } from 'react';
 import classNames from 'classnames';
 import { InputError, Label } from '../../elements';
 import { ControlButtonType } from '../../../../../types/ControlButtonType';
@@ -16,7 +16,7 @@ type InputPasswordProps = InputHTMLAttributes<HTMLInputElement> & {
   };
 };
 
-export const InputPassword: FC<InputPasswordProps> = ({
+export const InputPassword: React.FC<InputPasswordProps> = ({
   className,
   label,
   register,

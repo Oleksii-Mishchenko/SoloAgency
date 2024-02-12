@@ -1,11 +1,11 @@
-import React, { useRef, useState } from 'react';
-import { MainButton } from '../../UI/buttons';
+import { useRef, useState } from 'react';
+import { NavLink } from 'react-router-dom';
+import classNames from 'classnames';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import * as authActions from '../../../features/authSlice';
-import './auth.scss';
-import classNames from 'classnames';
-import { NavLink } from 'react-router-dom';
 import { useOuterClick } from '../../../customHooks/useOuterClick';
+import { MainButton } from '../../UI/buttons';
+import './auth.scss';
 
 type Props = {
   menu: {
@@ -16,12 +16,11 @@ type Props = {
 
 export const Auth: React.FC<Props> = ({ menu: { isMenuOpen, toggleMenu } }) => {
   const dispatch = useAppDispatch();
-  const {
-    authData: { token, user },
-  } = useAppSelector(state => state.auth);
-
+  const { token } = useAppSelector(state => state.auth);
+  const { user } = useAppSelector(state => state.user);
   const [isAccountMenuOpen, setIsAccountMenuOpen] = useState(false);
   const accountRef = useRef<HTMLDivElement>(null);
+
   useOuterClick(accountRef, () => {
     if (isAccountMenuOpen) {
       setIsAccountMenuOpen(false);
@@ -41,7 +40,7 @@ export const Auth: React.FC<Props> = ({ menu: { isMenuOpen, toggleMenu } }) => {
   return (
     <div className="auth">
       {token && user ? (
-        <div className="auth__person">
+        <div className="auth__person" title={user.email}>
           <div className="auth__account" ref={accountRef}>
             <button
               className={classNames('auth__account-button', {
@@ -59,7 +58,7 @@ export const Auth: React.FC<Props> = ({ menu: { isMenuOpen, toggleMenu } }) => {
             >
               <li className="auth__menu-item">
                 <NavLink
-                  to="cabinet"
+                  to="orders"
                   className={({ isActive }) =>
                     classNames('auth__menu-link', {
                       'auth__menu-link--active': isActive,
@@ -67,7 +66,7 @@ export const Auth: React.FC<Props> = ({ menu: { isMenuOpen, toggleMenu } }) => {
                   }
                   onClick={handleMenuClosure}
                 >
-                  Мої замовлення
+                  {user.is_staff ? 'Замовлення' : 'Мої замовлення'}
                 </NavLink>
               </li>
 
@@ -86,7 +85,9 @@ export const Auth: React.FC<Props> = ({ menu: { isMenuOpen, toggleMenu } }) => {
             </ul>
           </div>
 
-          <div className="auth__avatar">{user.first_name[0]}</div>
+          <div className="auth__avatar" title={user.first_name}>
+            {user.first_name[0]}
+          </div>
         </div>
       ) : (
         <>

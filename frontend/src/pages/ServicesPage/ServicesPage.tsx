@@ -5,7 +5,8 @@ import { EventTypes, Services } from '../../components/sections/common';
 import './services-page.scss';
 
 export const ServicesPage = () => {
-  const { user, token } = useAppSelector(state => state.auth.authData);
+  const { token } = useAppSelector(state => state.auth);
+  const { user } = useAppSelector(state => state.user);
 
   return (
     <div className="services-page">

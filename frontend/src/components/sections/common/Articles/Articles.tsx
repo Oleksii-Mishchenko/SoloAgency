@@ -16,8 +16,10 @@ export const Articles: React.FC<Props> = ({ relPage }) => {
   );
 
   useEffect(() => {
-    dispatch(articlesActions.init());
-  }, [dispatch]);
+    if (!articles) {
+      dispatch(articlesActions.init());
+    }
+  }, []);
 
   return (
     <section className={`${relPage}__articles articles`}>
@@ -25,7 +27,7 @@ export const Articles: React.FC<Props> = ({ relPage }) => {
         <Loader element={LoaderElement.Block} className="articles__loader" />
       )}
 
-      {!!articles.length &&
+      {!!articles?.length &&
         !errors &&
         articles.map(({ id, title, content }) => (
           <article key={id} className="articles__article">

@@ -17,7 +17,9 @@ export const Services: React.FC<Props> = ({ relPage }) => {
   );
 
   useEffect(() => {
-    dispatch(servicesActions.init());
+    if (!services) {
+      dispatch(servicesActions.init());
+    }
   }, []);
 
   return (
