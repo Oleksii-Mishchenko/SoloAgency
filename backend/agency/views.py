@@ -107,11 +107,18 @@ class OrganizerViewSet(viewsets.ModelViewSet):
         return OrganizerSerializer
 
 
-class EventViewSet(viewsets.ModelViewSet):
+class EventViewSet(
+    PaginationMixin,
+    viewsets.ModelViewSet
+):
     queryset = Event.objects.all()
     permission_classes = [
         RegisteredUserCanCreateReadOnlyAdminCanModifyDelete,
     ]
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        return self.paginated_response(queryset, EventSerializer)
 
     def get_queryset(self):
         user = self.request.user
@@ -192,12 +199,19 @@ class ReviewViewSet(viewsets.ModelViewSet):
         return super().list(request, *args, **kwargs)
 
 
-class CallRequestViewSet(viewsets.ModelViewSet):
+class CallRequestViewSet(
+    PaginationMixin,
+    viewsets.ModelViewSet
+):
     queryset = CallRequest.objects.all()
     serializer_class = CallRequestSerializer
     permission_classes = [
         IsAdminOrCreateOnly,
     ]
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        return self.paginated_response(queryset, CallRequestSerializer)
 
 
 class ArticleViewSet(viewsets.ModelViewSet):
