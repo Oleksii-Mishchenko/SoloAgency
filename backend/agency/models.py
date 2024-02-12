@@ -106,7 +106,8 @@ class Event(models.Model):
     service = models.ForeignKey("Service", on_delete=models.CASCADE)
     description = models.TextField(blank=True, null=True)
     string_validator = RegexValidator(
-        regex=r"^[a-zA-Zа-яА-Я]+$", message="Word must contain only letters."
+        regex=r"^[a-zA-Zа-яА-ЯґҐєЄіІїЇ' ]+$",
+        message="Word must contain only letters."
     )
     city = models.CharField(max_length=63, validators=[string_validator])
     venue = models.CharField(max_length=63, blank=True, null=True)
@@ -183,7 +184,8 @@ class Review(models.Model):
 class CallRequest(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     string_validator = RegexValidator(
-        regex=r"^[a-zA-Zа-яА-Я]+$", message="Word must contain only letters."
+        regex=r"^[a-zA-Zа-яА-ЯґҐєЄіІїЇ' ]+$",
+        message="Word must contain only letters."
     )
     name = models.CharField(max_length=63, validators=[string_validator])
     description = models.TextField(null=True, blank=True, max_length=255)
