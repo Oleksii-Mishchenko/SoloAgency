@@ -4,7 +4,7 @@ import './orders-page.scss';
 export const OrdersPage = () => {
   return (
     <div className="orders-page">
-      <Orders />
+      <Orders relPage="orders-page" />
     </div>
   );
 };
