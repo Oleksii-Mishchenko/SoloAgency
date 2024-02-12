@@ -42,7 +42,7 @@ class Article(models.Model):
 
 class Service(models.Model):
     name = models.CharField(max_length=63)
-    description = models.TextField(max_length=255)
+    description = models.TextField(max_length=511)
 
     presentation = models.FileField(
         upload_to=service_presentation_pdf_file_path, null=True, blank=True
