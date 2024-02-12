@@ -133,9 +133,9 @@ class AdviceViewSet(
 ):
     queryset = Advice.objects.all()
     serializer_class = AdviceSerializer
-    # permission_classes = [
-    #     IsAdminOrReadOnly,
-    # ]
+    permission_classes = [
+        IsAdminOrReadOnly,
+    ]
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
