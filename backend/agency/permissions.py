@@ -6,3 +6,10 @@ class IsAdminOrReadOnly(BasePermission):
         if request.method in ["GET", "HEAD", "OPTIONS"]:
             return True
         return request.user and request.user.is_staff
+
+
+class IsAdminOrCreateOnly(BasePermission):
+    def has_permission(self, request, view):
+        if request.method == 'POST':
+            return True
+        return request.user and request.user.is_staff

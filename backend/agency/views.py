@@ -22,7 +22,7 @@ from agency.models import (
     Portfolio,
 )
 from agency.pagination import LargeResultsSetPagination
-from agency.permissions import IsAdminOrReadOnly
+from agency.permissions import IsAdminOrReadOnly, IsAdminOrCreateOnly
 from agency.serializers import (
     ServiceSerializer,
     AgencySerializer,
@@ -183,6 +183,7 @@ class ReviewViewSet(viewsets.ModelViewSet):
 class CallRequestViewSet(viewsets.ModelViewSet):
     queryset = CallRequest.objects.all()
     serializer_class = CallRequestSerializer
+    permission_classes = [IsAdminOrCreateOnly,]
 
 
 class ArticleViewSet(viewsets.ModelViewSet):
