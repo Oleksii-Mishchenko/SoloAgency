@@ -80,6 +80,10 @@ class EventTypeViewSet(
     queryset = EventType.objects.all()
     serializer_class = EventTypeSerializer
 
+    permission_classes = [
+        IsAdminOrReadOnly,
+    ]
+
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
         return self.paginated_response(queryset, EventTypeSerializer)
@@ -198,6 +202,9 @@ class PortfolioViewSet(
 ):
     serializer_class = PortfolioSerializer
     queryset = Portfolio.objects.all()
+    permission_classes = [
+        IsAdminOrReadOnly,
+    ]
 
     def get_queryset(self):
         queryset = Portfolio.objects.all()
