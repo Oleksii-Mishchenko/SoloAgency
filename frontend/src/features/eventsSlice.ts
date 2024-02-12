@@ -2,28 +2,40 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { ServerErrorResponse } from '../types/ServerErrorResponse';
 import { Event, PreparedEventRequestData } from '../types/Event';
 import { parseErrors } from '../helpers/parseErrors';
-import { addEventRequest } from '../api/events';
+import { addEventRequest, getEvents } from '../api/events';
 
 export type EventsState = {
   event: Event | null;
   isEventRequestInProgress: boolean;
   eventRequestErrors: ServerErrorResponse | null;
+  events: Event[] | null;
+  areLoading: boolean;
+  eventsErrors: ServerErrorResponse | null;
 };
 
 const initialState: EventsState = {
   event: null,
   isEventRequestInProgress: false,
   eventRequestErrors: null,
+  events: null,
+  areLoading: false,
+  eventsErrors: null,
 };
 
 export const add = createAsyncThunk(
-  'events/add',
+  'add/events',
   async (data: PreparedEventRequestData) => {
     const response = await addEventRequest(data);
 
     return response;
   },
 );
+
+export const init = createAsyncThunk('fetch/callRequests', async () => {
+  const response = await getEvents();
+
+  return response;
+});
 
 export const eventsState = createSlice({
   name: 'events',

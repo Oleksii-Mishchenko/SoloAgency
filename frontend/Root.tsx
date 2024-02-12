@@ -11,7 +11,7 @@ import { PortfolioPage } from './src/pages';
 import { PageNotFound } from './src/pages';
 import { AdvicesPage } from './src/pages';
 import { ServicesPage } from './src/pages';
-import { CabinetPage } from './src/pages';
+import { OrdersPage } from './src/pages';
 
 export const Root = () => (
   <Router>
@@ -22,7 +22,7 @@ export const Root = () => (
         <Route path="portfolio" element={<PortfolioPage />} />
         <Route path="advices" element={<AdvicesPage />} />
         <Route path="services" element={<ServicesPage />} />
-        <Route path="cabinet" element={<CabinetPage />} />
+        <Route path="orders" element={<OrdersPage />} />
         <Route path="*" element={<PageNotFound />} />
       </Route>
     </Routes>

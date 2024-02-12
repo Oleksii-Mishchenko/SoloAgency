@@ -58,7 +58,7 @@ export const Auth: React.FC<Props> = ({ menu: { isMenuOpen, toggleMenu } }) => {
             >
               <li className="auth__menu-item">
                 <NavLink
-                  to="cabinet"
+                  to="orders"
                   className={({ isActive }) =>
                     classNames('auth__menu-link', {
                       'auth__menu-link--active': isActive,
