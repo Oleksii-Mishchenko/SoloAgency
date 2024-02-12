@@ -9,7 +9,7 @@ export type EventsState = {
   isEventRequestInProgress: boolean;
   eventRequestErrors: ServerErrorResponse | null;
   events: Event[] | null;
-  areLoading: boolean;
+  areEventsLoading: boolean;
   eventsErrors: ServerErrorResponse | null;
 };
 
@@ -18,7 +18,7 @@ const initialState: EventsState = {
   isEventRequestInProgress: false,
   eventRequestErrors: null,
   events: null,
-  areLoading: false,
+  areEventsLoading: false,
   eventsErrors: null,
 };
 

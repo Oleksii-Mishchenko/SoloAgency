@@ -1,4 +1,4 @@
 export enum OrderType {
-  Event = 'event',
-  CallRequest = 'callRequest',
+  Event = 'events',
+  CallRequest = 'callRequests',
 }

@@ -9,7 +9,7 @@ export type CallRequestState = {
   isUploading: boolean;
   callRequestErrors: ServerErrorResponse | null;
   callRequests: CallRequest[] | null;
-  areLoading: boolean;
+  areCRLoading: boolean;
   callRequestsErrors: ServerErrorResponse | null;
 };
 
@@ -18,7 +18,7 @@ const initialState: CallRequestState = {
   isUploading: false,
   callRequestErrors: null,
   callRequests: null,
-  areLoading: false,
+  areCRLoading: false,
   callRequestsErrors: null,
 };
 
@@ -67,18 +67,18 @@ export const callRequestSlice = createSlice({
     });
 
     builder.addCase(init.pending, state => {
-      state.areLoading = true;
+      state.areCRLoading = true;
       state.callRequests = null;
       state.callRequestsErrors = null;
     });
 
     builder.addCase(init.fulfilled, (state, action) => {
-      state.areLoading = false;
+      state.areCRLoading = false;
       state.callRequests = action.payload;
     });
 
     builder.addCase(init.rejected, (state, action) => {
-      state.areLoading = false;
+      state.areCRLoading = false;
       state.callRequestsErrors = parseErrors(action.error.message);
     });
   },
