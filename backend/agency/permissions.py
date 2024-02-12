@@ -24,3 +24,12 @@ class IsAdminOrCreateReadOnly(BasePermission):
         elif request.method in ["PUT", "PATCH", "DELETE"]:
             return request.user and request.user.is_staff
         return False
+
+
+class RegisteredUserCanCreateReadOnlyAdminCanModifyDelete(BasePermission):
+    def has_permission(self, request, view):
+        if request.method in ["GET", "POST"]:
+            return request.user and request.user.is_authenticated
+        elif request.method in ["PUT", "PATCH", "DELETE"]:
+            return request.user and request.user.is_staff
+        return False
