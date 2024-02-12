@@ -60,17 +60,17 @@ class PaginationMixin:
 class ServiceViewSet(viewsets.ModelViewSet):
     queryset = Service.objects.all()
     serializer_class = ServiceSerializer
-    # permission_classes = [
-    #     IsAdminOrReadOnly,
-    # ]
+    permission_classes = [
+        IsAdminOrReadOnly,
+    ]
 
 
 class AgencyViewSet(viewsets.ModelViewSet):
     queryset = Agency.objects.all()
     serializer_class = AgencySerializer
-    # permission_classes = [
-    #     IsAdminOrReadOnly,
-    # ]
+    permission_classes = [
+        IsAdminOrReadOnly,
+    ]
 
 
 class EventTypeViewSet(
@@ -88,9 +88,9 @@ class EventTypeViewSet(
 class OrganizerViewSet(viewsets.ModelViewSet):
     queryset = Organizer.objects.all()
     serializer_class = OrganizerSerializer
-    # permission_classes = [
-    #     IsAdminOrReadOnly,
-    # ]
+    permission_classes = [
+        IsAdminOrReadOnly,
+    ]
 
     def get_serializer_class(self):
         if self.action == "list":
@@ -189,6 +189,7 @@ class CallRequestViewSet(viewsets.ModelViewSet):
 class ArticleViewSet(viewsets.ModelViewSet):
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
+    permission_classes = [IsAdminOrReadOnly,]
 
 
 class PortfolioViewSet(
