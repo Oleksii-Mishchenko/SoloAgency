@@ -32,7 +32,6 @@ from agency.serializers import (
     CallRequestSerializer,
     ArticleSerializer,
     OrganizerListSerializer,
-    EventListSerializer,
     PortfolioSerializer,
 )
 
@@ -105,6 +104,7 @@ class EventViewSet(
     viewsets.ModelViewSet
 ):
     queryset = Event.objects.all()
+    serializer_class = EventSerializer
     permission_classes = [
         RegisteredUserCanCreateReadOnlyAdminCanModifyDelete,
     ]
@@ -123,10 +123,7 @@ class EventViewSet(
         else:
             return Event.objects.none()
 
-    def get_serializer_class(self):
-        if self.action == "list":
-            return EventListSerializer
-        return EventSerializer
+
 
     def perform_create(self, serializer):
         user = self.request.user
