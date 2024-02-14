@@ -1,0 +1,42 @@
+@import '../../../styles/main.scss';
+
+.order {
+  padding: 40px;
+  border: 0.5px solid $color-green-element;
+  border-radius: 20px;
+
+  &__title {
+    margin-bottom: 10px;
+    text-align: center;
+
+    @extend %h3;
+  }
+
+  &__date {
+    display: block;
+    margin-bottom: 8px;
+    text-align: right;
+    font-style: italic;
+    color: $color-grey-elements;
+
+    @extend %secondary-body;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+  }
+
+  &__item {
+    @extend %body;
+
+    &-name {
+      @extend %body-bold-button;
+    }
+
+    &-empty {
+      color: $color-grey-elements;
+    }
+  }
+}

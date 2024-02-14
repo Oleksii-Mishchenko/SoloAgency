@@ -1,0 +1,14 @@
+@import '../../../styles/main.scss';
+
+.unauthorized-message {
+  &__warn {
+    @extend %secondary-body;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  &__offer {
+    @extend %body;
+    text-align: center;
+  }
+}

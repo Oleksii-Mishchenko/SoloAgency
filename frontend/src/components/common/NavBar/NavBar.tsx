@@ -1,6 +1,6 @@
 import React from 'react';
 import { HeaderNavLink } from '../../UI/buttons';
-import { navLinks } from '../../../assets/navLinks/navLinks';
+import { navLinks } from '../../../assets/libs/navLinks/navLinks';
 import './nav-bar.scss';
 
 type Props = {

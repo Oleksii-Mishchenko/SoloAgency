@@ -5,3 +5,5 @@ export * from './Loader/Loader';
 export * from './Notification/Notification';
 export * from './Pagination/Pagination';
 export * from './SocialMedia/SocialMedia';
+export * from './Tabs/Tabs';
+export * from './UnauthorizedMessage/UnauthorizedMessage';

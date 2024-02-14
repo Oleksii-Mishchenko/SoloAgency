@@ -1,7 +1,7 @@
 import { Event, PreparedEventRequestData } from '../types/Event';
 import { client } from '../utils/axiosClient';
 
-const eventsUrl = 'agency/events/';
+const eventsUrl = 'agency/events/?page=3';
 
 export const addEventRequest = (
   data: PreparedEventRequestData,

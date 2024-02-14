@@ -56,7 +56,11 @@ export const Pagination: React.FC<Props> = ({ className, config }) => {
               {pageNum}
             </span>
           ) : (
-            <Link key={pageNum} to={`?${path}`} className="pagination__page">
+            <Link
+              key={pageNum}
+              to={{ search: path }}
+              className="pagination__page"
+            >
               {pageNum}
             </Link>
           );
