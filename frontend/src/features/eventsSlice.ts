@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { ServerErrorResponse } from '../types/ServerErrorResponse';
-import { Event, PreparedEventRequestData } from '../types/Event';
+import { Event, Events, PreparedEventRequestData } from '../types/Event';
 import { parseErrors } from '../helpers/parseErrors';
 import { addEventRequest, getEvents } from '../api/events';
 
@@ -8,7 +8,7 @@ export type EventsState = {
   event: Event | null;
   isEventRequestInProgress: boolean;
   eventRequestErrors: ServerErrorResponse | null;
-  events: Event[] | null;
+  events: Events;
   areEventsLoading: boolean;
   eventsErrors: ServerErrorResponse | null;
 };
@@ -17,7 +17,13 @@ const initialState: EventsState = {
   event: null,
   isEventRequestInProgress: false,
   eventRequestErrors: null,
-  events: null,
+  events: {
+    num_pages: 0,
+    current_page: 0,
+    next_page: null,
+    previous_page: null,
+    results: [],
+  },
   areEventsLoading: false,
   eventsErrors: null,
 };
@@ -31,8 +37,8 @@ export const add = createAsyncThunk(
   },
 );
 
-export const init = createAsyncThunk('fetch/events', async () => {
-  const response = await getEvents();
+export const init = createAsyncThunk('fetch/events', async (page: string) => {
+  const response = await getEvents(page);
 
   return response;
 });
@@ -65,6 +71,7 @@ export const eventsSlice = createSlice({
     builder.addCase(init.pending, state => {
       state.areEventsLoading = true;
       state.eventsErrors = null;
+      state.events = initialState.events;
     });
 
     builder.addCase(init.fulfilled, (state, action) => {
