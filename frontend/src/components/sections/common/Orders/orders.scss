@@ -1,9 +1,31 @@
 @import '../../../../styles/main.scss';
 
 .orders {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+
+  @include on-desktop {
+    row-gap: 30px;
+  }
+
   &__title {
     @extend %h1;
 
     text-align: center;
+  }
+
+  &__loader {
+    margin: 0 auto;
+  }
+
+  &__errors {
+    margin: 0 auto;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
   }
 }

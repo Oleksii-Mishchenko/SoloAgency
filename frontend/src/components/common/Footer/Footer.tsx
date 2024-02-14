@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { navLinks } from '../../../assets/navLinks/navLinks';
+import { navLinks } from '../../../assets/libs/navLinks/navLinks';
 import { Logo } from '../../UI/buttons';
 import { SocialMedia } from '../../UX';
 import './footer.scss';

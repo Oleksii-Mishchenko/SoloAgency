@@ -1,4 +1,8 @@
-import { CallRequest, CallRequestData } from '../types/CallRequestData';
+import {
+  CallRequest,
+  CallRequestData,
+  CallRequests,
+} from '../types/CallRequestData';
 import { client } from '../utils/axiosClient';
 
 const callRequestUrl = 'agency/call-requests/';
@@ -12,6 +16,6 @@ export const addCallRequest = (
   );
 };
 
-export const getCallRequests = (): Promise<CallRequest[]> => {
-  return client.get<CallRequest[]>(callRequestUrl);
+export const getCallRequests = (params: string): Promise<CallRequests> => {
+  return client.get<CallRequests>(callRequestUrl + params);
 };

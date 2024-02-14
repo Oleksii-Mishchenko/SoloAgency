@@ -31,13 +31,13 @@ export const add = createAsyncThunk(
   },
 );
 
-export const init = createAsyncThunk('fetch/callRequests', async () => {
+export const init = createAsyncThunk('fetch/events', async () => {
   const response = await getEvents();
 
   return response;
 });
 
-export const eventsState = createSlice({
+export const eventsSlice = createSlice({
   name: 'events',
   initialState,
   reducers: {
@@ -61,8 +61,23 @@ export const eventsState = createSlice({
       state.isEventRequestInProgress = false;
       state.eventRequestErrors = parseErrors(action.error.message);
     });
+
+    builder.addCase(init.pending, state => {
+      state.areEventsLoading = true;
+      state.eventsErrors = null;
+    });
+
+    builder.addCase(init.fulfilled, (state, action) => {
+      state.areEventsLoading = false;
+      state.events = action.payload;
+    });
+
+    builder.addCase(init.rejected, (state, action) => {
+      state.areEventsLoading = false;
+      state.eventsErrors = parseErrors(action.error.message);
+    });
   },
 });
 
-export const { clearEventRequestData } = eventsState.actions;
-export default eventsState.reducer;
+export const { clearEventRequestData } = eventsSlice.actions;
+export default eventsSlice.reducer;

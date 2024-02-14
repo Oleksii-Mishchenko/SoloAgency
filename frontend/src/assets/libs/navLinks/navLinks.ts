@@ -1,4 +1,4 @@
-import { HeaderNavLink } from '../../types/HeaderNavLink';
+import { HeaderNavLink } from '../../../types/HeaderNavLink';
 
 export const navLinks: HeaderNavLink[] = [
   { id: 1, path: '/portfolio', text: 'Портфоліо' },

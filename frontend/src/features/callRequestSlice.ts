@@ -1,5 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { CallRequest, CallRequestData } from '../types/CallRequestData';
+import {
+  CallRequest,
+  CallRequestData,
+  CallRequests,
+} from '../types/CallRequestData';
 import { ServerErrorResponse } from '../types/ServerErrorResponse';
 import { addCallRequest, getCallRequests } from '../api/callRequest';
 import { parseErrors } from '../helpers/parseErrors';
@@ -8,7 +12,7 @@ export type CallRequestState = {
   callRequest: CallRequest | null;
   isUploading: boolean;
   callRequestErrors: ServerErrorResponse | null;
-  callRequests: CallRequest[] | null;
+  callRequests: CallRequests;
   areCRLoading: boolean;
   callRequestsErrors: ServerErrorResponse | null;
 };
@@ -17,7 +21,13 @@ const initialState: CallRequestState = {
   callRequest: null,
   isUploading: false,
   callRequestErrors: null,
-  callRequests: null,
+  callRequests: {
+    num_pages: 0,
+    current_page: 0,
+    next_page: null,
+    previous_page: null,
+    results: [],
+  },
   areCRLoading: false,
   callRequestsErrors: null,
 };
@@ -31,11 +41,14 @@ export const add = createAsyncThunk(
   },
 );
 
-export const init = createAsyncThunk('fetch/callRequests', async () => {
-  const response = await getCallRequests();
+export const init = createAsyncThunk(
+  'fetch/callRequests',
+  async (page: string) => {
+    const response = await getCallRequests(page);
 
-  return response;
-});
+    return response;
+  },
+);
 
 export const callRequestSlice = createSlice({
   name: 'callRequest',
@@ -68,8 +81,8 @@ export const callRequestSlice = createSlice({
 
     builder.addCase(init.pending, state => {
       state.areCRLoading = true;
-      state.callRequests = null;
       state.callRequestsErrors = null;
+      state.callRequests = initialState.callRequests;
     });
 
     builder.addCase(init.fulfilled, (state, action) => {

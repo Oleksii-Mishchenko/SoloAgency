@@ -5,9 +5,8 @@ import { Rating, TextArea } from '../../../UI/inputs/fields';
 import { RatingType } from '../../../../types/Rating';
 import { NewReview } from '../../../../types/Review';
 import { handleMessageBlur } from '../../../../helpers/textManipulator';
-import { MainButton, AuthLink } from '../../../UI/buttons';
-import { Notification } from '../../../UX';
-import { AuthLinkType } from '../../../../types/AuthLinkType';
+import { MainButton } from '../../../UI/buttons';
+import { Notification, UnauthorizedMessage } from '../../../UX';
 import './add-review.scss';
 
 type Props = {
@@ -103,19 +102,9 @@ export const AddReview: React.FC<Props> = ({ relPage }) => {
           )}
         </>
       ) : (
-        <>
-          <p className="add-review__sign-up-warn">
-            Відгуки можуть залишати тільки зареєстровані користувачі.
-          </p>
-
-          <p className="add-review__sign-up-offer">
-            {'Будь ласка, '}
-            <AuthLink linkType={AuthLinkType.Register} name="Зареєструйтесь" />
-            {' або '}
-            <AuthLink linkType={AuthLinkType.Login} name="Увійдіть" />
-            {' в свій обліковий запис.'}
-          </p>
-        </>
+        <UnauthorizedMessage
+          warning={'Відгуки можуть залишати тільки зареєстровані користувачі.'}
+        />
       )}
     </section>
   );
