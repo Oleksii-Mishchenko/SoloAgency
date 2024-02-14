@@ -33,6 +33,7 @@ from agency.serializers import (
     ArticleSerializer,
     OrganizerListSerializer,
     PortfolioSerializer,
+    EventListDetailSerializer,
 )
 
 
@@ -99,10 +100,7 @@ class OrganizerViewSet(viewsets.ModelViewSet):
         return OrganizerSerializer
 
 
-class EventViewSet(
-    PaginationMixin,
-    viewsets.ModelViewSet
-):
+class EventViewSet(PaginationMixin, viewsets.ModelViewSet):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
     permission_classes = [
@@ -111,7 +109,7 @@ class EventViewSet(
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
-        return self.paginated_response(queryset, EventSerializer)
+        return self.paginated_response(queryset, EventListDetailSerializer)
 
     def get_queryset(self):
         user = self.request.user
@@ -122,8 +120,6 @@ class EventViewSet(
                 return Event.objects.filter(user=user)
         else:
             return Event.objects.none()
-
-
 
     def perform_create(self, serializer):
         user = self.request.user
@@ -189,10 +185,7 @@ class ReviewViewSet(viewsets.ModelViewSet):
         return super().list(request, *args, **kwargs)
 
 
-class CallRequestViewSet(
-    PaginationMixin,
-    viewsets.ModelViewSet
-):
+class CallRequestViewSet(PaginationMixin, viewsets.ModelViewSet):
     queryset = CallRequest.objects.all()
     serializer_class = CallRequestSerializer
     permission_classes = [
