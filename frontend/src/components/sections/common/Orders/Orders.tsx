@@ -40,8 +40,10 @@ export const Orders: React.FC<Props> = ({ relPage }) => {
     activeOrder === OrderType.CallRequest &&
     !areCRLoading &&
     !!callRequests.results.length;
-
-  console.log(callRequests.current_page);
+  const areEventsVisible =
+    activeOrder === OrderType.Event &&
+    !areEventsLoading &&
+    !!events.results.length;
 
   useEffect(() => {
     const params = getSearchWith({ page }, searchParams);
@@ -56,13 +58,15 @@ export const Orders: React.FC<Props> = ({ relPage }) => {
         case OrderType.Event:
         default:
           setActiveOrder(OrderType.Event);
-          dispatch(eventsActions.init());
+          dispatch(eventsActions.init(params ? `?${params}` : ''));
           break;
       }
     }
   }, [type, page, user, token]);
 
   const sectionRef = useScrollToRef([callRequests.current_page]);
+
+  console.log(events);
 
   return (
     <section className={`${relPage}__orders orders`} ref={sectionRef}>
@@ -122,6 +126,24 @@ export const Orders: React.FC<Props> = ({ relPage }) => {
                 {callRequests.num_pages > 1 && (
                   <Pagination config={callRequests} />
                 )}
+              </>
+            )}
+
+            {areEventsVisible && (
+              <>
+                {events.results.map(event => {
+                  return (
+                    <Order
+                      config={{
+                        type: OrderType.Event,
+                        order: event,
+                      }}
+                      key={event.id}
+                    />
+                  );
+                })}
+
+                {events.num_pages > 1 && <Pagination config={events} />}
               </>
             )}
           </div>

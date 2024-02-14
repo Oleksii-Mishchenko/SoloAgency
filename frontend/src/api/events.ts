@@ -1,7 +1,7 @@
-import { Event, PreparedEventRequestData } from '../types/Event';
+import { Event, Events, PreparedEventRequestData } from '../types/Event';
 import { client } from '../utils/axiosClient';
 
-const eventsUrl = 'agency/events/?page=3';
+const eventsUrl = 'agency/events/';
 
 export const addEventRequest = (
   data: PreparedEventRequestData,
@@ -9,6 +9,6 @@ export const addEventRequest = (
   return client.post<Event, PreparedEventRequestData>(eventsUrl, data);
 };
 
-export const getEvents = (): Promise<Event[]> => {
-  return client.get<Event[]>(eventsUrl);
+export const getEvents = (params: string): Promise<Events> => {
+  return client.get<Events>(eventsUrl + params);
 };

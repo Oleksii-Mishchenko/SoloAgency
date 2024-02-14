@@ -16,10 +16,8 @@ type Props = {
   config: EventConfig | CRConfig;
 };
 
-export const Order: React.FC<Props> = ({
-  cr: { city, created_at, description, name, phone },
-}) => {
-  const date = new Date(Date.parse(created_at)).toLocaleString('uk-UA', {
+export const Order: React.FC<Props> = ({ config: { type, order } }) => {
+  const date = new Date(Date.parse(order.created_at)).toLocaleString('uk-UA', {
     dateStyle: 'long',
     timeStyle: 'short',
   });
@@ -34,24 +32,24 @@ export const Order: React.FC<Props> = ({
       <ul className="order__content">
         <li className="order__item">
           <span className="order__item-name">Ім'я: </span>
-          {name}
+          {order.name}
         </li>
 
         <li className="c-r-card__item">
           <span className="c-r-card__item-name">Місто: </span>
-          {city || (
+          {order.city || (
             <span className="c-r-card__item-empty">Місто не вказано</span>
           )}
         </li>
 
         <li className="c-r-card__item">
           <span className="c-r-card__item-name">Номер телефону: </span>
-          {phone}
+          {order.phone}
         </li>
 
         <li className="c-r-card__item">
           <span className="c-r-card__item-name">Додатковий опис: </span>
-          {description || (
+          {order.description || (
             <span className="c-r-card__item-empty">Опис не надано</span>
           )}
         </li>

@@ -1,3 +1,5 @@
+import { PaginationResult } from './PaginationConfig';
+
 export type EventStatus = 'created' | 'done' | 'in_progress' | 'rejected';
 
 export interface Event {
@@ -32,3 +34,5 @@ export interface PreparedEventRequestData
   extends Omit<EventRequestData, 'date'> {
   date: string;
 }
+
+export type Events = PaginationResult<Event>;
