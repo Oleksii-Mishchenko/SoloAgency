@@ -50,3 +50,7 @@ class User(AbstractUser):
     REQUIRED_FIELDS = ["first_name"]
 
     objects = UserManager()
+
+    @property
+    def full_name(self):
+        return f"{self.first_name} {self.last_name}"

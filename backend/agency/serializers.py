@@ -101,6 +101,30 @@ class EventSerializer(serializers.ModelSerializer):
         )
 
 
+class EventListDetailSerializer(serializers.ModelSerializer):
+    customer = serializers.CharField(source="user.full_name", read_only=True)
+    event_type_name = serializers.CharField(source="event_type.name", read_only=True)
+    service_name = serializers.CharField(source="service.name", read_only=True)
+
+    class Meta:
+        model = Event
+        fields = (
+            "id",
+            "customer",
+            "service_name",
+            "description",
+            "number_of_guests",
+            "event_type_name",
+            "date",
+            "style",
+            "city",
+            "venue",
+            "phone",
+            "created_at",
+            "status",
+        )
+
+
 class AdviceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Advice
