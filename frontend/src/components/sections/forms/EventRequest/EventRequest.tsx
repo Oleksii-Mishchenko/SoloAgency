@@ -1,4 +1,5 @@
 import { Controller, useForm } from 'react-hook-form';
+import { LegacyRef } from 'react';
 import { format } from 'date-fns';
 import { useAppSelector, useAppDispatch } from '../../../../app/hooks';
 import * as eventsActions from '../../../../features/eventsSlice';
@@ -22,9 +23,10 @@ import './event-request.scss';
 
 type Props = {
   relPage: string;
+  sectionRef: LegacyRef<HTMLElement>;
 };
 
-export const EventRequest: React.FC<Props> = ({ relPage }) => {
+export const EventRequest: React.FC<Props> = ({ relPage, sectionRef }) => {
   const dispatch = useAppDispatch();
   const { event, eventRequestErrors, isEventRequestInProgress } =
     useAppSelector(state => state.events);
@@ -55,7 +57,10 @@ export const EventRequest: React.FC<Props> = ({ relPage }) => {
   };
 
   return (
-    <section className={`${relPage}__event-request event-request`}>
+    <section
+      className={`${relPage}__event-request event-request`}
+      ref={sectionRef}
+    >
       <div className="event-request__header">
         <h2 className="event-request__title">
           Бажаєте замовити організацію події?

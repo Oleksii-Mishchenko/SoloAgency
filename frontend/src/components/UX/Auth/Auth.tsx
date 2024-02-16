@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import * as authActions from '../../../features/authSlice';
@@ -15,6 +15,7 @@ type Props = {
 };
 
 export const Auth: React.FC<Props> = ({ menu: { isMenuOpen, toggleMenu } }) => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { token } = useAppSelector(state => state.auth);
   const { user } = useAppSelector(state => state.user);
@@ -35,6 +36,12 @@ export const Auth: React.FC<Props> = ({ menu: { isMenuOpen, toggleMenu } }) => {
     if (isAccountMenuOpen) {
       setIsAccountMenuOpen(false);
     }
+  };
+
+  const handleLogout = () => {
+    handleMenuClosure();
+    dispatch(authActions.logOut());
+    navigate('/', { replace: true });
   };
 
   return (
@@ -74,10 +81,7 @@ export const Auth: React.FC<Props> = ({ menu: { isMenuOpen, toggleMenu } }) => {
                 <button
                   type="button"
                   className="auth__menu-link auth__menu-link--button"
-                  onClick={() => {
-                    handleMenuClosure();
-                    dispatch(authActions.logOut());
-                  }}
+                  onClick={handleLogout}
                 >
                   Вийти
                 </button>

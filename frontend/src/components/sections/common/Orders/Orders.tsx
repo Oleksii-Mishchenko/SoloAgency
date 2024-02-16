@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
 import * as callRequestsActions from '../../../../features/callRequestSlice';
 import * as eventsActions from '../../../../features/eventsSlice';
@@ -15,8 +15,8 @@ import {
 } from '../../../UX';
 import { orderTabs } from '../../../../assets/libs/tabs/orders';
 import { LoaderElement } from '../../../../types/LoaderElement';
+import { CROrder, EventOrder } from '../../../cards';
 import './orders.scss';
-import { Order } from '../../../cards';
 
 type Props = {
   relPage: string;
@@ -36,14 +36,8 @@ export const Orders: React.FC<Props> = ({ relPage }) => {
   );
   const { user } = useAppSelector(state => state.user);
   const { token } = useAppSelector(state => state.auth);
-  const areCRsVisible =
-    activeOrder === OrderType.CallRequest &&
-    !areCRLoading &&
-    !!callRequests.results.length;
-  const areEventsVisible =
-    activeOrder === OrderType.Event &&
-    !areEventsLoading &&
-    !!events.results.length;
+  const areCRsVisible = activeOrder === OrderType.CallRequest && !areCRLoading;
+  const areEventsVisible = activeOrder === OrderType.Event && !areEventsLoading;
 
   useEffect(() => {
     const params = getSearchWith({ page }, searchParams);
@@ -64,9 +58,10 @@ export const Orders: React.FC<Props> = ({ relPage }) => {
     }
   }, [type, page, user, token]);
 
-  const sectionRef = useScrollToRef([callRequests.current_page]);
-
-  console.log(events);
+  const sectionRef = useScrollToRef([
+    callRequests.current_page,
+    events.current_page,
+  ]);
 
   return (
     <section className={`${relPage}__orders orders`} ref={sectionRef}>
@@ -99,28 +94,10 @@ export const Orders: React.FC<Props> = ({ relPage }) => {
               />
             )}
 
-            {eventsErrors && (
-              <Errors className="orders__errors" errors={eventsErrors} />
-            )}
-
-            {callRequestsErrors && (
-              <Errors className="orders__errors" errors={callRequestsErrors} />
-            )}
-
-            {/* {(activeOrder === OrderType.Event && events && !areEventsLoading) && 123} */}
-
-            {areCRsVisible && (
+            {areCRsVisible && !!callRequests.results.length && (
               <>
                 {callRequests.results.map(callRequest => {
-                  return (
-                    <Order
-                      config={{
-                        type: OrderType.CallRequest,
-                        order: callRequest,
-                      }}
-                      key={callRequest.id}
-                    />
-                  );
+                  return <CROrder order={callRequest} key={callRequest.id} />;
                 })}
 
                 {callRequests.num_pages > 1 && (
@@ -129,22 +106,48 @@ export const Orders: React.FC<Props> = ({ relPage }) => {
               </>
             )}
 
-            {areEventsVisible && (
+            {areCRsVisible && callRequestsErrors && (
+              <Errors className="orders__errors" errors={callRequestsErrors} />
+            )}
+
+            {areEventsVisible && !!events.results.length && (
               <>
                 {events.results.map(event => {
                   return (
-                    <Order
-                      config={{
-                        type: OrderType.Event,
-                        order: event,
-                      }}
+                    <EventOrder
+                      order={event}
                       key={event.id}
+                      isStaff={user.is_staff}
                     />
                   );
                 })}
 
                 {events.num_pages > 1 && <Pagination config={events} />}
               </>
+            )}
+
+            {areEventsVisible && !events.results.length && !eventsErrors && (
+              <div className="orders__no-orders">
+                <h3 className="orders__no-orders-title">
+                  У Вас немає замовлених подій
+                </h3>
+
+                <p className="orders__no-orders-message">
+                  Ви можете замовити подію на сторінці з{' '}
+                  <Link
+                    className="orders__no-orders-link"
+                    to="/services"
+                    state="order"
+                  >
+                    послугами
+                  </Link>
+                  .
+                </p>
+              </div>
+            )}
+
+            {areEventsVisible && eventsErrors && (
+              <Errors className="orders__errors" errors={eventsErrors} />
             )}
           </div>
         </>

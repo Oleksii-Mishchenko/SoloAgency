@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { ServerErrorResponse } from '../types/ServerErrorResponse';
 import { Event, Events, PreparedEventRequestData } from '../types/Event';
 import { parseErrors } from '../helpers/parseErrors';
-import { addEventRequest, getEvents } from '../api/events';
+import { addEventRequest, getEvents, patchEvent } from '../api/events';
 
 export type EventsState = {
   event: Event | null;
@@ -11,6 +11,8 @@ export type EventsState = {
   events: Events;
   areEventsLoading: boolean;
   eventsErrors: ServerErrorResponse | null;
+  isStatusChanging: boolean;
+  changeStatusErrors: ServerErrorResponse | null;
 };
 
 const initialState: EventsState = {
@@ -26,6 +28,8 @@ const initialState: EventsState = {
   },
   areEventsLoading: false,
   eventsErrors: null,
+  isStatusChanging: false,
+  changeStatusErrors: null,
 };
 
 export const add = createAsyncThunk(
@@ -43,6 +47,15 @@ export const init = createAsyncThunk('fetch/events', async (page: string) => {
   return response;
 });
 
+export const changeStatus = createAsyncThunk(
+  'patch/event',
+  async ({ id, status }: Pick<Event, 'id' | 'status'>) => {
+    const response = await patchEvent({ status }, id);
+
+    return response;
+  },
+);
+
 export const eventsSlice = createSlice({
   name: 'events',
   initialState,
@@ -50,6 +63,10 @@ export const eventsSlice = createSlice({
     clearEventRequestData: state => {
       state.event = null;
       state.eventRequestErrors = null;
+    },
+
+    clearChangeStatusErrors: state => {
+      state.changeStatusErrors = null;
     },
   },
 
@@ -83,8 +100,30 @@ export const eventsSlice = createSlice({
       state.areEventsLoading = false;
       state.eventsErrors = parseErrors(action.error.message);
     });
+
+    builder.addCase(changeStatus.pending, state => {
+      state.isStatusChanging = true;
+      state.changeStatusErrors = null;
+    });
+
+    builder.addCase(changeStatus.fulfilled, (state, action) => {
+      state.isStatusChanging = false;
+      state.events.results = state.events.results.map(result => {
+        if (result.id === action.payload.id) {
+          return { ...result, status: action.payload.status };
+        }
+
+        return result;
+      });
+    });
+
+    builder.addCase(changeStatus.rejected, (state, action) => {
+      state.isStatusChanging = false;
+      state.changeStatusErrors = parseErrors(action.error.message);
+    });
   },
 });
 
-export const { clearEventRequestData } = eventsSlice.actions;
+export const { clearEventRequestData, clearChangeStatusErrors } =
+  eventsSlice.actions;
 export default eventsSlice.reducer;

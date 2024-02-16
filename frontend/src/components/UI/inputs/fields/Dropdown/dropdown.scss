@@ -33,15 +33,15 @@
 
   &__control {
     padding: 7px 16px !important;
-    background-color: transparent !important;
+    background-color: $color-white !important;
     border: 1px solid $color-grey-blocks !important;
     border-radius: 5px !important;
     transition: all 0.3s !important;
 
-  &:hover {
-    border-color: $color-black !important;
-    box-shadow: 0 0 5px rgba($color-grey-blocks, 0.3);
-  }
+    &:hover {
+      border-color: $color-black !important;
+      box-shadow: 0 0 5px rgba($color-grey-blocks, 0.3);
+    }
 
     &--is-focused {
       box-shadow: 0 0 5px rgba($color-black, 0.4) !important;

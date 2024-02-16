@@ -5,14 +5,14 @@ export type EventStatus = 'created' | 'done' | 'in_progress' | 'rejected';
 export interface Event {
   id: number;
   customer: string;
-  event_name: string;
   service_name: string;
   description: string;
   number_of_guests: number;
   event_type_name: string;
-  date: Date;
+  date: string;
   style: string;
   city: string;
+  created_at: string;
   venue: string;
   phone: string;
   status: EventStatus;

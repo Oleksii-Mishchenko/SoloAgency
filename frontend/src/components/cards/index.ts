@@ -1,4 +1,5 @@
 export * from './AdviceAccordion/AdviceAccordion';
+export * from './CROrder/CROrder';
+export * from './EventOrder/EventOrder';
 export * from './Project/Project';
-export * from './Order/Order';
 export * from './Review/Review';
