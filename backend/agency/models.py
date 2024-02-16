@@ -142,6 +142,9 @@ class Event(models.Model):
     def __str__(self):
         return f"{self.phone} - {self.event_type.name}"
 
+    class Meta:
+        ordering = ["date"]
+
 
 class Advice(models.Model):
     question = models.TextField(max_length=255)
@@ -210,6 +213,9 @@ class CallRequest(models.Model):
 
     def __str__(self):
         return f"CallRequest: {self.name} {self.phone}"
+
+    class Meta:
+        ordering = ["-created_at"]
 
 
 class Portfolio(models.Model):
