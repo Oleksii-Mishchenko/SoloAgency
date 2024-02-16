@@ -1,4 +1,5 @@
 export * from './AttachFile/AttachFile';
+export * from './Dropdown/OrderSelect';
 export * from './Rating/Rating';
 export * from './SearchField/SearchField';
 export * from './TextArea/TextArea';

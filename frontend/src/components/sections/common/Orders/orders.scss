@@ -28,4 +28,29 @@
     flex-direction: column;
     row-gap: 20px;
   }
+
+  &__no-orders {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+
+    &-title {
+      @extend %h3;
+    }
+
+    &-message {
+      @extend %secondary-body;
+    }
+
+    &-link {
+      @extend %body-bold-button;
+
+      color: $color-green-dark;
+      transition: all 0.3s;
+
+      &:hover {
+        color: $color-green-hover;
+      }
+    }
+  }
 }

@@ -1,0 +1,25 @@
+@import '../../../styles/main.scss';
+
+.order-item {
+  display: flex;
+
+  &__name {
+    line-height: 25px;
+
+    @extend %body-bold-button;
+  }
+
+  &__value {
+    margin-left: 10px;
+
+    @extend %body;
+
+    &::first-letter {
+      text-transform: uppercase;
+    }
+
+    &--empty {
+      color: $color-grey-elements;
+    }
+  }
+}
