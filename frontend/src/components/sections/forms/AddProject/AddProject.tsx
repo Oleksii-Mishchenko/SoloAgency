@@ -6,8 +6,8 @@ import { Notification } from '../../../UX';
 import { NewProject } from '../../../../types/Project';
 import { AttachFile, TextArea, TextInput } from '../../../UI/inputs/fields';
 import {
-  handleMessageBlur,
-  handleNameBlur,
+  handleCommonBlur,
+  handleProperBlur,
 } from '../../../../helpers/textManipulator';
 import './add-project.scss';
 
@@ -69,7 +69,7 @@ export const AddProject: React.FC<Props> = ({ relPage }) => {
                 message: 'Тільки українські та латинські літери',
               },
               onBlur: (event: React.ChangeEvent<HTMLInputElement>) => {
-                setValue('title', handleNameBlur(event.target.value));
+                setValue('title', handleProperBlur(event.target.value));
                 trigger('title');
               },
             }),
@@ -86,7 +86,7 @@ export const AddProject: React.FC<Props> = ({ relPage }) => {
             ...register('description', {
               required: `Опис не може бути порожнім`,
               onBlur: (event: React.ChangeEvent<HTMLInputElement>) => {
-                setValue('description', handleMessageBlur(event.target.value));
+                setValue('description', handleCommonBlur(event.target.value));
               },
             }),
           }}

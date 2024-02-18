@@ -3,8 +3,8 @@ import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
 import { NewEventType } from '../../../../types/EventType';
 import * as eventTypesActions from '../../../../features/eventTypesSlice';
 import {
-  handleMessageBlur,
-  handleNameBlur,
+  handleCommonBlur,
+  handleProperBlur,
 } from '../../../../helpers/textManipulator';
 import { AttachFile, TextArea, TextInput } from '../../../UI/inputs/fields';
 import { MainButton } from '../../../UI/buttons';
@@ -69,7 +69,7 @@ export const AddEventType: React.FC<Props> = ({ relPage }) => {
                 message: 'Тільки українські та латинські літери',
               },
               onBlur: (event: React.ChangeEvent<HTMLInputElement>) => {
-                setValue('name', handleNameBlur(event.target.value));
+                setValue('name', handleProperBlur(event.target.value));
                 trigger('name');
               },
             }),
@@ -86,7 +86,7 @@ export const AddEventType: React.FC<Props> = ({ relPage }) => {
             ...register('description', {
               required: `Опис не може бути порожнім`,
               onBlur: (event: React.ChangeEvent<HTMLInputElement>) => {
-                setValue('description', handleMessageBlur(event.target.value));
+                setValue('description', handleCommonBlur(event.target.value));
               },
             }),
           }}

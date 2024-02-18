@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
 import { Rating, TextArea } from '../../../UI/inputs/fields';
 import { RatingType } from '../../../../types/Rating';
 import { NewReview } from '../../../../types/Review';
-import { handleMessageBlur } from '../../../../helpers/textManipulator';
+import { handleCommonBlur } from '../../../../helpers/textManipulator';
 import { MainButton } from '../../../UI/buttons';
 import { Notification, UnauthorizedMessage } from '../../../UX';
 import './add-review.scss';
@@ -70,7 +70,7 @@ export const AddReview: React.FC<Props> = ({ relPage }) => {
                 ...register('text', {
                   required: `Відгук не може бути порожнім`,
                   onBlur: (event: React.ChangeEvent<HTMLInputElement>) => {
-                    setValue('text', handleMessageBlur(event.target.value));
+                    setValue('text', handleCommonBlur(event.target.value));
                   },
                 }),
               }}

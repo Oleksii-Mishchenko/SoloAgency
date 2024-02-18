@@ -4,7 +4,7 @@ import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
 import * as advicesActions from '../../../../features/advicesSlice';
 import { NewAdvice } from '../../../../types/Advice';
-import { handleMessageBlur } from '../../../../helpers/textManipulator';
+import { handleCommonBlur } from '../../../../helpers/textManipulator';
 import { RatingType } from '../../../../types/Rating';
 import { Rating, TextArea, TextInput } from '../../../UI/inputs/fields';
 import { MainButton } from '../../../UI/buttons';
@@ -67,7 +67,7 @@ export const AddAdvice: React.FC<Props> = ({ relPage }) => {
             ...register('question', {
               required: `Питання не вказано`,
               onBlur: (event: React.ChangeEvent<HTMLInputElement>) => {
-                setValue('question', handleMessageBlur(event.target.value));
+                setValue('question', handleCommonBlur(event.target.value));
               },
             }),
           }}
@@ -83,7 +83,7 @@ export const AddAdvice: React.FC<Props> = ({ relPage }) => {
             ...register('answer', {
               required: `Відповідь не вказано`,
               onBlur: (event: React.ChangeEvent<HTMLInputElement>) => {
-                setValue('answer', handleMessageBlur(event.target.value));
+                setValue('answer', handleCommonBlur(event.target.value));
               },
             }),
           }}

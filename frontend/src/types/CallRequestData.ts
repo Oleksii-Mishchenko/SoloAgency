@@ -2,8 +2,8 @@ import { PaginationResult } from './PaginationConfig';
 
 export interface CallRequestData {
   name: string;
-  description: string;
-  city: string | null;
+  description?: string | null;
+  city?: string | null;
   phone: string;
 }
 

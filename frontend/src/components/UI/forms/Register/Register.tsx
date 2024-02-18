@@ -10,7 +10,7 @@ import {
 import { AuthLink, ControlButton, MainButton } from '../../buttons';
 import { useOuterClick } from '../../../../customHooks/useOuterClick';
 import { RegisterData } from '../../../../types/RegisterData';
-import { handleNameBlur } from '../../../../helpers/textManipulator';
+import { handleProperBlur } from '../../../../helpers/textManipulator';
 import { AuthLinkType } from '../../../../types/AuthLinkType';
 import { ControlButtonType } from '../../../../types/ControlButtonType';
 import { cleanPhoneNumber } from '../../../../helpers/cleanPhoneNumber';
@@ -83,7 +83,10 @@ export const Register = () => {
                     message: 'Тільки українські та латинські літери',
                   },
                   onBlur: (event: React.ChangeEvent<HTMLInputElement>) => {
-                    setValue('first_name', handleNameBlur(event.target.value));
+                    setValue(
+                      'first_name',
+                      handleProperBlur(event.target.value),
+                    );
                     trigger('first_name');
                   },
                 }),
@@ -110,7 +113,7 @@ export const Register = () => {
                     message: 'Тільки українські та латинські літери',
                   },
                   onBlur: (event: React.ChangeEvent<HTMLInputElement>) => {
-                    setValue('last_name', handleNameBlur(event.target.value));
+                    setValue('last_name', handleProperBlur(event.target.value));
                     trigger('last_name');
                   },
                 }),
