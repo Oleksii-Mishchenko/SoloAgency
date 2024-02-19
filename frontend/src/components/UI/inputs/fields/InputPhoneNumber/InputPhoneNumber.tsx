@@ -1,14 +1,14 @@
 import classNames from 'classnames';
-import { Noop } from 'react-hook-form';
 import MaskedInput from 'react-text-mask';
 import { InputError, Label } from '../../elements';
 import './input-phone-number.scss';
+import { Noop } from 'react-hook-form';
 
 interface InputPhoneNumberProps {
   error: string | undefined;
   label: string;
   isRequired?: boolean;
-  value: string;
+  value?: string | null;
   onChange: (value: string) => void;
   onBlur: Noop;
 }
@@ -21,6 +21,19 @@ export const InputPhoneNumber: React.FC<InputPhoneNumberProps> = ({
   onChange,
   onBlur,
 }) => {
+  const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
+    if (!event.target.value) {
+      onChange('+38 (0');
+    }
+  };
+
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    if (e.target.value === '+38 (0' || !e.target.value) {
+      onChange('');
+    }
+    onBlur();
+  };
+
   return (
     <div className="input-phone-number">
       <Label label={label} isRequired={isRequired} />
@@ -48,13 +61,13 @@ export const InputPhoneNumber: React.FC<InputPhoneNumberProps> = ({
           /\d/,
         ]}
         placeholder="+38 (0__ ) ___-__-__"
-        value={value}
+        value={value || ''}
         className={classNames('input-phone-number__field', {
           'input-phone-number__field--error': error,
         })}
-        onFocus={() => onChange('+38 (0')}
-        onChange={e => onChange(e.target.value)}
-        onBlur={onBlur}
+        onChange={event => onChange(event.target.value)}
+        onFocus={event => handleFocus(event)}
+        onBlur={event => handleBlur(event)}
         type="tel"
         id={label}
       />

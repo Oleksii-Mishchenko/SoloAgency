@@ -46,7 +46,7 @@ export const Auth: React.FC<Props> = ({ menu: { isMenuOpen, toggleMenu } }) => {
 
   return (
     <div className="auth">
-      {token && user ? (
+      {token && user && (
         <div className="auth__person" title={user.email}>
           <div className="auth__account" ref={accountRef}>
             <button
@@ -93,7 +93,9 @@ export const Auth: React.FC<Props> = ({ menu: { isMenuOpen, toggleMenu } }) => {
             {user.first_name[0]}
           </div>
         </div>
-      ) : (
+      )}
+
+      {!token && (
         <>
           <MainButton
             white

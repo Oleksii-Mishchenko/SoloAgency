@@ -16,6 +16,7 @@ import {
 } from '../../../../helpers/textManipulator';
 import { Notification } from '../../../UX';
 import { cleanPhoneNumber } from '../../../../helpers/cleanPhoneNumber';
+import { schema } from '../../../../assets/libs/validation/schema';
 import './call-request.scss';
 
 type Props = {
@@ -29,34 +30,10 @@ export const CallRequest: React.FC<Props> = ({ relPage }) => {
   );
 
   const callRequestSchema = yup.object({
-    name: yup
-      .string()
-      .required("Вкажіть Ваше ім'я")
-      .min(2, 'Не менше 2 символів')
-      .max(30, 'Не більше 30 символів')
-      .matches(
-        /^[A-Za-zа-щА-ЩЬьЮюЯяЇїІіЄєҐґ'ʼ ]+$/,
-        'Тільки українські або латинські літери',
-      ),
-
-    city: yup
-      .string()
-      .nullable()
-      .max(30, 'Не більше 30 символів')
-      .matches(/^[A-Za-zа-щА-ЩЬьЮюЯяЇїІіЄєҐґ'ʼ -]+$/, {
-        message: 'Тільки українські або латинські літери',
-        excludeEmptyString: true,
-      }),
-
-    phone: yup
-      .string()
-      .required('Введіть номер телефону')
-      .matches(
-        /^\+38 \(\d{3}\) \d{3}-\d{2}-\d{2}$/,
-        'Введіть правильний номер телефону',
-      ),
-
-    description: yup.string().max(200, 'Не більше 200 символів').nullable(),
+    name: schema.nameRequired,
+    city: schema.city,
+    phone: schema.phoneRequired,
+    description: schema.message(255),
   });
 
   const {

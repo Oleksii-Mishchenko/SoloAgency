@@ -2,6 +2,9 @@ import { useRef } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
 import * as authActions from '../../../../features/authSlice';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { schema } from '../../../../assets/libs/validation/schema';
 import { InputPassword, TextInput } from '../../inputs/fields';
 import { LoginData } from '../../../../types/LoginData';
 import { useOuterClick } from '../../../../customHooks/useOuterClick';
@@ -12,6 +15,11 @@ import { hostName } from '../../../../utils/axiosClient';
 import './login.scss';
 
 export const Login = () => {
+  const loginSchema = yup.object({
+    email: schema.email,
+    password: schema.password,
+  });
+
   const loginRef = useRef(null);
   const dispatch = useAppDispatch();
   const { isLoggingIn } = useAppSelector(state => state.auth);
@@ -25,6 +33,7 @@ export const Login = () => {
     handleSubmit,
   } = useForm<LoginData>({
     mode: 'onTouched',
+    resolver: yupResolver<LoginData>(loginSchema),
   });
 
   const onSubmit: SubmitHandler<LoginData> = async (data: LoginData) => {
