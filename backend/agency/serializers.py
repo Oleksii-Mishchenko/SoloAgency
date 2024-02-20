@@ -146,6 +146,7 @@ class CallRequestSerializer(serializers.ModelSerializer):
             "phone",
             "city",
             "created_at",
+            "status",
         )
 
 
