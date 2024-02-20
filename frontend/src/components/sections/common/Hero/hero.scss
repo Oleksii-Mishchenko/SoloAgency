@@ -11,6 +11,8 @@
     @include on-tablet {
       position: absolute;
       top: 20px;
+      left: 0;
+      right: 0;
       grid-column: 3 / -3;
     }
 
@@ -21,7 +23,7 @@
 
     &-text {
       margin-bottom: 16px;
-      font-family: Kurale, serif;
+      font-family: Kurale, sans-serif;
       font-size: 16px;
       font-weight: 400;
       line-height: 22px;
