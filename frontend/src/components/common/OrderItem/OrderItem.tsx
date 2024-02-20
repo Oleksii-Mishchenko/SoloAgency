@@ -3,7 +3,7 @@ import './order-item.scss';
 
 type Props = {
   name: string;
-  value: string | null;
+  value?: string | null;
 };
 
 export const OrderItem: React.FC<Props> = ({ name, value }) => {
