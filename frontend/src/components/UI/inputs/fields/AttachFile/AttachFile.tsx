@@ -9,7 +9,7 @@ type Props = InputHTMLAttributes<HTMLInputElement> & {
   label: string;
   isRequired?: boolean;
   error: string | undefined;
-  onAttach: (value: File | null) => void;
+  onAttach: (value?: File) => void;
 };
 
 export const AttachFile: React.FC<Props> = ({
@@ -33,7 +33,7 @@ export const AttachFile: React.FC<Props> = ({
   };
 
   const handleRemoveFile = () => {
-    onAttach(null);
+    onAttach(undefined);
 
     if (inputRef.current) {
       inputRef.current.value = '';

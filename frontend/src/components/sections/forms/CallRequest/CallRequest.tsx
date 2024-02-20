@@ -1,4 +1,6 @@
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { CallRequestData } from '../../../../types/CallRequestData';
 import { MainButton } from '../../../UI/buttons';
 import {
@@ -9,12 +11,12 @@ import {
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
 import * as callRequestActions from '../../../../features/callRequestSlice';
 import {
-  handleCityChange,
-  handleNameBlur,
-  trimString,
+  handleCommonBlur,
+  handleProperBlur,
 } from '../../../../helpers/textManipulator';
 import { Notification } from '../../../UX';
 import { cleanPhoneNumber } from '../../../../helpers/cleanPhoneNumber';
+import { schema } from '../../../../assets/libs/validation/schema';
 import './call-request.scss';
 
 type Props = {
@@ -27,6 +29,13 @@ export const CallRequest: React.FC<Props> = ({ relPage }) => {
     state => state.callRequest,
   );
 
+  const callRequestSchema = yup.object({
+    name: schema.nameRequired,
+    city: schema.city,
+    phone: schema.phoneRequired,
+    description: schema.message(255),
+  });
+
   const {
     register,
     formState: { errors },
@@ -37,6 +46,13 @@ export const CallRequest: React.FC<Props> = ({ relPage }) => {
     control,
   } = useForm<CallRequestData>({
     mode: 'onTouched',
+    defaultValues: {
+      name: '',
+      city: null,
+      phone: '',
+      description: null,
+    },
+    resolver: yupResolver<CallRequestData>(callRequestSchema),
   });
 
   const onSubmit: SubmitHandler<CallRequestData> = async (
@@ -65,24 +81,10 @@ export const CallRequest: React.FC<Props> = ({ relPage }) => {
             isRequired
             placeholder="Ім'я"
             error={errors.name?.message}
-            defaultValue={undefined}
             register={{
               ...register('name', {
-                required: `Вкажіть ваше ім'я`,
-                minLength: {
-                  value: 2,
-                  message: 'Не менше 2 символів',
-                },
-                maxLength: {
-                  value: 30,
-                  message: `Не більше 30 символів`,
-                },
-                pattern: {
-                  value: /^[A-Za-zА-Яа-я ]+$/,
-                  message: 'Тільки українські та латинські літери',
-                },
                 onBlur: (event: React.ChangeEvent<HTMLInputElement>) => {
-                  setValue('name', handleNameBlur(event.target.value));
+                  setValue('name', handleProperBlur(event.target.value));
                   trigger('name');
                 },
               }),
@@ -95,29 +97,9 @@ export const CallRequest: React.FC<Props> = ({ relPage }) => {
             error={errors.city?.message}
             register={{
               ...register('city', {
-                minLength: {
-                  value: 2,
-                  message: 'Не менше 2 символів',
-                },
-                maxLength: {
-                  value: 30,
-                  message: 'Не більше 30 символів',
-                },
-                pattern: {
-                  value: /^[A-Za-zА-Яа-я ]+$/,
-                  message: 'Тільки українські та латинські літери',
-                },
-
-                onChange: (event: React.ChangeEvent<HTMLInputElement>) => {
-                  const handledValue = handleCityChange(event.target.value);
-
-                  setValue('city', handledValue);
-                },
-
                 onBlur: (event: React.ChangeEvent<HTMLInputElement>) => {
-                  const trimmedValue = trimString(event.target.value);
-
-                  setValue('city', trimmedValue);
+                  setValue('city', handleProperBlur(event.target.value));
+                  trigger('city');
                 },
               }),
             }}
@@ -126,13 +108,6 @@ export const CallRequest: React.FC<Props> = ({ relPage }) => {
           <Controller
             control={control}
             name="phone"
-            rules={{
-              required: "Поле є обов'язковим",
-              pattern: {
-                value: /^\+38 \(\d{3}\) \d{3}-\d{2}-\d{2}$/,
-                message: 'Введіть правильний номер телефону',
-              },
-            }}
             render={({ field }) => (
               <InputPhoneNumber
                 value={field.value}
@@ -152,7 +127,10 @@ export const CallRequest: React.FC<Props> = ({ relPage }) => {
             error={errors.description?.message}
             register={{
               ...register('description', {
-                maxLength: { value: 200, message: 'Не більше 200 символів' },
+                onBlur: (event: React.ChangeEvent<HTMLInputElement>) => {
+                  setValue('description', handleCommonBlur(event.target.value));
+                  trigger('description');
+                },
               }),
             }}
           />

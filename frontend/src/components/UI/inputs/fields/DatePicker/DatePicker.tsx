@@ -9,7 +9,7 @@ import './date-picker.scss';
 type Props = {
   label: string;
   error: string | undefined;
-  value: Date;
+  value?: Date | null;
   onChange: (value: Date | null) => void;
 };
 

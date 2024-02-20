@@ -11,8 +11,7 @@ export const Hero: React.FC<Props> = ({ relPage, onCallRequest }) => {
     <section className={`${relPage}__hero hero`}>
       <div className="hero__content">
         <p className="hero__content-text">
-          Організовуємо мрії та перетворюємо їх у реальність - ваші події, наша
-          справа!
+          Організовуємо так, як в мріях. <br /> Створюємо серцем 🤍
         </p>
 
         <MainButton

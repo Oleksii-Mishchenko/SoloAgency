@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { schema } from '../../../../assets/libs/validation/schema';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
 import * as advicesActions from '../../../../features/advicesSlice';
 import { NewAdvice } from '../../../../types/Advice';
-import { handleMessageBlur } from '../../../../helpers/textManipulator';
+import { handleCommonBlur } from '../../../../helpers/textManipulator';
 import { RatingType } from '../../../../types/Rating';
 import { Rating, TextArea, TextInput } from '../../../UI/inputs/fields';
 import { MainButton } from '../../../UI/buttons';
@@ -17,6 +20,12 @@ type Props = {
 };
 
 export const AddAdvice: React.FC<Props> = ({ relPage }) => {
+  const addAdviceSchema = yup.object({
+    question: schema.messageRequired(255),
+    answer: schema.messageRequired(511),
+    priority: schema.rating,
+  });
+
   const [searchParams, setSearchParams] = useSearchParams();
   const [isNotified, setIsNotified] = useState<boolean>(false);
   const dispatch = useAppDispatch();
@@ -38,6 +47,7 @@ export const AddAdvice: React.FC<Props> = ({ relPage }) => {
       answer: '',
       priority: 5,
     },
+    resolver: yupResolver<NewAdvice>(addAdviceSchema),
   });
 
   const onSubmit: SubmitHandler<NewAdvice> = async (data: NewAdvice) => {
@@ -65,9 +75,8 @@ export const AddAdvice: React.FC<Props> = ({ relPage }) => {
           error={errors.question?.message}
           register={{
             ...register('question', {
-              required: `Питання не вказано`,
               onBlur: (event: React.ChangeEvent<HTMLInputElement>) => {
-                setValue('question', handleMessageBlur(event.target.value));
+                setValue('question', handleCommonBlur(event.target.value));
               },
             }),
           }}
@@ -81,9 +90,8 @@ export const AddAdvice: React.FC<Props> = ({ relPage }) => {
           error={errors.answer?.message}
           register={{
             ...register('answer', {
-              required: `Відповідь не вказано`,
               onBlur: (event: React.ChangeEvent<HTMLInputElement>) => {
-                setValue('answer', handleMessageBlur(event.target.value));
+                setValue('answer', handleCommonBlur(event.target.value));
               },
             }),
           }}
@@ -94,7 +102,7 @@ export const AddAdvice: React.FC<Props> = ({ relPage }) => {
           control={control}
           render={({ field }) => (
             <Rating
-              title="Оберіть пріоритет питання"
+              label="Оберіть пріоритет питання"
               value={field.value}
               onChange={(value: RatingType) => field.onChange(value)}
             />

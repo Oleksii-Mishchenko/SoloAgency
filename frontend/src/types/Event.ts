@@ -21,18 +21,18 @@ export interface Event {
 export interface EventRequestData {
   city: string;
   phone: string;
-  date: Date;
+  date?: Date | null;
   service: number;
-  description: string;
-  number_of_guests: number;
+  description?: string | null;
+  number_of_guests?: number | string | null;
   event_type: number;
-  style: string;
-  venue: string;
+  style?: string | null;
+  venue?: string | null;
 }
 
 export interface PreparedEventRequestData
   extends Omit<EventRequestData, 'date'> {
-  date: string;
+  date: string | null;
 }
 
 export type Events = PaginationResult<Event>;

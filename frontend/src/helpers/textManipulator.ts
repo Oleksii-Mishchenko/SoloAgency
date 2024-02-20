@@ -1,6 +1,6 @@
 const textManipulator = {
   capFirst: (string: string): string =>
-    string.charAt(0).toUpperCase() + string.slice(1),
+    string.charAt(0).toUpperCase() + string.slice(1).toLowerCase(),
 
   capEvery: (string: string): string =>
     string
@@ -25,7 +25,7 @@ export const {
 } = textManipulator;
 
 const inputHandlers = {
-  handleNameBlur: (string: string): string => {
+  handleProperBlur: (string: string): string => {
     const trimmedValue = trimString(string);
     const noDoubleSpaces = removeDoubleSpaces(trimmedValue);
     const capEveryValue = capEvery(noDoubleSpaces);
@@ -33,15 +33,8 @@ const inputHandlers = {
     return capEveryValue;
   },
 
-  handleMessageBlur: (string: string): string => {
+  handleCommonBlur: (string: string): string => {
     const trimmedValue = trimString(string);
-    const capFirstValue = capFirst(trimmedValue);
-
-    return capFirstValue;
-  },
-
-  handleCityChange: (string: string): string => {
-    const trimmedValue = removeLeadingSpace(string);
     const noDoubleSpaces = removeDoubleSpaces(trimmedValue);
     const capFirstValue = capFirst(noDoubleSpaces);
 
@@ -49,5 +42,4 @@ const inputHandlers = {
   },
 };
 
-export const { handleNameBlur, handleCityChange, handleMessageBlur } =
-  inputHandlers;
+export const { handleProperBlur, handleCommonBlur } = inputHandlers;

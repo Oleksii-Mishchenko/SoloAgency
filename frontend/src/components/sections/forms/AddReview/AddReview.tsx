@@ -1,13 +1,16 @@
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 import * as reviewsActions from '../../../../features/reviewsSlice';
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
 import { Rating, TextArea } from '../../../UI/inputs/fields';
 import { RatingType } from '../../../../types/Rating';
 import { NewReview } from '../../../../types/Review';
-import { handleMessageBlur } from '../../../../helpers/textManipulator';
+import { handleCommonBlur } from '../../../../helpers/textManipulator';
 import { MainButton } from '../../../UI/buttons';
 import { Notification, UnauthorizedMessage } from '../../../UX';
 import './add-review.scss';
+import { schema } from '../../../../assets/libs/validation/schema';
 
 type Props = {
   relPage: string;
@@ -20,6 +23,12 @@ export const AddReview: React.FC<Props> = ({ relPage }) => {
   const { addErrors, isAddingReview, isAddSuccess } = useAppSelector(
     state => state.reviews,
   );
+
+  const newReviewSchema = yup.object({
+    rating: schema.rating,
+    text: schema.messageRequired(200),
+  });
+
   const {
     register,
     formState: { errors },
@@ -33,6 +42,7 @@ export const AddReview: React.FC<Props> = ({ relPage }) => {
       rating: 5,
       text: '',
     },
+    resolver: yupResolver<NewReview>(newReviewSchema),
   });
 
   const onSubmit: SubmitHandler<NewReview> = async (data: NewReview) => {
@@ -45,7 +55,7 @@ export const AddReview: React.FC<Props> = ({ relPage }) => {
     <section className={`${relPage}__add-review add-review`}>
       <h2 className="add-review__title">Бажаєте залишити відгук?</h2>
 
-      {token && user ? (
+      {token && user && (
         <>
           <form className="add-review__form" onSubmit={handleSubmit(onSubmit)}>
             <Controller
@@ -53,7 +63,7 @@ export const AddReview: React.FC<Props> = ({ relPage }) => {
               control={control}
               render={({ field }) => (
                 <Rating
-                  title="Поставте нам оцінку"
+                  label="Поставте нам оцінку"
                   value={field.value}
                   onChange={(value: RatingType) => field.onChange(value)}
                 />
@@ -68,9 +78,8 @@ export const AddReview: React.FC<Props> = ({ relPage }) => {
               error={errors.text?.message}
               register={{
                 ...register('text', {
-                  required: `Відгук не може бути порожнім`,
                   onBlur: (event: React.ChangeEvent<HTMLInputElement>) => {
-                    setValue('text', handleMessageBlur(event.target.value));
+                    setValue('text', handleCommonBlur(event.target.value));
                   },
                 }),
               }}
@@ -101,7 +110,9 @@ export const AddReview: React.FC<Props> = ({ relPage }) => {
             />
           )}
         </>
-      ) : (
+      )}
+
+      {!token && (
         <UnauthorizedMessage
           warning={'Відгуки можуть залишати тільки зареєстровані користувачі.'}
         />

@@ -9,7 +9,7 @@ export interface EventType extends DropdownObject {
 export interface NewEventType {
   name: string;
   description: string;
-  photo: File | null;
+  photo: File;
 }
 
 export type EventTypes = PaginationResult<EventType>;

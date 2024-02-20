@@ -11,10 +11,10 @@ export const useOuterClick = (
       }
     };
 
-    document.addEventListener('click', handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
 
     return (): void => {
-      document.removeEventListener('click', handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [ref, callback]);
 };

@@ -1,9 +1,12 @@
 import { useRef } from 'react';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { schema } from '../../../../assets/libs/validation/schema';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import * as advicesActions from '../../../../features/advicesSlice';
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
 import { Advice } from '../../../../types/Advice';
-import { handleMessageBlur } from '../../../../helpers/textManipulator';
+import { handleCommonBlur } from '../../../../helpers/textManipulator';
 import { Rating, TextArea, TextInput } from '../../../UI/inputs/fields';
 import { RatingType } from '../../../../types/Rating';
 import { MainButton } from '../../../UI/buttons';
@@ -21,6 +24,13 @@ export const EditAdvice: React.FC<Props> = ({
   advice,
   closeEditor,
 }) => {
+  const editAdviceSchema = yup.object({
+    id: yup.number().required(),
+    question: schema.messageRequired(255),
+    answer: schema.messageRequired(511),
+    priority: schema.rating,
+  });
+
   const dispatch = useAppDispatch();
   const { isPatchingAdvice } = useAppSelector(state => state.advices);
   const editAdviceRef = useRef<HTMLDivElement>(null);
@@ -35,6 +45,7 @@ export const EditAdvice: React.FC<Props> = ({
   } = useForm<Advice>({
     mode: 'onTouched',
     defaultValues: advice,
+    resolver: yupResolver<Advice>(editAdviceSchema),
   });
 
   const onSubmit: SubmitHandler<Advice> = async (data: Advice) => {
@@ -56,9 +67,8 @@ export const EditAdvice: React.FC<Props> = ({
           error={errors.question?.message}
           register={{
             ...register('question', {
-              required: `Питання не вказано`,
               onBlur: (event: React.ChangeEvent<HTMLInputElement>) => {
-                setValue('question', handleMessageBlur(event.target.value));
+                setValue('question', handleCommonBlur(event.target.value));
               },
             }),
           }}
@@ -72,9 +82,8 @@ export const EditAdvice: React.FC<Props> = ({
           error={errors.answer?.message}
           register={{
             ...register('answer', {
-              required: `Відповідь не вказано`,
               onBlur: (event: React.ChangeEvent<HTMLInputElement>) => {
-                setValue('answer', handleMessageBlur(event.target.value));
+                setValue('answer', handleCommonBlur(event.target.value));
               },
             }),
           }}
@@ -85,7 +94,7 @@ export const EditAdvice: React.FC<Props> = ({
           control={control}
           render={({ field }) => (
             <Rating
-              title="Оберіть пріоритет питання"
+              label="Оберіть пріоритет питання"
               value={field.value}
               onChange={(value: RatingType) => field.onChange(value)}
             />
