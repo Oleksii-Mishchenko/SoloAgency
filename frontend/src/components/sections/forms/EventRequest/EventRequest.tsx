@@ -100,11 +100,7 @@ export const EventRequest: React.FC<Props> = ({ relPage, sectionRef }) => {
           Бажаєте замовити організацію події?
         </h2>
 
-        {token && user ? (
-          <p className="event-request__info">
-            Заповніть форму нижче і ми зв'яжемось з вами!
-          </p>
-        ) : (
+        {!token && (
           <>
             <p className="event-request__sign-up-warn">
               Замовити організацію події можуть тільки зареєстровані
@@ -126,173 +122,193 @@ export const EventRequest: React.FC<Props> = ({ relPage, sectionRef }) => {
       </div>
 
       {token && user && (
-        <form className="event-request__form" onSubmit={handleSubmit(onSubmit)}>
-          <div className="event-request__inputs">
-            <div className="event-request__form-fields">
-              <fieldset className="event-request__fieldset">
-                <TextInput
-                  label="Місто проведення"
-                  placeholder="Місто"
-                  isRequired
-                  error={errors.city?.message}
-                  register={{
-                    ...register('city', {
-                      onBlur: (event: React.ChangeEvent<HTMLInputElement>) => {
-                        setValue('city', handleProperBlur(event.target.value));
-                      },
-                    }),
-                  }}
-                />
+        <>
+          <p className="event-request__info">
+            Заповніть форму нижче і ми зв'яжемось з вами!
+          </p>
 
-                <Controller
-                  control={control}
-                  name="phone"
-                  render={({ field }) => (
-                    <InputPhoneNumber
-                      value={field.value}
-                      isRequired
-                      onChange={(value: string) => field.onChange(value)}
-                      onBlur={field.onBlur}
-                      error={errors.phone?.message}
-                      label="Номер телефону"
-                    />
-                  )}
-                />
+          <form
+            className="event-request__form"
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            <div className="event-request__inputs">
+              <div className="event-request__form-fields">
+                <fieldset className="event-request__fieldset">
+                  <TextInput
+                    label="Місто проведення"
+                    placeholder="Місто"
+                    isRequired
+                    error={errors.city?.message}
+                    register={{
+                      ...register('city', {
+                        onBlur: (
+                          event: React.ChangeEvent<HTMLInputElement>,
+                        ) => {
+                          setValue(
+                            'city',
+                            handleProperBlur(event.target.value),
+                          );
+                        },
+                      }),
+                    }}
+                  />
 
-                <Controller
-                  control={control}
-                  name="date"
-                  render={({ field }) => (
-                    <DatePicker
-                      label="Дата"
-                      error={errors.date?.message}
-                      value={field?.value}
-                      onChange={value => field.onChange(value)}
-                    />
-                  )}
-                />
+                  <Controller
+                    control={control}
+                    name="phone"
+                    render={({ field }) => (
+                      <InputPhoneNumber
+                        value={field.value}
+                        isRequired
+                        onChange={(value: string) => field.onChange(value)}
+                        onBlur={field.onBlur}
+                        error={errors.phone?.message}
+                        label="Номер телефону"
+                      />
+                    )}
+                  />
 
-                <Controller
-                  control={control}
-                  name="event_type"
-                  render={({ field }) => (
-                    <Dropdown
-                      value={field.value}
-                      onChange={(value: number) => field.onChange(value)}
-                      placeholder="Оберіть вид події"
-                      label="Вид події"
-                      error={errors.event_type?.message}
-                      isSearchable
-                      isRequired
-                      selectType={SelectType.EventTypes}
-                    />
-                  )}
-                />
-              </fieldset>
+                  <Controller
+                    control={control}
+                    name="date"
+                    render={({ field }) => (
+                      <DatePicker
+                        label="Дата"
+                        error={errors.date?.message}
+                        value={field?.value}
+                        onChange={value => field.onChange(value)}
+                      />
+                    )}
+                  />
 
-              <fieldset className="event-request__fieldset">
-                <Controller
-                  control={control}
-                  defaultValue={undefined}
-                  name="service"
-                  render={({ field }) => (
-                    <Dropdown
-                      value={field.value}
-                      onChange={(value: number) => field.onChange(value)}
-                      placeholder="Оберіть послугу"
-                      label="Послуга"
-                      isRequired
-                      error={errors.service?.message}
-                      selectType={SelectType.Services}
-                    />
-                  )}
-                />
+                  <Controller
+                    control={control}
+                    name="event_type"
+                    render={({ field }) => (
+                      <Dropdown
+                        value={field.value}
+                        onChange={(value: number) => field.onChange(value)}
+                        placeholder="Оберіть вид події"
+                        label="Вид події"
+                        error={errors.event_type?.message}
+                        isSearchable
+                        isRequired
+                        selectType={SelectType.EventTypes}
+                      />
+                    )}
+                  />
+                </fieldset>
 
-                <TextInput
-                  label="Орієнтовна кількість гостей"
-                  placeholder="Кількість"
-                  error={errors.number_of_guests?.message}
-                  register={{
-                    ...register('number_of_guests', {
-                      valueAsNumber: true,
-                      onChange: (
-                        event: React.ChangeEvent<HTMLInputElement>,
-                      ) => {
-                        if (event.target.value === '') {
-                          setValue('number_of_guests', null);
-                        }
-                      },
-                      onBlur: (event: React.ChangeEvent<HTMLInputElement>) => {
-                        const value = event.target.value;
-                        setValue('number_of_guests', value ? value : null);
-                      },
-                    }),
-                  }}
-                />
+                <fieldset className="event-request__fieldset">
+                  <Controller
+                    control={control}
+                    defaultValue={undefined}
+                    name="service"
+                    render={({ field }) => (
+                      <Dropdown
+                        value={field.value}
+                        onChange={(value: number) => field.onChange(value)}
+                        placeholder="Оберіть послугу"
+                        label="Послуга"
+                        isRequired
+                        error={errors.service?.message}
+                        selectType={SelectType.Services}
+                      />
+                    )}
+                  />
 
-                <TextInput
-                  label="Локація святкування"
-                  placeholder="Місце"
-                  error={errors.venue?.message}
-                  register={{
-                    ...register('venue', {
-                      onBlur: (event: React.ChangeEvent<HTMLInputElement>) => {
-                        setValue(
-                          'venue',
-                          event.target.value
-                            ? handleCommonBlur(event.target.value)
-                            : null,
-                        );
-                      },
-                    }),
-                  }}
-                />
+                  <TextInput
+                    label="Орієнтовна кількість гостей"
+                    placeholder="Кількість"
+                    error={errors.number_of_guests?.message}
+                    register={{
+                      ...register('number_of_guests', {
+                        valueAsNumber: true,
+                        onChange: (
+                          event: React.ChangeEvent<HTMLInputElement>,
+                        ) => {
+                          if (event.target.value === '') {
+                            setValue('number_of_guests', null);
+                          }
+                        },
+                        onBlur: (
+                          event: React.ChangeEvent<HTMLInputElement>,
+                        ) => {
+                          const value = event.target.value;
+                          setValue('number_of_guests', value ? value : null);
+                        },
+                      }),
+                    }}
+                  />
 
-                <TextInput
-                  label="Вкажіть стиль заходу"
-                  placeholder="Стиль"
-                  error={errors.style?.message}
-                  register={{
-                    ...register('style', {
-                      onBlur: (event: React.ChangeEvent<HTMLInputElement>) => {
-                        setValue(
-                          'style',
-                          event.target.value
-                            ? handleCommonBlur(event.target.value)
-                            : null,
-                        );
-                      },
-                    }),
-                  }}
-                />
-              </fieldset>
+                  <TextInput
+                    label="Локація святкування"
+                    placeholder="Місце"
+                    error={errors.venue?.message}
+                    register={{
+                      ...register('venue', {
+                        onBlur: (
+                          event: React.ChangeEvent<HTMLInputElement>,
+                        ) => {
+                          setValue(
+                            'venue',
+                            event.target.value
+                              ? handleCommonBlur(event.target.value)
+                              : null,
+                          );
+                        },
+                      }),
+                    }}
+                  />
+
+                  <TextInput
+                    label="Вкажіть стиль заходу"
+                    placeholder="Стиль"
+                    error={errors.style?.message}
+                    register={{
+                      ...register('style', {
+                        onBlur: (
+                          event: React.ChangeEvent<HTMLInputElement>,
+                        ) => {
+                          setValue(
+                            'style',
+                            event.target.value
+                              ? handleCommonBlur(event.target.value)
+                              : null,
+                          );
+                        },
+                      }),
+                    }}
+                  />
+                </fieldset>
+              </div>
+
+              <TextArea
+                label="Особливі побажання"
+                error={errors.description?.message}
+                register={{
+                  ...register('description', {
+                    onBlur: (event: React.ChangeEvent<HTMLInputElement>) => {
+                      setValue(
+                        'description',
+                        event.target.value
+                          ? handleCommonBlur(event.target.value)
+                          : null,
+                      );
+                    },
+                  }),
+                }}
+              />
             </div>
 
-            <TextArea
-              label="Особливі побажання"
-              error={errors.description?.message}
-              register={{
-                ...register('description', {
-                  onBlur: (event: React.ChangeEvent<HTMLInputElement>) => {
-                    setValue(
-                      'description',
-                      event.target.value
-                        ? handleCommonBlur(event.target.value)
-                        : null,
-                    );
-                  },
-                }),
-              }}
+            <MainButton
+              className="event-request__button"
+              type="submit"
+              text="Надіслати"
+              isLoading={isEventRequestInProgress}
             />
-          </div>
-
-          <MainButton
-            className="event-request__button"
-            type="submit"
-            text="Надіслати"
-            isLoading={isEventRequestInProgress}
-          />
-        </form>
+          </form>
+        </>
       )}
 
       {event && (
