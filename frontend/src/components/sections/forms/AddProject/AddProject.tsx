@@ -1,14 +1,14 @@
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { schema } from '../../../../assets/libs/validation/schema';
 import * as portfolioActions from '../../../../features/portfolioSlice';
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
 import { MainButton } from '../../../UI/buttons';
 import { Notification } from '../../../UX';
 import { NewProject } from '../../../../types/Project';
 import { AttachFile, TextArea, TextInput } from '../../../UI/inputs/fields';
-import {
-  handleCommonBlur,
-  handleProperBlur,
-} from '../../../../helpers/textManipulator';
+import { handleCommonBlur } from '../../../../helpers/textManipulator';
 import './add-project.scss';
 
 type Props = {
@@ -16,6 +16,12 @@ type Props = {
 };
 
 export const AddProject: React.FC<Props> = ({ relPage }) => {
+  const newProjectSchema = yup.object({
+    title: schema.messageRequired(120),
+    description: schema.messageRequired(1023),
+    photo: schema.photo,
+  });
+
   const dispatch = useAppDispatch();
   const { errorsAdding, isAdding, isAddSuccess } = useAppSelector(
     state => state.portfolio,
@@ -30,6 +36,12 @@ export const AddProject: React.FC<Props> = ({ relPage }) => {
     trigger,
   } = useForm<NewProject>({
     mode: 'onTouched',
+    defaultValues: {
+      title: '',
+      description: '',
+      photo: undefined,
+    },
+    resolver: yupResolver<NewProject>(newProjectSchema),
   });
 
   const onSubmit: SubmitHandler<NewProject> = async (data: NewProject) => {
@@ -63,13 +75,8 @@ export const AddProject: React.FC<Props> = ({ relPage }) => {
           error={errors.title?.message}
           register={{
             ...register('title', {
-              required: `Назва не може бути порожньою`,
-              pattern: {
-                value: /^[A-Za-zА-Яа-я ]+$/,
-                message: 'Тільки українські та латинські літери',
-              },
               onBlur: (event: React.ChangeEvent<HTMLInputElement>) => {
-                setValue('title', handleProperBlur(event.target.value));
+                setValue('title', handleCommonBlur(event.target.value));
                 trigger('title');
               },
             }),
@@ -84,7 +91,6 @@ export const AddProject: React.FC<Props> = ({ relPage }) => {
           error={errors.description?.message}
           register={{
             ...register('description', {
-              required: `Опис не може бути порожнім`,
               onBlur: (event: React.ChangeEvent<HTMLInputElement>) => {
                 setValue('description', handleCommonBlur(event.target.value));
               },
@@ -95,14 +101,12 @@ export const AddProject: React.FC<Props> = ({ relPage }) => {
         <Controller
           control={control}
           name="photo"
-          rules={{ required: 'Будь ласка, додайте зображення.' }}
           render={({ field: { value, onChange } }) => {
             return (
               <AttachFile
                 label="Оберіть фото події"
                 isRequired
                 error={errors.photo?.message}
-                defaultValue={value?.name || ''}
                 value={value?.name}
                 readOnly
                 onAttach={value => {

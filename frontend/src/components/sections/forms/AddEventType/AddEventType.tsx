@@ -1,11 +1,11 @@
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { schema } from '../../../../assets/libs/validation/schema';
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
-import { NewEventType } from '../../../../types/EventType';
 import * as eventTypesActions from '../../../../features/eventTypesSlice';
-import {
-  handleCommonBlur,
-  handleProperBlur,
-} from '../../../../helpers/textManipulator';
+import { NewEventType } from '../../../../types/EventType';
+import { handleCommonBlur } from '../../../../helpers/textManipulator';
 import { AttachFile, TextArea, TextInput } from '../../../UI/inputs/fields';
 import { MainButton } from '../../../UI/buttons';
 import { Notification } from '../../../UX';
@@ -16,6 +16,12 @@ type Props = {
 };
 
 export const AddEventType: React.FC<Props> = ({ relPage }) => {
+  const eventTypeSchema = yup.object({
+    name: schema.messageRequired(255),
+    description: schema.messageRequired(255),
+    photo: schema.photo,
+  });
+
   const dispatch = useAppDispatch();
   const { errorsAdding, isAdding, isAddSuccess } = useAppSelector(
     state => state.eventTypes,
@@ -30,6 +36,12 @@ export const AddEventType: React.FC<Props> = ({ relPage }) => {
     trigger,
   } = useForm<NewEventType>({
     mode: 'onTouched',
+    defaultValues: {
+      name: '',
+      description: '',
+      photo: undefined,
+    },
+    resolver: yupResolver<NewEventType>(eventTypeSchema),
   });
 
   const onSubmit: SubmitHandler<NewEventType> = async (data: NewEventType) => {
@@ -63,13 +75,8 @@ export const AddEventType: React.FC<Props> = ({ relPage }) => {
           error={errors.name?.message}
           register={{
             ...register('name', {
-              required: `Назва не може бути порожньою`,
-              pattern: {
-                value: /^[A-Za-zА-Яа-я ]+$/,
-                message: 'Тільки українські та латинські літери',
-              },
               onBlur: (event: React.ChangeEvent<HTMLInputElement>) => {
-                setValue('name', handleProperBlur(event.target.value));
+                setValue('name', handleCommonBlur(event.target.value));
                 trigger('name');
               },
             }),
@@ -84,7 +91,6 @@ export const AddEventType: React.FC<Props> = ({ relPage }) => {
           error={errors.description?.message}
           register={{
             ...register('description', {
-              required: `Опис не може бути порожнім`,
               onBlur: (event: React.ChangeEvent<HTMLInputElement>) => {
                 setValue('description', handleCommonBlur(event.target.value));
               },
@@ -95,13 +101,11 @@ export const AddEventType: React.FC<Props> = ({ relPage }) => {
         <Controller
           control={control}
           name="photo"
-          rules={{ required: 'Будь ласка, додайте зображення.' }}
           render={({ field: { value, onChange } }) => {
             return (
               <AttachFile
                 label="Оберіть фото послуги"
                 error={errors.photo?.message}
-                defaultValue={value?.name || ''}
                 value={value?.name}
                 isRequired
                 onAttach={value => {

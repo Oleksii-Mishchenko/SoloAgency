@@ -33,6 +33,7 @@ export const Login = () => {
     handleSubmit,
   } = useForm<LoginData>({
     mode: 'onTouched',
+    defaultValues: { email: '', password: '' },
     resolver: yupResolver<LoginData>(loginSchema),
   });
 

@@ -49,14 +49,43 @@ export const schema = {
       excludeEmptyString: true,
     }),
 
-  message: (num: number) =>
-    yup.string().max(num, `Не більше ${num} символів`).nullable(),
+  message: (max: number) =>
+    yup
+      .string()
+      .max(max, `Не більше ${max} символів`)
+      .nullable()
+      .matches(
+        /^[0-9A-Za-zа-щА-ЩЬьЮюЯяЇїІіЄєҐґ'ʼ!"№;%:?*)(_+=₴.,@#$^&|`~<> / }{ -]+$/,
+        {
+          message: 'Тільки українські або латинські літери',
+          excludeEmptyString: true,
+        },
+      ),
 
-  messageRequired: (num: number) =>
+  messageRequired: (max: number) =>
     yup
       .string()
       .required('Поле не може бути порожнім')
-      .max(num, `Не більше ${num} символів`),
+      .max(max, `Не більше ${max} символів`)
+      .matches(
+        /^[0-9A-Za-zа-щА-ЩЬьЮюЯяЇїІіЄєҐґ'ʼ!"№;%:?*)(_+=₴.,@#$^&|`~<> / }{ -]+$/,
+        {
+          message: 'Тільки українські або латинські літери',
+          excludeEmptyString: true,
+        },
+      ),
+
+  photo: yup
+    .mixed<File>()
+    .required('Додайте фотографію')
+    .test('fileType', 'Невірний формат файлу', value => {
+      const extension = value.name.split('.').pop();
+
+      return ['.jpg', '.jpeg', '.png'].includes(`.${extension}`);
+    })
+    .test('fileSize', 'Файл занадто великий', value => {
+      return value.size <= 10485760;
+    }),
 
   rating: yup
     .mixed<RatingType>()

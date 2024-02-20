@@ -10,7 +10,7 @@ export interface Project {
 export interface NewProject {
   title: string;
   description: string;
-  photo: File | null;
+  photo: File;
 }
 
 export type Portfolio = PaginationResult<Project>;
