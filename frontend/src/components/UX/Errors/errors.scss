@@ -26,12 +26,18 @@
     @extend %body;
     padding-left: 20px;
     margin-bottom: 5px;
-    text-transform: capitalize;
+
+    &::first-letter {
+      text-transform: capitalize;
+    }
   }
 
   &__message {
     @extend %body-error;
     padding-left: 40px;
-    text-transform: capitalize;
+
+    &::first-letter {
+      text-transform: capitalize;
+    }
   }
 }
