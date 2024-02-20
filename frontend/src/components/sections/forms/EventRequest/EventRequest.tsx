@@ -1,6 +1,9 @@
 import { Controller, useForm } from 'react-hook-form';
 import { LegacyRef } from 'react';
 import { format } from 'date-fns';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { schema } from '../../../../assets/libs/validation/schema';
 import { useAppSelector, useAppDispatch } from '../../../../app/hooks';
 import * as eventsActions from '../../../../features/eventsSlice';
 import {
@@ -19,6 +22,10 @@ import {
 import { SelectType } from '../../../../types/SelectType';
 import { Notification } from '../../../UX';
 import { cleanPhoneNumber } from '../../../../helpers/cleanPhoneNumber';
+import {
+  handleCommonBlur,
+  handleProperBlur,
+} from '../../../../helpers/textManipulator';
 import './event-request.scss';
 
 type Props = {
@@ -27,6 +34,18 @@ type Props = {
 };
 
 export const EventRequest: React.FC<Props> = ({ relPage, sectionRef }) => {
+  const eventRequestSchema = yup.object({
+    city: schema.cityRequired,
+    phone: schema.phoneRequired,
+    date: schema.date,
+    event_type: schema.dropdownRequired('вид події'),
+    service: schema.dropdownRequired('послугу'),
+    number_of_guests: schema.numberOfGuests,
+    venue: schema.message(63),
+    style: schema.message(63),
+    description: schema.message(500),
+  });
+
   const dispatch = useAppDispatch();
   const { event, eventRequestErrors, isEventRequestInProgress } =
     useAppSelector(state => state.events);
@@ -36,14 +55,29 @@ export const EventRequest: React.FC<Props> = ({ relPage, sectionRef }) => {
     register,
     control,
     reset,
+    setValue,
     handleSubmit,
     formState: { errors },
-  } = useForm<EventRequestData>({ mode: 'onTouched' });
+  } = useForm<EventRequestData>({
+    mode: 'onTouched',
+    defaultValues: {
+      city: '',
+      phone: '',
+      date: null,
+      event_type: undefined,
+      service: undefined,
+      number_of_guests: null,
+      venue: null,
+      style: null,
+      description: null,
+    },
+    resolver: yupResolver<EventRequestData>(eventRequestSchema),
+  });
 
   const onSubmit = async (data: EventRequestData) => {
     const preparedData: PreparedEventRequestData = {
       ...data,
-      date: data.date ? format(data.date, 'yyyy-MM-dd') : '',
+      date: data.date ? format(data.date, 'yyyy-MM-dd') : null,
       phone: cleanPhoneNumber(data.phone),
     };
 
@@ -102,20 +136,17 @@ export const EventRequest: React.FC<Props> = ({ relPage, sectionRef }) => {
                   isRequired
                   error={errors.city?.message}
                   register={{
-                    ...register('city', { required: 'Вкажіть місто' }),
+                    ...register('city', {
+                      onBlur: (event: React.ChangeEvent<HTMLInputElement>) => {
+                        setValue('city', handleProperBlur(event.target.value));
+                      },
+                    }),
                   }}
                 />
 
                 <Controller
                   control={control}
                   name="phone"
-                  rules={{
-                    required: 'Введіть номер телефону',
-                    pattern: {
-                      value: /^\+38 \(\d{3}\) \d{3}-\d{2}-\d{2}$/,
-                      message: 'Введіть правильний номер телефону',
-                    },
-                  }}
                   render={({ field }) => (
                     <InputPhoneNumber
                       value={field.value}
@@ -135,7 +166,7 @@ export const EventRequest: React.FC<Props> = ({ relPage, sectionRef }) => {
                     <DatePicker
                       label="Дата"
                       error={errors.date?.message}
-                      value={field.value}
+                      value={field?.value}
                       onChange={value => field.onChange(value)}
                     />
                   )}
@@ -144,9 +175,6 @@ export const EventRequest: React.FC<Props> = ({ relPage, sectionRef }) => {
                 <Controller
                   control={control}
                   name="event_type"
-                  rules={{
-                    required: 'Вкажіть вид події',
-                  }}
                   render={({ field }) => (
                     <Dropdown
                       value={field.value}
@@ -167,9 +195,6 @@ export const EventRequest: React.FC<Props> = ({ relPage, sectionRef }) => {
                   control={control}
                   defaultValue={undefined}
                   name="service"
-                  rules={{
-                    required: 'Вкажіть послугу',
-                  }}
                   render={({ field }) => (
                     <Dropdown
                       value={field.value}
@@ -190,6 +215,17 @@ export const EventRequest: React.FC<Props> = ({ relPage, sectionRef }) => {
                   register={{
                     ...register('number_of_guests', {
                       valueAsNumber: true,
+                      onChange: (
+                        event: React.ChangeEvent<HTMLInputElement>,
+                      ) => {
+                        if (event.target.value === '') {
+                          setValue('number_of_guests', null);
+                        }
+                      },
+                      onBlur: (event: React.ChangeEvent<HTMLInputElement>) => {
+                        const value = event.target.value;
+                        setValue('number_of_guests', value ? value : null);
+                      },
                     }),
                   }}
                 />
@@ -199,7 +235,16 @@ export const EventRequest: React.FC<Props> = ({ relPage, sectionRef }) => {
                   placeholder="Місце"
                   error={errors.venue?.message}
                   register={{
-                    ...register('venue'),
+                    ...register('venue', {
+                      onBlur: (event: React.ChangeEvent<HTMLInputElement>) => {
+                        setValue(
+                          'venue',
+                          event.target.value
+                            ? handleCommonBlur(event.target.value)
+                            : null,
+                        );
+                      },
+                    }),
                   }}
                 />
 
@@ -208,7 +253,16 @@ export const EventRequest: React.FC<Props> = ({ relPage, sectionRef }) => {
                   placeholder="Стиль"
                   error={errors.style?.message}
                   register={{
-                    ...register('style'),
+                    ...register('style', {
+                      onBlur: (event: React.ChangeEvent<HTMLInputElement>) => {
+                        setValue(
+                          'style',
+                          event.target.value
+                            ? handleCommonBlur(event.target.value)
+                            : null,
+                        );
+                      },
+                    }),
                   }}
                 />
               </fieldset>
@@ -217,7 +271,18 @@ export const EventRequest: React.FC<Props> = ({ relPage, sectionRef }) => {
             <TextArea
               label="Особливі побажання"
               error={errors.description?.message}
-              register={{ ...register('description') }}
+              register={{
+                ...register('description', {
+                  onBlur: (event: React.ChangeEvent<HTMLInputElement>) => {
+                    setValue(
+                      'description',
+                      event.target.value
+                        ? handleCommonBlur(event.target.value)
+                        : null,
+                    );
+                  },
+                }),
+              }}
             />
           </div>
 

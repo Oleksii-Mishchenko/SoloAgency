@@ -27,8 +27,18 @@ export const schema = {
   city: yup
     .string()
     .nullable()
-    .max(30, 'Не більше 30 символів')
-    .matches(/^[A-Za-zа-щА-ЩЬьЮюЯяЇїІіЄєҐґ'ʼ -]+$/, {
+    .max(63, 'Не більше 63 символів')
+    .matches(/^[0-9A-Za-zа-щА-ЩЬьЮюЯяЇїІіЄєҐґ'ʼ -]+$/, {
+      message: 'Тільки українські або латинські літери',
+      excludeEmptyString: true,
+    }),
+
+  cityRequired: yup
+    .string()
+    .required('Введіть назву міста')
+    .min(2, 'Не менше 2 символів')
+    .max(63, 'Не більше 63 символів')
+    .matches(/^[0-9A-Za-zа-щА-ЩЬьЮюЯяЇїІіЄєҐґ'ʼ -]+$/, {
       message: 'Тільки українські або латинські літери',
       excludeEmptyString: true,
     }),
@@ -48,6 +58,20 @@ export const schema = {
       message: 'Введіть номер телефону повністю',
       excludeEmptyString: true,
     }),
+
+  date: yup
+    .date()
+    .nullable()
+    .min(new Date(), 'Дата не може бути раніше сьогоднішньої'),
+
+  numberOfGuests: yup
+    .number()
+    .nullable()
+    .integer('Введіть ціле число')
+    .positive('Введіть додатне число')
+    .typeError('Тільки число'),
+
+  dropdownRequired: (type: string) => yup.number().required(`Вкажіть ${type}`),
 
   message: (max: number) =>
     yup
