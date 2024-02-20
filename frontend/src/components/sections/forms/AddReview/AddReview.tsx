@@ -63,7 +63,7 @@ export const AddReview: React.FC<Props> = ({ relPage }) => {
               control={control}
               render={({ field }) => (
                 <Rating
-                  title="Поставте нам оцінку"
+                  label="Поставте нам оцінку"
                   value={field.value}
                   onChange={(value: RatingType) => field.onChange(value)}
                 />

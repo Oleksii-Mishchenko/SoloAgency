@@ -5,17 +5,17 @@ import { Label } from '../../elements';
 import './rating.scss';
 
 type Props = {
-  title: string;
+  label: string;
   value: RatingType;
   onChange: (value: RatingType) => void;
 };
 
-export const Rating: React.FC<Props> = ({ title, value, onChange }) => {
+export const Rating: React.FC<Props> = ({ label, value, onChange }) => {
   const stars: RatingType[] = useMemo(() => [1, 2, 3, 4, 5], []);
 
   return (
     <div className="rating">
-      <Label label={title} isRequired />
+      <Label label={label} isRequired />
 
       <div className="rating__stars">
         {stars.map(star => (
