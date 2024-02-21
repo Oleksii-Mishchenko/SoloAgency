@@ -28,12 +28,22 @@ export const Orders: React.FC<Props> = ({ relPage }) => {
   const page = searchParams.get('page');
   const [activeOrder, setActiveOrder] = useState<OrderType | null>(null);
   const dispatch = useAppDispatch();
-  const { callRequests, areCRLoading, callRequestsErrors } = useAppSelector(
-    state => state.callRequest,
-  );
-  const { events, areEventsLoading, eventsErrors } = useAppSelector(
-    state => state.events,
-  );
+  const {
+    callRequests,
+    areCRLoading,
+    callRequestsErrors,
+    changeCRStatusId,
+    changeCRStatusErrorId,
+    changeCRStatusErrors,
+  } = useAppSelector(state => state.callRequest);
+  const {
+    events,
+    areEventsLoading,
+    eventsErrors,
+    changeEventStatusId,
+    changeEventStatusErrors,
+    changeEventStatusErrorId,
+  } = useAppSelector(state => state.events);
   const { user } = useAppSelector(state => state.user);
   const { token } = useAppSelector(state => state.auth);
   const areCRsVisible = activeOrder === OrderType.CallRequest && !areCRLoading;
@@ -97,7 +107,18 @@ export const Orders: React.FC<Props> = ({ relPage }) => {
             {areCRsVisible && !!callRequests.results.length && (
               <>
                 {callRequests.results.map(callRequest => {
-                  return <CROrder order={callRequest} key={callRequest.id} />;
+                  return (
+                    <CROrder
+                      order={callRequest}
+                      key={callRequest.id}
+                      errors={
+                        changeCRStatusErrorId === callRequest.id
+                          ? changeCRStatusErrors
+                          : null
+                      }
+                      isChangingStatus={callRequest.id === changeCRStatusId}
+                    />
+                  );
                 })}
 
                 {callRequests.num_pages > 1 && (
@@ -118,6 +139,12 @@ export const Orders: React.FC<Props> = ({ relPage }) => {
                       order={event}
                       key={event.id}
                       isStaff={user.is_staff}
+                      errors={
+                        changeEventStatusErrorId === event.id
+                          ? changeEventStatusErrors
+                          : null
+                      }
+                      isChangingStatus={event.id === changeEventStatusId}
                     />
                   );
                 })}

@@ -1,6 +1,5 @@
+import { OrderStatus } from './OrderStatus';
 import { PaginationResult } from './PaginationConfig';
-
-export type EventStatus = 'created' | 'done' | 'in_progress' | 'rejected';
 
 export interface Event {
   id: number;
@@ -15,7 +14,7 @@ export interface Event {
   created_at: string;
   venue: string;
   phone: string;
-  status: EventStatus;
+  status: OrderStatus;
 }
 
 export interface EventRequestData {

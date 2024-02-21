@@ -11,8 +11,9 @@ export type EventsState = {
   events: Events;
   areEventsLoading: boolean;
   eventsErrors: ServerErrorResponse | null;
-  isStatusChanging: boolean;
-  changeStatusErrors: ServerErrorResponse | null;
+  changeEventStatusId: number | null;
+  changeEventStatusErrors: ServerErrorResponse | null;
+  changeEventStatusErrorId: number | null;
 };
 
 const initialState: EventsState = {
@@ -28,8 +29,9 @@ const initialState: EventsState = {
   },
   areEventsLoading: false,
   eventsErrors: null,
-  isStatusChanging: false,
-  changeStatusErrors: null,
+  changeEventStatusId: null,
+  changeEventStatusErrors: null,
+  changeEventStatusErrorId: null,
 };
 
 export const add = createAsyncThunk(
@@ -66,7 +68,8 @@ export const eventsSlice = createSlice({
     },
 
     clearChangeStatusErrors: state => {
-      state.changeStatusErrors = null;
+      state.changeEventStatusErrors = null;
+      state.changeEventStatusErrorId = null;
     },
   },
 
@@ -101,25 +104,24 @@ export const eventsSlice = createSlice({
       state.eventsErrors = parseErrors(action.error.message);
     });
 
-    builder.addCase(changeStatus.pending, state => {
-      state.isStatusChanging = true;
-      state.changeStatusErrors = null;
+    builder.addCase(changeStatus.pending, (state, action) => {
+      state.changeEventStatusId = action.meta.arg.id;
+      state.changeEventStatusErrors = null;
     });
 
     builder.addCase(changeStatus.fulfilled, (state, action) => {
-      state.isStatusChanging = false;
+      state.changeEventStatusId = null;
       state.events.results = state.events.results.map(result => {
-        if (result.id === action.payload.id) {
-          return { ...result, status: action.payload.status };
-        }
-
-        return result;
+        return result.id === action.payload.id
+          ? { ...result, status: action.payload.status }
+          : result;
       });
     });
 
     builder.addCase(changeStatus.rejected, (state, action) => {
-      state.isStatusChanging = false;
-      state.changeStatusErrors = parseErrors(action.error.message);
+      state.changeEventStatusId = null;
+      state.changeEventStatusErrorId = action.meta.arg.id;
+      state.changeEventStatusErrors = parseErrors(action.error.message);
     });
   },
 });
