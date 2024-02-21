@@ -1,64 +1,46 @@
-import { useState } from 'react';
+import { useState, FC, memo } from 'react';
 import Select, { SingleValue } from 'react-select';
-import { useAppDispatch, useAppSelector } from '../../../../../app/hooks';
-import * as eventsActions from '../../../../../features/eventsSlice';
 import { Label } from '../../elements';
-import { EventStatus } from '../../../../../types/Event';
-import { statusUa } from '../../../../../assets/libs/translations/statusUa';
+import { OrderStatus } from '../../../../../types/OrderStatus';
+import { statusOpts } from '../../../../../assets/libs/translations/statusUa';
+import { SelectOption } from '../../../../../types/SelectOption';
 import './dropdown.scss';
 
 type Props = {
   inputLabel: string;
-  value: EventStatus;
-  id: number;
+  value: OrderStatus;
+  isLoading: boolean;
+  onChange: (newValue: SingleValue<SelectOption<OrderStatus>>) => void;
 };
 
-export const OrderSelect: React.FC<Props> = ({ inputLabel, value, id }) => {
-  const dispatch = useAppDispatch();
-  const { isStatusChanging } = useAppSelector(state => state.events);
-  const entries: [EventStatus, string][] = Object.entries(statusUa).map(
-    ([key, value]) => [key as EventStatus, value],
-  );
-  const options = entries.map(([value, label]) => ({ value, label }));
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const onMenuOpen = () => setIsMenuOpen(true);
-  const onMenuClose = () => setIsMenuOpen(false);
+export const OrderSelect: FC<Props> = memo(
+  ({ inputLabel, value, onChange, isLoading }) => {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const onMenuOpen = () => setIsMenuOpen(true);
+    const onMenuClose = () => setIsMenuOpen(false);
 
-  const getValue = (newValue: EventStatus) => {
-    return options.find(option => option.value === newValue);
-  };
+    const getValue = (newValue: OrderStatus) => {
+      return statusOpts.find(option => option.value === newValue);
+    };
 
-  const handleChange = (
-    newValue: SingleValue<{ value: EventStatus; label: string }>,
-  ) => {
-    const status = newValue?.value;
+    return (
+      <div className="event-order__dropdown dropdown">
+        <Label label={inputLabel} />
 
-    if (status === value) {
-      return;
-    }
-
-    if (status) {
-      dispatch(eventsActions.changeStatus({ id, status }));
-    }
-  };
-
-  return (
-    <div className="event-order__dropdown dropdown">
-      <Label label={inputLabel} />
-
-      <Select
-        inputId={inputLabel}
-        options={options}
-        isLoading={isStatusChanging}
-        isSearchable={false}
-        value={getValue(value)}
-        onChange={handleChange}
-        classNamePrefix="dropdown"
-        menuIsOpen={isMenuOpen}
-        onMenuOpen={onMenuOpen}
-        onMenuClose={onMenuClose}
-        onFocus={onMenuOpen}
-      />
-    </div>
-  );
-};
+        <Select
+          inputId={inputLabel}
+          options={statusOpts}
+          isLoading={isLoading}
+          isSearchable={false}
+          value={getValue(value)}
+          onChange={onChange}
+          classNamePrefix="dropdown"
+          menuIsOpen={isMenuOpen}
+          onMenuOpen={onMenuOpen}
+          onMenuClose={onMenuClose}
+          onFocus={onMenuOpen}
+        />
+      </div>
+    );
+  },
+);

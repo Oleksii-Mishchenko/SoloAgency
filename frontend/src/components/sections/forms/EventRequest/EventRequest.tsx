@@ -1,5 +1,5 @@
+import { LegacyRef, memo, FC } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { LegacyRef } from 'react';
 import { format } from 'date-fns';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -33,7 +33,7 @@ type Props = {
   sectionRef: LegacyRef<HTMLElement>;
 };
 
-export const EventRequest: React.FC<Props> = ({ relPage, sectionRef }) => {
+export const EventRequest: FC<Props> = memo(({ relPage, sectionRef }) => {
   const eventRequestSchema = yup.object({
     city: schema.cityRequired,
     phone: schema.phoneRequired,
@@ -329,4 +329,4 @@ export const EventRequest: React.FC<Props> = ({ relPage, sectionRef }) => {
       )}
     </section>
   );
-};
+});

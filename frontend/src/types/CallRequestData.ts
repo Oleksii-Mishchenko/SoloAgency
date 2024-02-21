@@ -1,3 +1,4 @@
+import { OrderStatus } from './OrderStatus';
 import { PaginationResult } from './PaginationConfig';
 
 export interface CallRequestData {
@@ -10,6 +11,7 @@ export interface CallRequestData {
 export interface CallRequest extends CallRequestData {
   id: number;
   created_at: string;
+  status: OrderStatus;
 }
 
 export type CallRequests = PaginationResult<CallRequest>;

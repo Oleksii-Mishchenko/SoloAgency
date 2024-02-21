@@ -7,7 +7,7 @@ import { useLoadOptions } from '../../../../../customHooks/useLoadOptions';
 import { InputError, Label } from '../../elements';
 import './dropdown.scss';
 
-type DropdownProps = {
+type Props = {
   label: string;
   placeholder: string;
   value: number | undefined;
@@ -18,7 +18,7 @@ type DropdownProps = {
   selectType: SelectType;
 };
 
-export const Dropdown: React.FC<DropdownProps> = ({
+export const Dropdown: React.FC<Props> = ({
   label,
   placeholder,
   value,
@@ -33,9 +33,11 @@ export const Dropdown: React.FC<DropdownProps> = ({
   const onMenuOpen = () => setIsMenuOpen(true);
   const onMenuClose = () => setIsMenuOpen(false);
 
-  const handleChange = (selectedOption: OnChangeValue<SelectOption, false>) => {
+  const handleChange = (
+    selectedOption: OnChangeValue<SelectOption<number>, false>,
+  ) => {
     if (selectedOption) {
-      const selectedValue = (selectedOption as SelectOption).value;
+      const selectedValue = selectedOption.value;
       onChange(selectedValue);
     }
   };

@@ -1,3 +1,4 @@
+import { FC, memo } from 'react';
 import classNames from 'classnames';
 import './order-item.scss';
 
@@ -6,7 +7,7 @@ type Props = {
   value?: string | null;
 };
 
-export const OrderItem: React.FC<Props> = ({ name, value }) => {
+export const OrderItem: FC<Props> = memo(({ name, value }) => {
   return (
     <li className="order-item">
       <p className="order-item__name">{`${name}:`}</p>
@@ -20,4 +21,4 @@ export const OrderItem: React.FC<Props> = ({ name, value }) => {
       </p>
     </li>
   );
-};
+});
