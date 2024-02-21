@@ -1,4 +1,4 @@
-import React, { useCallback, FC } from 'react';
+import { useCallback, FC, memo } from 'react';
 import { SingleValue } from 'react-select';
 import * as callRequestsActions from '../../../features/callRequestSlice';
 import { useAppDispatch } from '../../../app/hooks';
@@ -18,7 +18,7 @@ type Props = {
   isChangingStatus: boolean;
 };
 
-export const CROrder: FC<Props> = React.memo(
+export const CROrder: FC<Props> = memo(
   ({
     order: { id, created_at, city, name, phone, description, status },
     isChangingStatus,

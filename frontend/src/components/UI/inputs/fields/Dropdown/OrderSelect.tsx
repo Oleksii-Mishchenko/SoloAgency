@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, FC, memo } from 'react';
 import Select, { SingleValue } from 'react-select';
 import { Label } from '../../elements';
 import { OrderStatus } from '../../../../../types/OrderStatus';
@@ -13,37 +13,34 @@ type Props = {
   onChange: (newValue: SingleValue<SelectOption<OrderStatus>>) => void;
 };
 
-export const OrderSelect: React.FC<Props> = ({
-  inputLabel,
-  value,
-  onChange,
-  isLoading,
-}) => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const onMenuOpen = () => setIsMenuOpen(true);
-  const onMenuClose = () => setIsMenuOpen(false);
+export const OrderSelect: FC<Props> = memo(
+  ({ inputLabel, value, onChange, isLoading }) => {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const onMenuOpen = () => setIsMenuOpen(true);
+    const onMenuClose = () => setIsMenuOpen(false);
 
-  const getValue = (newValue: OrderStatus) => {
-    return statusOpts.find(option => option.value === newValue);
-  };
+    const getValue = (newValue: OrderStatus) => {
+      return statusOpts.find(option => option.value === newValue);
+    };
 
-  return (
-    <div className="event-order__dropdown dropdown">
-      <Label label={inputLabel} />
+    return (
+      <div className="event-order__dropdown dropdown">
+        <Label label={inputLabel} />
 
-      <Select
-        inputId={inputLabel}
-        options={statusOpts}
-        isLoading={isLoading}
-        isSearchable={false}
-        value={getValue(value)}
-        onChange={onChange}
-        classNamePrefix="dropdown"
-        menuIsOpen={isMenuOpen}
-        onMenuOpen={onMenuOpen}
-        onMenuClose={onMenuClose}
-        onFocus={onMenuOpen}
-      />
-    </div>
-  );
-};
+        <Select
+          inputId={inputLabel}
+          options={statusOpts}
+          isLoading={isLoading}
+          isSearchable={false}
+          value={getValue(value)}
+          onChange={onChange}
+          classNamePrefix="dropdown"
+          menuIsOpen={isMenuOpen}
+          onMenuOpen={onMenuOpen}
+          onMenuClose={onMenuClose}
+          onFocus={onMenuOpen}
+        />
+      </div>
+    );
+  },
+);
