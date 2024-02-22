@@ -55,7 +55,7 @@ export const Advices: React.FC<Props> = ({ relPage }) => {
 
   return (
     <section className={`${relPage}__advices advices`} ref={sectionRef}>
-      <h1 className="advices__title">Найпоширеніші питання</h1>
+      <h1 className="advices__title">Поширені запитання</h1>
 
       <div className="advices__wrapper">
         {isLoadingAdvices && (
