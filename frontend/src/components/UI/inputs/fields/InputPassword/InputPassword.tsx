@@ -37,6 +37,9 @@ export const InputPassword: React.FC<InputPasswordProps> = ({
         type={isPasswordVisible ? 'text' : 'password'}
         {...register}
         {...props}
+        onCopy={event => event.preventDefault()}
+        onCut={event => event.preventDefault()}
+        onPaste={event => event.preventDefault()}
       />
 
       <ControlButton

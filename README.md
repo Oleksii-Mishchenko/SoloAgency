@@ -20,22 +20,27 @@ Telegram notifications are configured.
 
 
 ## Content
-- [technology](#technology)
+- [technologies](#technologies)
 - [documentation](#documentation)
-- [docker](#docker)
 - [using](#using)
 - [get access](#using)
-- [project developer](#project-developer)
+- [docker](#docker)
+- [project developers](#project-developers)
 
-## Technology
+## Technologies
 - [Python](https://www.python.org/)
 - [Django](https://www.djangoproject.com/)
 - [Django-Rest-Framework](https://www.django-rest-framework.org/)
 - [Swagger](https://swagger.io/)
 - [Docker](https://www.docker.com/)
-
-- Описати фронтенд
-
+- [Sass](https://sass-lang.com/)
+- [Vite](https://vitejs.dev/)
+- [Typescript](https://www.typescriptlang.org/)
+- [React](https://react.dev/), [React Router](https://reactrouter.com/en/main)
+- [Redux Toolkit](https://redux-toolkit.js.org/), [Redux Persist](https://github.com/rt2zz/redux-persist)
+- [Axios](https://axios-http.com/)
+- [React Hook Form](https://react-hook-form.com/)
+- [Yup](https://github.com/jquense/yup)
 
 ## Documentation
 http://127.0.0.1:8000/api/doc/swagger/
@@ -154,10 +159,10 @@ $ docker-compose up
 ```
 Welcome, the application is ready to use at url http://localhost:3000/SoloAgency/#/
 
-## Project developer
+## Project developers
 
 - [Taras Savchyn](https://www.linkedin.com/in/taras-savchyn-ba2705261/) — Python Developer
-- [Taras Savchyn](https://www.linkedin.com/in/taras-savchyn-ba2705261/) — Frontend Developer
-- [Taras Savchyn](https://www.linkedin.com/in/taras-savchyn-ba2705261/) — Frontend Developer
-- [Taras Savchyn](https://www.linkedin.com/in/taras-savchyn-ba2705261/) — QA
+- [Oleksii Mishchenko](https://www.linkedin.com/in/oleksii-mishchenko-1b1158246/) — Frontend Developer
+- [Tetiana Melnychuk](https://www.linkedin.com/in/tetiana-melnychuk-51b8a3278/) — UI/UX Designer
+- [Ekateryna Shabunina](https://www.linkedin.com/in/ekateryna-shabunina-02732b256/) — QA Engineer
 
