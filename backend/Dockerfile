@@ -12,8 +12,8 @@ ENV PYTHONUNBUFFERED 1
 
 # Upgrade pip and install requirements
 RUN pip install --upgrade pip
-COPY backend/requirements.txt backend/requirements.txt
-RUN pip install -r backend/requirements.txt
+COPY ./backend .
+RUN pip install -r requirements.txt
 
 # Create necessary directories
 RUN mkdir -p /app/media/uploads/

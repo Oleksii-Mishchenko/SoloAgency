@@ -1,0 +1,155 @@
+@import '../../../styles/main.scss';
+
+.auth {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  @include on-desktop {
+    flex-direction: row;
+  }
+
+  &__button {
+    @include on-tablet {
+      margin: 0 auto;
+      width: 300px;
+    }
+
+    @include on-desktop {
+      width: auto;
+    }
+  }
+
+  &__person {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 15px;
+
+    @include on-desktop {
+      position: relative;
+      display: block;
+    }
+  }
+
+  &__account {
+    padding: 8px;
+    border: 0.5px solid $color-grey-elements;
+    border-radius: 5px;
+    background-color: $color-white;
+    overflow: hidden;
+    order: 1;
+
+    @include on-desktop {
+      position: absolute;
+      right: 100%;
+      margin-right: 20px;
+    }
+
+    &-button {
+      display: flex;
+      align-items: center;
+      padding: 0;
+      border: none;
+      background-color: transparent;
+      font-family: Gilroy, sans-serif;
+      font-weight: 500;
+      font-size: 18px;
+      color: $color-black;
+      line-height: 25px;
+      cursor: pointer;
+
+      &--open {
+        margin-bottom: 8px;
+
+        &::after {
+          transform: rotateX(-180deg);
+        }
+      }
+
+      &::after {
+        content: "";
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+        margin-left: 5px;
+        background-image: url(../../../assets/img/chevron-down.svg);
+        transition: all 0.3s;
+      }
+    }
+  }
+
+  &__menu {
+    height: 0;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.3s;
+
+    &--open {
+      height: unset;
+      margin-bottom: 8px;
+      visibility: visible;
+      opacity: 1;
+    }
+
+    &-item {
+      margin-bottom: 8px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    &-link {
+      width: 100%;
+      font-family: Gilroy, sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 16px;
+      color: $color-black;
+      text-align: left;
+      white-space: nowrap;
+      transition: all 0.3s;
+
+      &:hover {
+        background-color: $color-grey-hover;
+      }
+
+      &--button {
+        padding: 0;
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+      }
+
+      &:hover {
+        color: $color-green-hover;
+      }
+
+      &--active {
+        color: $color-green-dark;
+
+        &:hover {
+          color: $color-green-dark;
+        }
+      }
+    }
+  }
+
+  &__avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    width: 40px;
+    background-color: $color-grey-elements;
+    border-radius: 50px;
+    font-family: Gilroy, sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+    color: $color-white;
+    text-transform: uppercase;
+    user-select: none;
+  }
+}

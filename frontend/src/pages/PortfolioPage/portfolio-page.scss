@@ -1,0 +1,25 @@
+@import '../../styles/main.scss';
+
+.portfolio-page{
+  @include page-grid;
+
+  &__search-field {
+    grid-column: 1 / -1;
+
+    @include on-tablet {
+      grid-column: 2 / -2;
+    }
+
+    @include on-desktop {
+      grid-column: 3 / -3;
+    }
+  }
+
+  &__portfolio {
+    @extend .portfolio-page__search-field;
+  }
+
+  &__add-project {
+    @extend .portfolio-page__search-field;
+  }
+}

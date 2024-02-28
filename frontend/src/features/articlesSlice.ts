@@ -5,13 +5,13 @@ import { loadArticles } from '../api/articles';
 import { parseErrors } from '../helpers/parseErrors';
 
 export type ArticlesState = {
-  articles: Article[];
+  articles: Article[] | null;
   isLoadingArticles: boolean;
   errors: ServerErrorResponse | null;
 };
 
 const initialState: ArticlesState = {
-  articles: [],
+  articles: null,
   isLoadingArticles: false,
   errors: null,
 };

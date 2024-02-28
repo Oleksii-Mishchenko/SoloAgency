@@ -2,28 +2,34 @@ import os
 import uuid
 
 from django.contrib.auth import get_user_model
-from django.core.mail import send_mail
+from django.core.validators import RegexValidator, MinValueValidator, MaxValueValidator
 from django.db import models
-from django.db.models.signals import post_save
-from django.dispatch import receiver
+
 from django.utils.text import slugify
 
-from solo_agency import settings
 
 User = get_user_model()
 
 
-def organizer_photo_file_path(instance, filename):
+def service_presentation_pdf_file_path(instance, filename):
     _, extension = os.path.splitext(filename)
-    filename = f"{slugify(instance.full_name)}-{uuid.uuid4()}{extension}"
+    filename = f"{slugify(instance.name)}-{uuid.uuid4()}{extension}"
 
-    return os.path.join("uploads/organizers", filename)
+    return os.path.join("uploads/presentation", filename)
+
 
 def event_type_photo_file_path(instance, filename):
     _, extension = os.path.splitext(filename)
     filename = f"{slugify(instance.name)}-{uuid.uuid4()}{extension}"
 
     return os.path.join("uploads/event-types", filename)
+
+
+def portfolio_photo_file_path(instance, filename):
+    _, extension = os.path.splitext(filename)
+    filename = f"{slugify(instance.title)}-{uuid.uuid4()}{extension}"
+
+    return os.path.join("uploads/portfolio", filename)
 
 
 class Article(models.Model):
@@ -36,7 +42,11 @@ class Article(models.Model):
 
 class Service(models.Model):
     name = models.CharField(max_length=63)
-    description = models.TextField()
+    description = models.TextField(max_length=511)
+
+    presentation = models.FileField(
+        upload_to=service_presentation_pdf_file_path, null=True, blank=True
+    )
 
     def __str__(self):
         return self.name
@@ -63,7 +73,7 @@ class Agency(models.Model):
 
 class EventType(models.Model):
     name = models.CharField(max_length=255, unique=True)
-    description = models.TextField()
+    description = models.TextField(max_length=255)
     photo = models.ImageField(
         upload_to=event_type_photo_file_path,
     )
@@ -73,15 +83,16 @@ class EventType(models.Model):
 
 
 class Organizer(models.Model):
-    description = models.TextField()
+    description = models.TextField(max_length=511)
     first_name = models.CharField(max_length=63)
     last_name = models.CharField(max_length=63)
     position = models.CharField(max_length=63)
-    phone = models.CharField(max_length=13)
-    email = models.EmailField()
-    photo = models.ImageField(
-        upload_to=organizer_photo_file_path,
+    phone_validator = RegexValidator(
+        regex=r"^\+380\d{9}$",
+        message="Phone number must be entered in the format: '+380XXXXXXXXX'.",
     )
+    phone = models.CharField(max_length=13, validators=[phone_validator])
+    email = models.EmailField()
 
     @property
     def full_name(self):
@@ -92,35 +103,73 @@ class Organizer(models.Model):
 
 
 class Event(models.Model):
-    organizers = models.ManyToManyField(
-        Organizer,
+    service = models.ForeignKey("Service", on_delete=models.CASCADE)
+    description = models.TextField(blank=True, null=True)
+    string_validator = RegexValidator(
+        regex=r"^[a-zA-Zа-яА-ЯґҐєЄіІїЇ' ]+$", message="Word must contain only letters."
     )
-    description = models.TextField()
-    name = models.CharField(max_length=63)
-    number_of_guests = models.IntegerField()
-    event_type = models.OneToOneField(EventType, on_delete=models.CASCADE)
-    date = models.DateField()
-    style = models.CharField(
-        max_length=63,
+    city = models.CharField(max_length=63, validators=[string_validator])
+    venue = models.CharField(max_length=63, blank=True, null=True)
+    number_of_guests = models.IntegerField(
+        validators=[MinValueValidator(1), MaxValueValidator(999999)],
+        blank=True,
+        null=True,
     )
+    event_type = models.ForeignKey(EventType, on_delete=models.CASCADE)
+    date = models.DateField(blank=True, null=True)
+    style = models.CharField(max_length=63, blank=True, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_events")
+
+    phone_validator = RegexValidator(
+        regex=r"^\+380\d{9}$",
+        message="Phone number must be entered in the format: '+380XXXXXXXXX'.",
+    )
+    phone = models.CharField(max_length=13, validators=[phone_validator])
+
     created_at = models.DateTimeField(auto_now_add=True)
 
+    status = models.CharField(
+        max_length=64,
+        choices=[
+            ("created", "created"),
+            ("done", "done"),
+            ("in_progress", "in_progress"),
+            ("rejected", "rejected"),
+        ],
+        default="created",
+    )
+
     def __str__(self):
-        return f"{self.name} - {self.event_type.name}"
+        return f"{self.phone} - {self.event_type.name}"
+
+    class Meta:
+        ordering = ["date"]
 
 
 class Advice(models.Model):
-    question = models.TextField()
-    answer = models.TextField()
+    question = models.TextField(max_length=255)
+    answer = models.TextField(max_length=511)
+    priority = models.IntegerField(
+        default=1,
+        choices=[
+            (1, "Low"),
+            (2, "Medium"),
+            (3, "High"),
+            (4, "Very High"),
+            (5, "Critical"),
+        ],
+    )
 
     def __str__(self):
         return self.question
 
+    class Meta:
+        ordering = ["-priority", "question"]
+
 
 class Review(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    text = models.TextField()
+    text = models.TextField(200)
     rating = models.PositiveIntegerField(
         default=5, choices=[(i, i) for i in range(1, 6)]
     )
@@ -128,23 +177,54 @@ class Review(models.Model):
     is_approved = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"Review by {self.user.username} - {self.created_at}"
+        return f"Review by {self.user.email} - {self.created_at}"
+
+    class Meta:
+        ordering = ["is_approved"]
+
+
+class CallRequest(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    string_validator = RegexValidator(
+        regex=r"^[a-zA-Zа-яА-ЯґҐєЄіІїЇ' ]+$", message="Word must contain only letters."
+    )
+    name = models.CharField(max_length=63, validators=[string_validator])
+    description = models.TextField(null=True, blank=True, max_length=255)
+    city = models.CharField(
+        max_length=63, null=True, blank=True, validators=[string_validator]
+    )
+
+    phone_validator = RegexValidator(
+        regex=r"^\+380\d{9}$",
+        message="Phone number must be entered in the format: '+380XXXXXXXXX'.",
+    )
+    phone = models.CharField(max_length=13, validators=[phone_validator])
+
+    status = models.CharField(
+        max_length=64,
+        choices=[
+            ("created", "created"),
+            ("done", "done"),
+            ("in_progress", "in_progress"),
+            ("rejected", "rejected"),
+        ],
+        default="created",
+    )
+
+    def __str__(self):
+        return f"CallRequest: {self.name} {self.phone}"
 
     class Meta:
         ordering = ["-created_at"]
 
 
-class CallRequest(models.Model):
+class Portfolio(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
-    name = models.CharField(max_length=63)
-    description = models.TextField(null=True, blank=True)
-    city = models.CharField(max_length=63, null=True, blank=True)
-    phone = models.CharField(max_length=15)
+    photo = models.ImageField(
+        upload_to=portfolio_photo_file_path,
+    )
+    description = models.TextField(max_length=1023)
+    title = models.CharField(max_length=120)
 
-@receiver(post_save, sender=CallRequest)
-def send_email_on_model_creation(sender, instance, **kwargs):
-    subject = 'Нова модель була створена!'
-    message = f'Модель {instance} була успішно створена.'
-    from_email = settings.DEFAULT_FROM_EMAIL
-    recipient_list = ['savik1992@gmail.com']
-    send_mail(subject, message, from_email, recipient_list)
+    def __str__(self):
+        return self.title

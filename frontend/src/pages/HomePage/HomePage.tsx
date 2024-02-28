@@ -1,215 +1,54 @@
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { Loader } from '../../components/Loader';
-import { MainButton } from '../../components/MainButton';
-import { LoaderElement } from '../../types/LoaderElement';
-import * as articlesActions from '../../features/articlesSlice';
+import { useEffect, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
+import { AddReview, CallRequest } from '../../components/sections/forms';
+import {
+  Articles,
+  ContactUs,
+  Hero,
+  ReviewsSlider,
+} from '../../components/sections/common';
 import './home-page.scss';
-import { useEffect } from 'react';
-import { Article } from '../../components/Article';
-import { SocialMedia } from '../../components/SocialMedia';
-import { CallRequest } from '../../components/CallRequest';
-import { Errors } from '../../components/Errors';
+import { scrollToTop } from '../../helpers/scrollToTop';
+import { useAppSelector } from '../../app/hooks';
 
 export const HomePage = () => {
-  const dispatch = useAppDispatch();
-  const { articles, isLoadingArticles, errors } = useAppSelector(
-    state => state.articles,
-  );
+  const { articles } = useAppSelector(state => state.articles);
+  const location = useLocation();
+  const contactsRef = useRef<HTMLElement>(null);
+
+  const scrollToContacts = () => {
+    if (articles) {
+      contactsRef.current?.scrollIntoView();
+    }
+  };
 
   useEffect(() => {
-    dispatch(articlesActions.init());
-  }, [dispatch]);
+    location.state === 'contacts' ? scrollToContacts() : scrollToTop();
+  }, [location.key, articles]);
 
   return (
     <div className="home-page">
-      <section className="home-page__hero">
-        <div className="home-page__hero-content">
-          <p className="home-page__hero-decorative-text">
-            Організовуємо мрії та перетворюємо їх у реальність - ваші події,
-            наша справа!
-          </p>
+      <Hero relPage="home-page" onCallRequest={scrollToContacts} />
 
-          <MainButton
-            text="Замовити послугу"
-            className="home-page__hero-button"
-          />
-        </div>
-      </section>
+      <Articles relPage="home-page" />
 
-      <section className="home-page__about-us">
-        {isLoadingArticles && (
-          <Loader
-            element={LoaderElement.Block}
-            className="home-page__about-us-loader"
-          />
-        )}
-
-        {!!articles.length &&
-          !errors &&
-          articles.map(article => (
-            <Article
-              key={article.id}
-              article={article}
-              className="home-page__about-us-article"
-            />
-          ))}
-
-        {errors && <Errors errors={errors} />}
-      </section>
-
-      <section className="home-page__contacts">
+      <section className="home-page__contacts" id="contacts" ref={contactsRef}>
         <h1 className="home-page__contacts-title">Наші контакти</h1>
 
         <div className="home-page__contacts-content">
-          <CallRequest />
+          <CallRequest relPage="home-page" />
 
-          <div className="home-page__contacts-items">
-            <div className="home-page__contacts-item">
-              <p className="home-page__contacts-item-name">Номер телефону</p>
-
-              <p className="home-page__contacts-item-value">+380222222222</p>
-            </div>
-
-            <div className="home-page__contacts-item">
-              <p className="home-page__contacts-item-name">Електронна адреса</p>
-
-              <p className="home-page__contacts-item-value">
-                soloagency@gmail.com
-              </p>
-            </div>
-
-            <div className="home-page__contacts-item">
-              <p
-                className="
-                  home-page__contacts-item-name
-                  home-page__contacts-item-name--social
-                "
-              >
-                Шукайте нас також в соціальних мережах:
-              </p>
-
-              <SocialMedia />
-            </div>
-          </div>
+          <ContactUs relPage="home-page" />
         </div>
       </section>
+
+      <section className="home-page__reviews">
+        <h1 className="home-page__reviews-title">Що говорять про нас?</h1>
+
+        <ReviewsSlider />
+      </section>
+
+      <AddReview relPage="home-page" />
     </div>
   );
 };
-
-// export const HomePage = () => {
-//   const [loginData, setLoginData] = useState<LoginData>({
-//     email: '',
-//     password: '',
-//   });
-//   const [registerData, setRegisterData] = useState<RegisterData>({
-//     email: '',
-//     password: '',
-//     first_name: '',
-//     last_name: '',
-//     phone: '',
-//   });
-//   const dispatch = useAppDispatch();
-//   const { authData } = useAppSelector(state => state.auth);
-
-//   const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
-//     event.preventDefault();
-
-//     dispatch(authActions.login(loginData));
-//   };
-
-//   const handleRegister = (event: React.FormEvent<HTMLFormElement>) => {
-//     event.preventDefault();
-
-//     dispatch(authActions.register(registerData));
-//   };
-
-//   useEffect(() => {
-//     if (authData.token) {
-//       dispatch(authActions.getUserByToken(authData.token));
-//     }
-//   }, [authData.token, dispatch]);
-
-//   return (
-//     <div className="home-page">
-//       <h2>Home Page</h2>
-//       <Loader2 />
-//       admin@admin.ua
-//       <form onSubmit={event => handleLogin(event)}>
-//         <input
-//           type="email"
-//           placeholder="Email"
-//           value={loginData.email}
-//           onChange={event =>
-//             setLoginData(state => ({ ...state, email: event.target.value }))
-//           }
-//         />
-//         <input
-//           type="password"
-//           placeholder="Password"
-//           value={loginData.password}
-//           onChange={event =>
-//             setLoginData(state => ({ ...state, password: event.target.value }))
-//           }
-//         />
-//         <button>Log in</button>
-//       </form>
-//       <br />
-//       <form onSubmit={event => handleRegister(event)}>
-//         <input
-//           type="email"
-//           placeholder="Email"
-//           value={registerData.email}
-//           onChange={event =>
-//             setRegisterData(state => ({ ...state, email: event.target.value }))
-//           }
-//         />
-//         <input
-//           type="password"
-//           placeholder="Password"
-//           value={registerData.password}
-//           onChange={event =>
-//             setRegisterData(state => ({
-//               ...state,
-//               password: event.target.value,
-//             }))
-//           }
-//         />
-//         <input
-//           type="text"
-//           placeholder="First name"
-//           value={registerData.first_name}
-//           onChange={event =>
-//             setRegisterData(state => ({
-//               ...state,
-//               first_name: event.target.value,
-//             }))
-//           }
-//         />
-//         <input
-//           type="text"
-//           placeholder="Last name"
-//           value={registerData.last_name}
-//           onChange={event =>
-//             setRegisterData(state => ({
-//               ...state,
-//               last_name: event.target.value,
-//             }))
-//           }
-//         />
-//         <input
-//           type="tel"
-//           placeholder="Phone number"
-//           value={registerData.phone}
-//           onChange={event =>
-//             setRegisterData(state => ({
-//               ...state,
-//               phone: event.target.value,
-//             }))
-//           }
-//         />
-//         <button>Register</button>
-//       </form>
-//     </div>
-//   );
-// };

@@ -1,3 +1,55 @@
-.services-page {
+@import '../../styles/main.scss';
 
+.services-page {
+  @include page-grid;
+
+  &__services {
+    grid-column: 1 / -1;
+
+    @include on-tablet {
+      grid-column: 2 / -2;
+    }
+
+    @include on-desktop {
+      grid-column: 1 / -1;
+    }
+  }
+
+  &__event-types {
+    @extend .services-page__services;
+  }
+
+  &__info {
+    @extend .services-page__services;
+
+    @include on-desktop {
+      grid-column: 1 / 9;
+    }
+
+    &-title {
+      margin-bottom: 20px;
+
+      @extend %h2;
+    }
+
+    &-description {
+      @extend %body;
+    }
+  }
+
+  &__add-event-type {
+    @extend .services-page__info;
+  }
+
+  &__event-request {
+    grid-column: 1 / -1;
+
+    @include on-tablet {
+      grid-column: 2 / -2;
+    }
+
+    @include on-wide-screen {
+      grid-column: span 8;
+    }
+  }
 }

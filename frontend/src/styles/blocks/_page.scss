@@ -1,8 +1,13 @@
 .page {
-scroll-behavior: smooth;
+  scroll-behavior: smooth;
 
   &__body {
     margin: 0;
+    padding-top: 32px;
     background-color: $color-white;
+
+    @include on-desktop {
+      padding-top: 50px;
+    }
   }
 }

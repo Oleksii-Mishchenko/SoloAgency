@@ -1,0 +1,9 @@
+@import '../../styles/main.scss';
+
+.orders-page {
+  @include page-grid;
+
+  &__orders {
+    grid-column: 1 / -1;
+  }
+}

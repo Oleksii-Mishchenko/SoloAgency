@@ -1,9 +1,0 @@
-@import '../../styles/main';
-
-.header-nav-link {
-  @extend %h3;
-
-  &--active {
-    color: $color-green-dark;
-  }
-}

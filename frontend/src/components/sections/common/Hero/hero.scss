@@ -1,0 +1,63 @@
+@import '../../../../styles/main.scss';
+
+.hero {
+  @include grid-container(12, 20px);
+
+  row-gap: 16px;
+
+  &__content {
+    grid-column: 1 / -1;
+
+    @include on-tablet {
+      position: absolute;
+      top: 20px;
+      left: 0;
+      right: 0;
+      grid-column: 3 / -3;
+    }
+
+    @include on-desktop {
+      top: 50px;
+      grid-column: 4 / 10;
+    }
+
+    &-text {
+      margin-bottom: 16px;
+      font-family: Kurale, sans-serif;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 22px;
+      text-align: left;
+
+      @include on-tablet {
+        margin-bottom: 10px;
+        text-align: center;
+        font-size: 20px;
+        line-height: 28px;
+      }
+
+      @include on-desktop {
+        margin-bottom: 20px;
+        font-size: 24px;
+        line-height: 34px;
+      }
+    }
+  }
+
+  &__button {
+    display: block;
+
+    @include on-tablet {
+      margin: 0 auto;
+    }
+  }
+
+  &__banner {
+    grid-column: 1 / -1;
+    padding-bottom: 38%;
+    background-image: url(../../../../assets/img/Hero.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+  }
+}

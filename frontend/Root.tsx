@@ -6,12 +6,12 @@ import {
 } from 'react-router-dom';
 
 import { App } from './src/App';
-import { HomePage } from './src/pages/HomePage';
-import { AboutUsPage } from './src/pages/AboutUsPage';
-import { PageNotFound } from './src/pages/PageNotFound';
-import { AdvicesPage } from './src/pages/AdvicesPage';
-import { ServicesPage } from './src/pages/ServicesPage';
-import { ContactsPage } from './src/pages/ContactsPage';
+import { HomePage } from './src/pages';
+import { PortfolioPage } from './src/pages';
+import { PageNotFound } from './src/pages';
+import { AdvicesPage } from './src/pages';
+import { ServicesPage } from './src/pages';
+import { OrdersPage } from './src/pages';
 
 export const Root = () => (
   <Router>
@@ -19,10 +19,10 @@ export const Root = () => (
       <Route path="/" element={<App />}>
         <Route index element={<HomePage />} />
         <Route path="home" element={<Navigate to="/" replace />} />
-        <Route path="about-us" element={<AboutUsPage />} />
+        <Route path="portfolio" element={<PortfolioPage />} />
         <Route path="advices" element={<AdvicesPage />} />
         <Route path="services" element={<ServicesPage />} />
-        <Route path="contacts" element={<ContactsPage />} />
+        <Route path="orders" element={<OrdersPage />} />
         <Route path="*" element={<PageNotFound />} />
       </Route>
     </Routes>

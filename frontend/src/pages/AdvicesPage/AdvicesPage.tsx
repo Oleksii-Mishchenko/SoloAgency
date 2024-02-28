@@ -1,74 +1,16 @@
-import { useEffect, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import * as advicesActions from '../../features/advicesSlice';
-import { Loader } from '../../components/Loader';
-import { NewAdvice } from '../../types/Advice';
-import { LoaderElement } from '../../types/LoaderElement';
+import './advices-page.scss';
+import { Advices } from '../../components/sections/common';
+import { AddAdvice } from '../../components/sections/forms';
+import { useAppSelector } from '../../app/hooks';
 
 export const AdvicesPage = () => {
-  const [newAdvice, setNewAdvice] = useState<NewAdvice>({
-    question: '',
-    answer: '',
-  });
-  const dispatch = useAppDispatch();
-  const { advices, isLoadingAdvices } = useAppSelector(state => state.advices);
-
-  useEffect(() => {
-    dispatch(advicesActions.init());
-  }, [dispatch]);
-
-  const handleRemove = (id: number) => {
-    dispatch(advicesActions.remove(id));
-  };
-
-  const handleAdd = async () => {
-    await dispatch(advicesActions.add(newAdvice));
-
-    setNewAdvice({ question: '', answer: '' });
-  };
+  const { user } = useAppSelector(state => state.user);
 
   return (
-    <div className="faq-page">
-      <h2>FAQ</h2>
-      <br />
-      {!!advices.length &&
-        advices.map(advice => (
-          <div key={advice.id}>
-            <h3>{advice.question}</h3>
-            <p>{advice.answer}</p>
-            <button onClick={() => handleRemove(advice.id)}>Remove</button>
-            <br />
-            <br />
-          </div>
-        ))}
+    <div className="advices-page">
+      <Advices relPage="advices-page" />
 
-      {isLoadingAdvices && <Loader element={LoaderElement.Block} />}
-
-      <form onSubmit={handleAdd}>
-        <input
-          type="text"
-          placeholder="Question"
-          value={newAdvice.question}
-          onChange={event =>
-            setNewAdvice(state => ({
-              ...state,
-              question: event.target.value,
-            }))
-          }
-        />
-        <input
-          type="text"
-          placeholder="Answer"
-          value={newAdvice.answer}
-          onChange={event =>
-            setNewAdvice(state => ({
-              ...state,
-              answer: event.target.value,
-            }))
-          }
-        />
-        <button>Add</button>
-      </form>
+      {user?.is_staff && <AddAdvice relPage="advices-page" />}
     </div>
   );
 };

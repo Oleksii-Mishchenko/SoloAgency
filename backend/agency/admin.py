@@ -9,6 +9,7 @@ from .models import (
     Review,
     CallRequest,
     Article,
+    Portfolio,
 )
 
 
@@ -22,15 +23,9 @@ class EventTypeAdmin(admin.ModelAdmin):
     list_display = ("name", "description", "photo")
 
 
-@admin.register(Organizer)
-class OrganizerAdmin(admin.ModelAdmin):
-    list_display = ("full_name", "position", "phone", "email", "photo")
-    search_fields = ("first_name", "last_name", "position", "phone", "email")
-
-
 @admin.register(Advice)
 class AdviceAdmin(admin.ModelAdmin):
-    list_display = ("question", "answer")
+    list_display = ("question", "answer", "priority")
 
 
 @admin.register(Review)
@@ -40,7 +35,9 @@ class ReviewAdmin(admin.ModelAdmin):
     search_fields = ("user__username", "text")
 
 
+admin.site.register(Organizer)
 admin.site.register(CallRequest)
 admin.site.register(Event)
 admin.site.register(Article)
 admin.site.register(Agency)
+admin.site.register(Portfolio)

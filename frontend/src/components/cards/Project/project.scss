@@ -1,0 +1,64 @@
+@import '../../../styles/main.scss';
+
+.project {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  @include on-wide-screen {
+    flex-direction: row;
+  }
+
+  &__visual {
+    position: relative;
+    flex: 1;
+  }
+
+  &__background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    filter: blur(5px);
+    z-index: -1;
+    opacity: 0.8;
+  }
+
+  &__info {
+    flex: 1;
+
+    &-title {
+      margin-bottom: 10px;
+
+      @extend %h3;
+    }
+
+    &-description {
+      @extend %body;
+
+      white-space: pre-line;
+      color: $color-black;
+    }
+  }
+
+  @include on-wide-screen {
+    &:nth-child(even) {
+      .project__visual {
+        order: 2;
+      }
+  
+      .project__info {
+        order: 1;
+      }
+    }
+  }
+
+  &__image {
+    display: block;
+    height: 276px;
+    width: 100%;
+    object-fit: contain;
+    object-position: center;
+  }
+}

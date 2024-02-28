@@ -1,0 +1,67 @@
+@import '../../../../styles/main.scss';
+
+.services {
+  &__title {
+    @extend %h1;
+    
+    margin-bottom: 20px;
+    text-align: center;
+
+    @include on-desktop {
+      margin-bottom: 30px;
+    }
+  }
+
+  &__services {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+
+    @include on-desktop {
+      row-gap: 30px;
+    }
+  }
+
+  &__service {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    padding: 20px;
+    background-color: $color-grey-hover;
+    border: 0.5px solid $color-green-element;
+    border-radius: 5px;
+
+    @include on-desktop {
+      width: calc(50% - 10px);
+
+      &:nth-child(2n) {
+        align-self: end;
+      }
+    }
+
+    &-title {
+      @extend %h2;
+    }
+
+    &-description {
+      @extend %body;
+
+      line-height: 27px;
+      color: $color-black;
+      white-space: pre-line;
+    }
+
+    &-file-link {
+      align-self: end;
+    }
+  }
+
+  &__loader {
+    margin: 0 auto;
+  }
+
+  &__errors {
+    margin: 0 auto;
+  }
+}

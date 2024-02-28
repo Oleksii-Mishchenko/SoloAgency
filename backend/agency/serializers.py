@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from agency.models import (
     Service,
@@ -9,7 +10,10 @@ from agency.models import (
     Review,
     CallRequest,
     Article,
+    Portfolio,
 )
+
+User = get_user_model()
 
 
 class ArticleSerializer(serializers.ModelSerializer):
@@ -21,7 +25,7 @@ class ArticleSerializer(serializers.ModelSerializer):
 class ServiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Service
-        fields = ("id", "name", "description")
+        fields = ("id", "name", "description", "presentation")
 
 
 class AgencySerializer(serializers.ModelSerializer):
@@ -37,6 +41,17 @@ class EventTypeSerializer(serializers.ModelSerializer):
         model = EventType
         fields = ("id", "name", "description", "photo")
 
+    def to_representation(self, instance):
+        representation = super(EventTypeSerializer, self).to_representation(instance)
+        representation["name"] = representation["name"].title()
+
+        request = self.context.get("request", None)
+        if request is not None:
+            photo_url = instance.photo.url
+            representation["photo"] = request.build_absolute_uri(photo_url)
+
+        return representation
+
 
 class OrganizerSerializer(serializers.ModelSerializer):
     class Meta:
@@ -49,37 +64,76 @@ class OrganizerSerializer(serializers.ModelSerializer):
             "position",
             "phone",
             "email",
+        )
+
+
+class OrganizerListSerializer(serializers.ModelSerializer):
+    full_name = serializers.ReadOnlyField()
+
+    class Meta:
+        model = Organizer
+        fields = (
+            "id",
+            "description",
+            "position",
+            "phone",
+            "email",
             "full_name",
-            "photo",
         )
 
 
 class EventSerializer(serializers.ModelSerializer):
-    organizers = OrganizerSerializer(many=True, read_only=True)
+    class Meta:
+        model = Event
+        fields = (
+            "id",
+            "service",
+            "description",
+            "number_of_guests",
+            "event_type",
+            "date",
+            "style",
+            "created_at",
+            "city",
+            "venue",
+            "phone",
+            "status",
+        )
+
+
+class EventListDetailSerializer(serializers.ModelSerializer):
+    customer = serializers.CharField(source="user.full_name", read_only=True)
+    event_type_name = serializers.CharField(source="event_type.name", read_only=True)
+    service_name = serializers.CharField(source="service.name", read_only=True)
 
     class Meta:
         model = Event
         fields = (
             "id",
-            "organizers",
+            "customer",
+            "service_name",
             "description",
-            "name",
             "number_of_guests",
-            "event_type",
+            "event_type_name",
             "date",
             "style",
-            "user",
+            "city",
+            "venue",
+            "phone",
             "created_at",
+            "status",
         )
 
 
 class AdviceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Advice
-        fields = ("id", "question", "answer")
-
-
-
+        fields = (
+            "id",
+            "question",
+            "answer",
+            "priority",
+        )
 
 
 class CallRequestSerializer(serializers.ModelSerializer):
@@ -92,34 +146,34 @@ class CallRequestSerializer(serializers.ModelSerializer):
             "phone",
             "city",
             "created_at",
+            "status",
         )
 
 
 class ReviewSerializer(serializers.ModelSerializer):
+    user_name = serializers.CharField(source="user.first_name", read_only=True)
+
     class Meta:
         model = Review
         fields = (
             "id",
             "user",
-            "text",
-            "rating",
-            "created_at",
-            "is_approved",
-        )
-
-
-
-class ReviewListSerializer(serializers.ModelSerializer):
-    user_name = serializers.CharField(
-        source="user.first_name", read_only=True
-    )
-    class Meta:
-        model = Review
-        fields = (
-            "id",
             "user_name",
             "text",
             "rating",
             "created_at",
             "is_approved",
+        )
+        read_only_fields = ("user",)
+
+
+class PortfolioSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Portfolio
+        fields = (
+            "id",
+            "title",
+            "description",
+            "photo",
+            "created_at",
         )

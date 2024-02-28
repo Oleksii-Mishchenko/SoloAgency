@@ -1,9 +1,10 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { handleErrorFromServer } from '../helpers/handleErrorFromServer';
 
-const instance = axios.create({
-  baseURL: 'http://0.0.0.0:8080/api',
-});
+export const hostName = 'http://127.0.0.1:8080';
+// export const hostName = 'http://0.0.0.0:8080',
+
+const instance = axios.create({ baseURL: `${hostName}/api` });
 
 export const client = {
   get: async <T>(url: string, config?: AxiosRequestConfig): Promise<T> => {
@@ -16,17 +17,9 @@ export const client = {
     }
   },
 
-  post: async <T, D>(
-    url: string,
-    data: D,
-    config?: AxiosRequestConfig,
-  ): Promise<T> => {
+  post: async <T, D>(url: string, data: D): Promise<T> => {
     try {
-      const response: AxiosResponse<T> = await instance.post<T>(
-        url,
-        data,
-        config,
-      );
+      const response: AxiosResponse<T> = await instance.post<T>(url, data);
 
       return response.data;
     } catch (error) {
@@ -35,16 +28,38 @@ export const client = {
   },
 
   patch: async <T, D>(url: string, data: D): Promise<T> => {
-    const response = await instance.patch<T>(url, data);
+    try {
+      const response: AxiosResponse<T> = await instance.patch<T>(url, data);
 
-    return response.data;
+      return response.data;
+    } catch (error) {
+      return handleErrorFromServer(error);
+    }
   },
 
-  delete: async (url: string) => {
+  delete: async <T>(url: string): Promise<T> => {
     try {
-      return await instance.delete(url);
+      const response: AxiosResponse<T> = await instance.delete<T>(url);
+
+      return response.data;
     } catch (error) {
       return handleErrorFromServer(error);
     }
   },
 };
+
+instance.interceptors.request.use(config => {
+  let token: string | null = null;
+
+  if (localStorage.getItem('persist:root') !== null) {
+    token = JSON.parse(
+      JSON.parse(localStorage.getItem('persist:root') || '').auth,
+    ).token;
+  }
+
+  if (token) {
+    config.headers.Authorization = `token ${token}`;
+  }
+
+  return config;
+});

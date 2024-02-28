@@ -1,0 +1,80 @@
+@import '../../../styles/main.scss';
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  column-gap: 15px;
+
+  &__button {
+    height: 40px;
+    width: 40px;
+    border: 1px solid $color-green-dark;
+    border-radius: 5px;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.65;
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &:hover {
+      opacity: 0.9;
+    }
+
+    &:active {
+      transform: scale(0.97);
+    }
+
+    &:disabled {
+      opacity: 0.3;
+      transform: none;
+      cursor: auto;
+    }
+
+    &--left {
+      background-image: url(../../../assets/img/chevron-left.svg);
+    }
+
+    &--right {
+      background-image: url(../../../assets/img/chevron-right.svg);
+    }
+  }
+
+  &__pages {
+    display: flex;
+    column-gap: 10px;
+  }
+
+  &__page {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    width: 40px;
+    border: 1px solid $color-white;
+    border-radius: 5px;
+    user-select: none;
+    transition: all 0.3s;
+
+    @extend %body-bold-button-green;
+
+    &:hover {
+      border-color: $color-green-dark;
+    }
+
+    &:active {
+      transform: scale(0.97);
+    }
+
+    &--active {
+      border-color: $color-green-dark;
+      background-color: $color-green-dark;
+      color: $color-white;
+
+      &:active {
+        transform: none;
+      }
+    }
+  }
+}

@@ -1,0 +1,56 @@
+@import '../../../../styles/main.scss';
+
+.orders {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+
+  @include on-desktop {
+    row-gap: 30px;
+  }
+
+  &__title {
+    @extend %h1;
+
+    text-align: center;
+  }
+
+  &__loader {
+    margin: 0 auto;
+  }
+
+  &__errors {
+    margin: 0 auto;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+  }
+
+  &__no-orders {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+
+    &-title {
+      @extend %h3;
+    }
+
+    &-message {
+      @extend %secondary-body;
+    }
+
+    &-link {
+      @extend %body-bold-button;
+
+      color: $color-green-dark;
+      transition: all 0.3s;
+
+      &:hover {
+        color: $color-green-hover;
+      }
+    }
+  }
+}
