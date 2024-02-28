@@ -6,6 +6,7 @@ import * as authActions from '../../../features/authSlice';
 import { useOuterClick } from '../../../customHooks/useOuterClick';
 import { MainButton } from '../../UI/buttons';
 import './auth.scss';
+import { hostName } from '../../../utils/axiosClient';
 
 type Props = {
   menu: {
@@ -75,6 +76,17 @@ export const Auth: React.FC<Props> = ({ menu: { isMenuOpen, toggleMenu } }) => {
                 >
                   {user.is_staff ? 'Замовлення' : 'Мої замовлення'}
                 </NavLink>
+              </li>
+
+              <li className="auth__menu-item">
+                <a
+                  href={`${hostName}/accounts/password/reset/`}
+                  className="auth__menu-link"
+                  target="_blank"
+                  onClick={handleMenuClosure}
+                >
+                  Змінити пароль
+                </a>
               </li>
 
               <li className="auth__menu-item">

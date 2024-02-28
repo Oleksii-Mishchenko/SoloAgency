@@ -23,12 +23,12 @@ export const InputPhoneNumber: React.FC<InputPhoneNumberProps> = ({
 }) => {
   const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
     if (!event.target.value) {
-      onChange('+38 (0');
+      onChange('+38 (');
     }
   };
 
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    if (e.target.value === '+38 (0' || !e.target.value) {
+    if (e.target.value === '+38 (' || !e.target.value) {
       onChange('');
     }
     onBlur();
@@ -45,7 +45,7 @@ export const InputPhoneNumber: React.FC<InputPhoneNumberProps> = ({
           '8',
           ' ',
           '(',
-          '0',
+          /\d/,
           /\d/,
           /\d/,
           ')',
