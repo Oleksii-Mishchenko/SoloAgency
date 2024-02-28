@@ -60,6 +60,7 @@ export const Register = () => {
 
   const onSubmit: SubmitHandler<RegisterFormData> = async data => {
     data.phone = data.phone ? cleanPhoneNumber(data.phone) : null;
+    data.email = data.email.toLowerCase();
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { repeatPassword, ...rest } = data;

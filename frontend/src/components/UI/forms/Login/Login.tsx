@@ -38,6 +38,8 @@ export const Login = () => {
   });
 
   const onSubmit: SubmitHandler<LoginData> = async (data: LoginData) => {
+    data.email = data.email.toLowerCase();
+
     await dispatch(authActions.login(data));
 
     onClose();
