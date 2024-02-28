@@ -97,11 +97,12 @@ DATABASES = {
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-
     {
         'NAME': 'user.password_validators.CustomPasswordValidator',
     },
-
+    {
+        'NAME': 'user.password_validators.MaxLengthValidator',
+    },
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
@@ -109,7 +110,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
         'OPTIONS': {
             'min_length': 5,
-            'max_length': 20,
         }
     },
     {
@@ -118,8 +118,6 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
-
-
 ]
 
 AUTH_USER_MODEL = "user.User"

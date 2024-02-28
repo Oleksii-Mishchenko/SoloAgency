@@ -23,3 +23,12 @@ class CustomPasswordValidator:
             "Your password must contain at least one uppercase letter, "
             "one lowercase letter, and one special character."
         )
+
+
+class MaxLengthValidator:
+    def validate(self, password, user=None):
+        if len(password) > 20:
+            raise ValidationError("Password must not exceed 20 characters.")
+
+    def get_help_text(self):
+        return "Password must not exceed 20 characters."
