@@ -14,7 +14,9 @@ export const useLoadOptions = (selectType: SelectType) => {
   const serverRequest = loaders[selectType];
 
   const [isLoadingOptions, setIsLoadingOptions] = useState(false);
-  const [options, setOptions] = useState<SelectOption[] | undefined>(undefined);
+  const [options, setOptions] = useState<SelectOption<number>[] | undefined>(
+    undefined,
+  );
 
   useEffect(() => {
     const fetchData = async () => {
