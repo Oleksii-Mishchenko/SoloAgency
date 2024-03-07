@@ -1,5 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { addEventType, loadEventTypes } from '../api/eventTypes';
+import {
+  addEventType,
+  loadEventTypes,
+  removeEventType,
+} from '../api/eventTypes';
 import { EventTypes } from '../types/EventType';
 import { ServerErrorResponse } from '../types/ServerErrorResponse';
 import { parseErrors } from '../helpers/parseErrors';
@@ -11,6 +15,9 @@ export type EventTypesState = {
   isAdding: boolean;
   isAddSuccess: boolean;
   errorsAdding: ServerErrorResponse | null;
+  deletingEventTypeId: number | null;
+  deletedEventTypeId: number | null;
+  errorsDeleteEventType: ServerErrorResponse | null;
 };
 
 const initialState: EventTypesState = {
@@ -26,6 +33,9 @@ const initialState: EventTypesState = {
   isAdding: false,
   isAddSuccess: false,
   errorsAdding: null,
+  deletingEventTypeId: null,
+  deletedEventTypeId: null,
+  errorsDeleteEventType: null,
 };
 
 export const init = createAsyncThunk(
@@ -37,11 +47,23 @@ export const init = createAsyncThunk(
   },
 );
 
-export const add = createAsyncThunk('add/service', async (data: FormData) => {
-  const response = await addEventType(data);
+export const add = createAsyncThunk(
+  'add/eventTypes',
+  async (data: FormData) => {
+    const response = await addEventType(data);
 
-  return response;
-});
+    return response;
+  },
+);
+
+export const remove = createAsyncThunk(
+  'delete/eventTypes',
+  async (id: number) => {
+    await removeEventType(id);
+
+    return id;
+  },
+);
 
 export const eventTypesSlice = createSlice({
   name: 'eventTypes',
@@ -50,6 +72,14 @@ export const eventTypesSlice = createSlice({
     clearAddData: state => {
       state.errorsAdding = null;
       state.isAddSuccess = false;
+    },
+
+    clearDeletedId: state => {
+      state.deletedEventTypeId = null;
+    },
+
+    clearErrorsDelete: state => {
+      state.errorsDeleteEventType = null;
     },
   },
 
@@ -83,8 +113,27 @@ export const eventTypesSlice = createSlice({
       state.isAdding = false;
       state.errorsAdding = parseErrors(action.error.message);
     });
+
+    builder.addCase(remove.pending, (state, action) => {
+      state.deletingEventTypeId = action.meta.arg;
+      state.errorsDeleteEventType = null;
+    });
+
+    builder.addCase(remove.fulfilled, (state, action) => {
+      state.deletingEventTypeId = null;
+      state.eventTypes.results = state.eventTypes.results.filter(
+        eventType => eventType.id !== action.payload,
+      );
+      state.deletedEventTypeId = action.payload;
+    });
+
+    builder.addCase(remove.rejected, (state, action) => {
+      state.deletingEventTypeId = null;
+      state.errorsDeleteEventType = parseErrors(action.error.message);
+    });
   },
 });
 
-export const { clearAddData } = eventTypesSlice.actions;
+export const { clearAddData, clearDeletedId, clearErrorsDelete } =
+  eventTypesSlice.actions;
 export default eventTypesSlice.reducer;
