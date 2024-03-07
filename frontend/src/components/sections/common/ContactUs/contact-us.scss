@@ -22,6 +22,8 @@
     }
 
     &-value {
+      display: block;
+
       @extend %body;
     }
   }
