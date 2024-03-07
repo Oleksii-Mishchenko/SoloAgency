@@ -9,7 +9,7 @@ export const ContactUs: React.FC<Props> = ({ relPage }) => {
   return (
     <article className={`${relPage}__contact-us contact-us`}>
       <div className="contact-us__contact">
-        <p className="contact-us__contact-name">Номери телефонів</p>
+        <p className="contact-us__contact-name">Контактні номери телефонів</p>
 
         <p className="contact-us__contact-value">+38 (063) 028 28 13</p>
         <p className="contact-us__contact-value">+38 (093) 816 16 54</p>

@@ -1,3 +1,5 @@
+@import '../../../../styles/main.scss';
+
 .control-button {
   height: 24px;
   width: 24px;
@@ -7,6 +9,13 @@
   background-repeat: no-repeat;
   border: none;
   cursor: pointer;
+
+  &--has-border {
+    width: 32px;
+    height: 32px;
+    border: 1px solid $color-green-disabled;
+    border-radius: 5px;
+  }
 
   &--edit {
     background-image: url(../../../../assets/img/pencil.svg);
