@@ -9,6 +9,7 @@ import { useScrollToRef } from '../../../../customHooks/useScrollToRef';
 import { Event } from '../../../cards';
 import './event-types.scss';
 import { EventType } from '../../../../types/EventType';
+import { EditEvent } from '../../forms';
 
 type Props = {
   relPage: string;
@@ -26,6 +27,8 @@ export const EventTypes: FC<Props> = ({ relPage }) => {
     deletingEventTypeId,
     deletedEventTypeId,
     errorsDeleteEventType,
+    isPatchedEventType,
+    errorsPatch,
   } = useAppSelector(state => state.eventTypes);
   const { user } = useAppSelector(state => state.user);
   const { num_pages, results } = eventTypes;
@@ -47,6 +50,8 @@ export const EventTypes: FC<Props> = ({ relPage }) => {
 
     setSearchParams(getSearchWith({ page: null }, searchParams));
   }, []);
+
+  const onCloseEditor = useCallback(() => setEditedEvent(null), []);
 
   return (
     <section className={`${relPage}__event-types event-types`} ref={sectionRef}>
@@ -79,7 +84,13 @@ export const EventTypes: FC<Props> = ({ relPage }) => {
         </>
       )}
 
-      {editedEvent && 123}
+      {editedEvent && (
+        <EditEvent
+          className="event-types__edit"
+          eventType={editedEvent}
+          closeEditor={onCloseEditor}
+        />
+      )}
 
       {errors && <Errors className="event-types__errors" errors={errors} />}
 
@@ -97,6 +108,23 @@ export const EventTypes: FC<Props> = ({ relPage }) => {
           message="Послуга не видалена"
           errors={errorsDeleteEventType}
           onClose={() => dispatch(eventTypesActions.clearErrorsDelete())}
+        />
+      )}
+
+      {isPatchedEventType && (
+        <Notification
+          className="event-types__notification"
+          message="Послуга була успішно змінена"
+          onClose={() => dispatch(eventTypesActions.clearIsPatched())}
+        />
+      )}
+
+      {errorsPatch && (
+        <Notification
+          className="event-types__notification"
+          message="Послуга не була змінена"
+          errors={errorsPatch}
+          onClose={() => dispatch(eventTypesActions.clearErrorsPatch())}
         />
       )}
     </section>

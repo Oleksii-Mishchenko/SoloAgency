@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
   addEventType,
+  editEventType,
   loadEventTypes,
   removeEventType,
 } from '../api/eventTypes';
@@ -18,6 +19,9 @@ export type EventTypesState = {
   deletingEventTypeId: number | null;
   deletedEventTypeId: number | null;
   errorsDeleteEventType: ServerErrorResponse | null;
+  isPatchingEventType: boolean;
+  isPatchedEventType: boolean;
+  errorsPatch: ServerErrorResponse | null;
 };
 
 const initialState: EventTypesState = {
@@ -36,6 +40,9 @@ const initialState: EventTypesState = {
   deletingEventTypeId: null,
   deletedEventTypeId: null,
   errorsDeleteEventType: null,
+  isPatchingEventType: false,
+  isPatchedEventType: false,
+  errorsPatch: null,
 };
 
 export const init = createAsyncThunk(
@@ -65,6 +72,15 @@ export const remove = createAsyncThunk(
   },
 );
 
+export const edit = createAsyncThunk(
+  'patch/eventTypes',
+  async (eventType: { formData: FormData; id: number }) => {
+    const response = await editEventType(eventType);
+
+    return response;
+  },
+);
+
 export const eventTypesSlice = createSlice({
   name: 'eventTypes',
   initialState,
@@ -80,6 +96,14 @@ export const eventTypesSlice = createSlice({
 
     clearErrorsDelete: state => {
       state.errorsDeleteEventType = null;
+    },
+
+    clearIsPatched: state => {
+      state.isPatchedEventType = false;
+    },
+
+    clearErrorsPatch: state => {
+      state.errorsPatch = null;
     },
   },
 
@@ -131,9 +155,32 @@ export const eventTypesSlice = createSlice({
       state.deletingEventTypeId = null;
       state.errorsDeleteEventType = parseErrors(action.error.message);
     });
+
+    builder.addCase(edit.pending, state => {
+      state.isPatchingEventType = true;
+      state.errorsPatch = null;
+    });
+
+    builder.addCase(edit.fulfilled, (state, action) => {
+      state.isPatchingEventType = false;
+      state.eventTypes.results = state.eventTypes.results.map(eventType => {
+        return eventType.id === action.payload.id ? action.payload : eventType;
+      });
+      state.isPatchedEventType = true;
+    });
+
+    builder.addCase(edit.rejected, (state, action) => {
+      state.isPatchingEventType = false;
+      state.errorsPatch = parseErrors(action.error.message);
+    });
   },
 });
 
-export const { clearAddData, clearDeletedId, clearErrorsDelete } =
-  eventTypesSlice.actions;
+export const {
+  clearAddData,
+  clearDeletedId,
+  clearErrorsDelete,
+  clearErrorsPatch,
+  clearIsPatched,
+} = eventTypesSlice.actions;
 export default eventTypesSlice.reducer;

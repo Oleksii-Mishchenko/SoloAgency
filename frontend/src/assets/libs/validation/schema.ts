@@ -107,8 +107,20 @@ export const schema = {
 
       return ['.jpg', '.jpeg', '.png'].includes(`.${extension}`);
     })
-    .test('fileSize', 'Файл занадто великий', value => {
+    .test('fileSize', 'Максимальний розмір файлу 5МБ', value => {
       return value.size <= 10485760;
+    }),
+
+  photoNotRequired: yup
+    .mixed<File>()
+    .nullable()
+    .test('fileType', 'Невірний формат файлу', value => {
+      const supportedFormats = ['image/jpeg', 'image/jpg', 'image/png'];
+
+      return value ? supportedFormats.includes(value.type) : true;
+    })
+    .test('fileSize', 'Максимальний розмір файлу 5МБ', value => {
+      return value ? value.size <= 10485760 : true;
     }),
 
   rating: yup
