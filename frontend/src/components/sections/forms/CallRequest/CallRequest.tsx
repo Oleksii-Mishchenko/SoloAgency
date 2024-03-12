@@ -66,7 +66,7 @@ export const CallRequest: React.FC<Props> = ({ relPage }) => {
   return (
     <article className={`${relPage}__call-request call-request`}>
       <div className="call-request__info">
-        <h2 className="call-request__title">Замовити дзвінок?</h2>
+        <h2 className="call-request__title">Бажаєте замовити дзвінок?</h2>
 
         <p className="call-request__description">
           Заповнюй свої дані, а наша команда сконтактує вас найближчим часом для

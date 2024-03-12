@@ -22,7 +22,15 @@
     }
 
     &-value {
+      display: block;
+      width: fit-content;
+      transition: all 0.3s;
+
       @extend %body;
+
+      &:hover {
+        color: $color-green-dark;
+      }
     }
   }
 }

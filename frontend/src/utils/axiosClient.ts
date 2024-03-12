@@ -1,8 +1,7 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { handleErrorFromServer } from '../helpers/handleErrorFromServer';
 
-export const hostName = 'http://127.0.0.1:8080';
-// export const hostName = 'http://0.0.0.0:8080',
+export const hostName = 'https://soloagency.org/rest';
 
 const instance = axios.create({ baseURL: `${hostName}/api` });
 
