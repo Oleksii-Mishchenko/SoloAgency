@@ -1,6 +1,8 @@
 # SoloAgency
 
-https://github.com/Oleksii-Mishchenko/SoloAgency.git
+### [Repository](https://github.com/Oleksii-Mishchenko/SoloAgency.git)
+
+### [Figma Design](https://www.figma.com/file/RYIfYMT2MNqeLg9wSi4aS3/Solo-Agency)
 
 
 The "Solo Agency" project combines the latest web development technologies, 
