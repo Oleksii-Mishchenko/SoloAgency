@@ -28,6 +28,12 @@
   }
 
   &__info {
+    margin-bottom: 20px;
+
+    @include on-desktop {
+      margin-bottom: 30px;
+    }
+
     @extend %secondary-body;
   }
 

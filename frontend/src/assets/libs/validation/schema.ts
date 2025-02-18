@@ -92,7 +92,7 @@ export const schema = {
       .required('Поле не може бути порожнім')
       .max(max, `Не більше ${max} символів`)
       .matches(
-        /^[0-9A-Za-zа-щА-ЩЬьЮюЯяЇїІіЄєҐґ'ʼ!"№;%:?*)(_+=₴.,@#$^&|`~<> / }{ -]+$/,
+        /^[0-9A-Za-zа-щА-ЩЬьЮюЯяЇїІіЄєҐґ'ʼ!"№;%:?*)(_+=₴.,@#$^&|`~<> /}{\n-]+$/,
         {
           message: 'Тільки українські або латинські літери',
           excludeEmptyString: true,
@@ -107,8 +107,20 @@ export const schema = {
 
       return ['.jpg', '.jpeg', '.png'].includes(`.${extension}`);
     })
-    .test('fileSize', 'Файл занадто великий', value => {
+    .test('fileSize', 'Максимальний розмір файлу 5МБ', value => {
       return value.size <= 10485760;
+    }),
+
+  photoNotRequired: yup
+    .mixed<File>()
+    .nullable()
+    .test('fileType', 'Невірний формат файлу', value => {
+      const supportedFormats = ['image/jpeg', 'image/jpg', 'image/png'];
+
+      return value ? supportedFormats.includes(value.type) : true;
+    })
+    .test('fileSize', 'Максимальний розмір файлу 5МБ', value => {
+      return value ? value.size <= 10485760 : true;
     }),
 
   rating: yup
@@ -137,7 +149,8 @@ export const schema = {
     .max(20, 'Занадто довгий пароль. Максимум 20 символів')
     .min(5, 'Мінімум 5 символів')
     .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-=_+])[^\s]+$/,
+      // eslint-disable-next-line max-len
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*['ʼ!"№;%:?*)(_+=₴.,@#$^&|`~<>/[\]\\}{-])[^\s]+$/,
       'Пароль повинен містити маленьку і велику літери, цифру та спецсимвол',
     ),
 

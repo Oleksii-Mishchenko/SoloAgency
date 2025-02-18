@@ -12,4 +12,10 @@ export interface NewEventType {
   photo: File;
 }
 
+export interface EditEventType {
+  name: string;
+  description: string;
+  photo?: File | null;
+}
+
 export type EventTypes = PaginationResult<EventType>;

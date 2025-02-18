@@ -1,0 +1,42 @@
+@import '../../../../styles/main.scss';
+
+.edit-event {
+  width: 100%;
+
+  @include on-tablet {
+    width: 80%;
+  }
+
+  @include on-desktop {
+    width: 90%;
+  }
+
+  @include on-wide-screen {
+    width: 80%;
+  }
+
+  @extend %pop-up;
+
+  &__title {
+    @extend %h3;
+
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: center;
+    column-gap: 20px;
+  }
+
+  &__button {
+    width: 120px;
+  }
+}

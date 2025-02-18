@@ -69,6 +69,7 @@ export const Review: React.FC<Props> = React.memo(
           {token && user?.is_staff && (
             <div className="review__controls">
               <ControlButton
+                className="control-button--has-border"
                 buttonType={ControlButtonType.Remove}
                 type="button"
                 title="Видалити"
@@ -80,6 +81,7 @@ export const Review: React.FC<Props> = React.memo(
 
               {!is_approved && (
                 <ControlButton
+                  className="control-button--has-border"
                   buttonType={ControlButtonType.Approve}
                   type="button"
                   title="Опублікувати"

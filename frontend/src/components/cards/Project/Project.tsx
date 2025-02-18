@@ -15,7 +15,7 @@ export const Project: React.FC<Props> = ({
           className="project__background"
           style={{ backgroundImage: `url(${photo})` }}
         />
-        <img src={photo} alt="Project" className="project__image" />
+        <img src={photo} alt={title} className="project__image" />
       </div>
 
       <div className="project__info">
